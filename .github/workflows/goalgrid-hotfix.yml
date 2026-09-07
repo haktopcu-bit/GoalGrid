@@ -3,7 +3,7 @@ name: GoalGrid Hotfix
 on:
   push:
     paths:
-      - 'tools/goalgrid_hotfix5.py'
+      - 'tools/goalgrid_hotfix6.py'
   workflow_dispatch:
 
 permissions:
@@ -17,16 +17,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Apply GoalGrid V1.9.7 hotfix
-        run: python tools/goalgrid_hotfix5.py
+      - name: Apply GoalGrid V1.9.8 hotfix
+        run: python tools/goalgrid_hotfix6.py
       - name: Commit patched GoalGrid
         run: |
           git config user.name "goalgrid-bot"
           git config user.email "goalgrid-bot@users.noreply.github.com"
-          git add index.html functions/data.js
+          git add index.html
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            git commit -m "Fix team history matching and missing leagues"
+            git commit -m "Fix GoalGrid runtime and restore date initialization"
             git push
           fi
