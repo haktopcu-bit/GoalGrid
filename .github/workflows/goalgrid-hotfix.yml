@@ -3,7 +3,7 @@ name: GoalGrid Hotfix
 on:
   push:
     paths:
-      - 'tools/goalgrid_hotfix3.py'
+      - 'tools/goalgrid_hotfix4.py'
   workflow_dispatch:
 
 permissions:
@@ -17,8 +17,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Apply GoalGrid V1.9.5 hotfix
-        run: python tools/goalgrid_hotfix3.py
+      - name: Apply GoalGrid V1.9.6 hotfix
+        run: python tools/goalgrid_hotfix4.py
       - name: Commit patched GoalGrid
         run: |
           git config user.name "goalgrid-bot"
@@ -27,6 +27,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            git commit -m "Support free-plan future fixture dates"
+            git commit -m "Use football-data fallback and remove women leagues"
             git push
           fi
