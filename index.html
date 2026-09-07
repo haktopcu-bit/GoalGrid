@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>GoalGrid V1.9.2</title>
+<title>GoalGrid V1.9.3</title>
 
 <style>
 :root{
@@ -444,7 +444,7 @@ input[type="date"]{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="subtitle">Futbol Karar Motoru • V1.9.2</p>
+<p class="subtitle">Futbol Karar Motoru • V1.9.3</p>
 
 <section class="card">
 
@@ -1050,6 +1050,25 @@ function wantedFixture(fixture){
   }
 
 
+  /*
+    Ulusal kupa / genç kupa adlarını lig adı eşleşmesinden ÖNCE ele.
+    Örn. "Premier League Cup" içinde "premier league" geçtiği için
+    eski sırada yanlışlıkla lig sanılıyordu.
+  */
+  const domesticCupWords = [
+    "fa cup", "league cup", "premier league cup", "efl cup",
+    "community shield", "copa del rey", "supercopa",
+    "coppa italia", "supercoppa", "dfb pokal", "dfb-pokal",
+    "coupe de france", "trophee des champions",
+    "knvb beker", "johan cruijff schaal",
+    "turkiye kupasi", "türkiye kupası",
+    "belgian cup", "croky cup", "cup", "beker", "pokal", "copa", "coppa", "coupe"
+  ];
+
+  if(includesAny(leagueName, domesticCupWords)){
+    return false;
+  }
+
   if(
     BASE_LEAGUES[
       fixture.league?.id
@@ -1073,21 +1092,20 @@ function wantedFixture(fixture){
   if(
     includesAny(
       leagueName,
-      rule.leagues
-    )
-  ){
-    return true;
-  }
-
-
-  /* Ulusal kupa maçları GoalGrid bültenine alınmaz. */
-  if(
-    includesAny(
-      leagueName,
       rule.cups
     )
   ){
     return false;
+  }
+
+
+  if(
+    includesAny(
+      leagueName,
+      rule.leagues
+    )
+  ){
+    return true;
   }
 
 
@@ -1415,7 +1433,7 @@ function normalizeApiFootballHistoryMatch(match){
 async function loadTeamHistory(teamId){
 
   const key =
-    "goalgrid_team_v192_"
+    "goalgrid_team_v193_"
     +
     teamId;
 
@@ -1455,11 +1473,24 @@ async function loadTeamHistory(teamId){
   }
 
 
-  const fixtures =
-    await apiFootball(
-      `/fixtures?team=${teamId}&last=20&timezone=Europe/Istanbul`
-    );
+  const seasonCandidates = [2026, 2025];
+  const fixtures = [];
+  const seasonErrors = [];
 
+  for(const season of seasonCandidates){
+    try{
+      const seasonFixtures = await apiFootball(
+        `/fixtures?team=${teamId}&season=${season}&timezone=Europe/Istanbul`
+      );
+      fixtures.push(...seasonFixtures);
+    }catch(error){
+      seasonErrors.push(`${season}: ${error.message}`);
+    }
+  }
+
+  if(!fixtures.length && seasonErrors.length){
+    throw new Error(seasonErrors.join(" • "));
+  }
 
   const matches =
     fixtures
@@ -1489,7 +1520,9 @@ async function loadTeamHistory(teamId){
         x =>
           x.team1 &&
           x.team2
-      );
+      )
+      .sort((a,b)=>String(b.date).localeCompare(String(a.date)))
+      .slice(0,40);
 
 
   localStorage.setItem(
