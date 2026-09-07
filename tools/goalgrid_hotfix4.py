@@ -11,14 +11,11 @@ replacement='''  const country =\n    plain(\n      fixture.league?.country\n   
 assert needle in s, 'wantedFixture country block not found'
 s=s.replace(needle,replacement,1)
 
-# Also reject obvious women team suffixes/names even if league metadata is vague.
 needle='''  if(includesAny(leagueName,domesticCupWords)){\n    return false;\n  }'''
 replacement='''  if(includesAny(leagueName,domesticCupWords)){\n    return false;\n  }\n\n  const homeName = plain(fixture.teams?.home?.name || "");\n  const awayName = plain(fixture.teams?.away?.name || "");\n  if(\n    /(^| )(w|women|femina|femenina|frauen)( |$)/.test(homeName) ||\n    /(^| )(w|women|femina|femenina|frauen)( |$)/.test(awayName)\n  ){\n    return false;\n  }'''
 assert needle in s, 'domestic cup block not found'
 s=s.replace(needle,replacement,1)
 
-# 2) API-Football free plan cannot query current 2026 season. Future-date fallback now uses football-data.org,
-# which already exists in GoalGrid and supports CL + major leagues without exposing the key client-side.
 start=s.find('async function loadFixturesForDate(date){')
 end=s.find('\n\n\nasync function scan(){', start)
 assert start!=-1 and end!=-1, 'loadFixturesForDate block not found'
@@ -33,11 +30,6 @@ new_helper=r'''async function loadFixturesForDate(date){
     const blockedDate=msg.includes("do not have access to this date");
     if(!blockedDate) throw error;
 
-    /*
-      API-Football Free plan future-date/2026-season engelinde ikinci fikstür kaynağı.
-      football-data.org kodları: CL, PL, ELC, BL1, SA, PD, FL1, DED, PPL.
-      Ulusal kupalar ve kadın ligleri bu listede yoktur.
-    */
     const competitionMap = {
       CL:{id:2,country:"World",name:"UEFA Champions League"},
       PL:{id:39,country:"England",name:"Premier League"},
@@ -101,7 +93,6 @@ new_helper=r'''async function loadFixturesForDate(date){
 }'''
 s=s[:start]+new_helper+s[end:]
 
-# 3) Never send null / foreign IDs to API-Football team-history endpoint.
 needle='''async function loadTeamHistory(teamId){\n\n  const key ='''
 replacement='''async function loadTeamHistory(teamId){\n\n  if(teamId===null || teamId===undefined || teamId===""){\n    return[];\n  }\n\n  const key ='''
 assert needle in s, 'loadTeamHistory start not found'
@@ -109,3 +100,5 @@ s=s.replace(needle,replacement,1)
 
 p.write_text(s,encoding='utf-8')
 print('GoalGrid V1.9.6 applied - women removed, future fixtures via football-data.org')
+
+# trigger
