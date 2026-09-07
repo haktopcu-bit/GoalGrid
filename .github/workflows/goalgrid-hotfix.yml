@@ -3,8 +3,7 @@ name: GoalGrid Hotfix
 on:
   push:
     paths:
-      - 'tools/goalgrid_hotfix.py'
-      - 'tools/goalgrid_hotfix2.py'
+      - 'tools/goalgrid_hotfix3.py'
   workflow_dispatch:
 
 permissions:
@@ -18,21 +17,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Apply latest GoalGrid hotfix
-        run: |
-          if [ -f tools/goalgrid_hotfix2.py ]; then
-            python tools/goalgrid_hotfix2.py
-          else
-            python tools/goalgrid_hotfix.py
-          fi
-      - name: Commit patched GoalGrid files
+      - name: Apply GoalGrid V1.9.5 hotfix
+        run: python tools/goalgrid_hotfix3.py
+      - name: Commit patched GoalGrid
         run: |
           git config user.name "goalgrid-bot"
           git config user.email "goalgrid-bot@users.noreply.github.com"
-          git add index.html functions/data.js
+          git add index.html
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            git commit -m "Fix UEFA history pool and domestic cup filtering"
+            git commit -m "Support free-plan future fixture dates"
             git push
           fi
