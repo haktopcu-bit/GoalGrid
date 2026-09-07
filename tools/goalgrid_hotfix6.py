@@ -17,10 +17,10 @@ assert needle in s, 'wantedFixture function header not found'
 s=s.replace(needle,replacement,1)
 
 # Ensure date initializes on load and UI is refreshed.
-# Existing init should work once syntax is fixed, but add a defensive DOMContentLoaded initializer once.
 if 'goalgrid-v198-init' not in s:
     insert='''\n<script id="goalgrid-v198-init">\nwindow.addEventListener("DOMContentLoaded",()=>{\n  try{\n    const el=document.querySelector("#selectedDate");\n    if(el && !el.value){ el.value=todayISO(); }\n    if(typeof updateSelectedDateText==="function") updateSelectedDateText();\n    if(typeof showApiState==="function") showApiState();\n    if(typeof render==="function") render();\n  }catch(e){ console.error("GoalGrid init",e); }\n});\n</script>\n'''
     s=s.replace('</body>',insert+'\n</body>',1)
 
 p.write_text(s,encoding='utf-8')
 print('GoalGrid V1.9.8 applied: JS syntax fixed, date init restored, women excluded')
+# trigger2
