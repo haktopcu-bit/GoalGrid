@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>GoalGrid V1.9.0</title>
+<title>GoalGrid V1.9.1</title>
 
 <style>
 :root{
@@ -444,7 +444,7 @@ input[type="date"]{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="subtitle">Futbol Karar Motoru • V1.9.0</p>
+<p class="subtitle">Futbol Karar Motoru • V1.9.1</p>
 
 <section class="card">
 
@@ -1022,6 +1022,13 @@ function includesAny(text,words){
 
 function wantedFixture(fixture){
 
+  const leagueId = Number(fixture.league?.id);
+
+  /* GoalGrid sabit ID güvenlik ağı: UEFA + Hollanda ligleri */
+  if([2,3,848,88,89].includes(leagueId)){
+    return true;
+  }
+
   const leagueName =
     plain(
       fixture.league?.name
@@ -1114,11 +1121,7 @@ function competitionConfig(fixture){
     );
 
 
-  if(
-    name.includes(
-      "champions league"
-    )
-  ){
+  if(leagueId===2 || name.includes("champions league")){
 
     return{
       name:
@@ -1131,6 +1134,14 @@ function competitionConfig(fixture){
 
   }
 
+
+  if(leagueId===3 || name.includes("europa league")){
+    return{ name:fixture.league.name, fd:null, of:null };
+  }
+
+  if(leagueId===848 || name.includes("conference league")){
+    return{ name:fixture.league.name, fd:null, of:null };
+  }
 
   return{
     name:
@@ -3455,10 +3466,10 @@ async function scan(){
       );
 
 
-    const selected =
-      fixtures.filter(
-        wantedFixture
-      );
+    const selected = fixtures.filter(wantedFixture);
+
+    const returnedCompetitions = [...new Set(fixtures.map(x=>`${x.league?.id}:${x.league?.name}`))];
+    console.log("GoalGrid API competitions", returnedCompetitions);
 
 
     if(
