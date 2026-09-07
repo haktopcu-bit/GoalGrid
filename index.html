@@ -2,18 +2,10 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1,viewport-fit=cover">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07101d">
-
-<meta
-  name="apple-mobile-web-app-capable"
-  content="yes">
-
-<title>GoalGrid V1.4</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>GoalGrid V1.5</title>
 
 <style>
 :root{
@@ -28,263 +20,139 @@
   --kirmizi:#fb7185;
   --sari:#fcd34d;
 }
-
-*{
-  box-sizing:border-box;
-}
-
+*{box-sizing:border-box}
 body{
   margin:0;
   background:linear-gradient(180deg,#08111f,#060b13);
   color:var(--yazi);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  min-height:100vh;
+  min-height:100vh
 }
-
 main{
   max-width:850px;
   margin:auto;
-  padding:
-    calc(22px + env(safe-area-inset-top))
-    13px
-    210px;
+  padding:calc(22px + env(safe-area-inset-top)) 13px 220px
 }
-
-h1{
-  font-size:32px;
-  margin:0;
-}
-
-.altBaslik{
-  color:var(--soluk);
-  margin:5px 0 17px;
-}
-
+h1{font-size:32px;margin:0}
+.altBaslik{color:var(--soluk);margin:5px 0 17px}
 .kart{
-  background:
-    linear-gradient(
-      180deg,
-      var(--kart2),
-      var(--kart)
-    );
+  background:linear-gradient(180deg,var(--kart2),var(--kart));
   border:1px solid var(--cizgi);
   border-radius:18px;
   padding:15px;
-  margin-bottom:11px;
+  margin-bottom:11px
 }
-
 button{
   border:0;
   border-radius:12px;
   padding:11px 13px;
   font-weight:850;
-  font-size:14px;
+  font-size:14px
 }
-
-.birincil{
-  background:var(--yesil);
-  color:#052218;
-}
-
-.ikincil{
-  background:#183149;
-  color:#dcecff;
-}
-
-.silButonu{
-  background:#40222d;
-  color:#ffb7c4;
-}
-
+.birincil{background:var(--yesil);color:#052218}
+.ikincil{background:#183149;color:#dcecff}
+.tehlike{background:#40222d;color:#ffb7c4}
 .ustSatir{
   display:flex;
   justify-content:space-between;
   gap:10px;
-  align-items:flex-start;
+  align-items:flex-start
 }
-
-.lig{
-  font-size:11px;
-  color:var(--soluk);
-}
-
-.takimlar{
-  font-size:18px;
-  font-weight:850;
-  margin-top:3px;
-}
-
-.saat{
-  color:var(--mavi);
-  font-weight:850;
-  font-size:13px;
-  white-space:nowrap;
-}
-
-.durum{
-  color:var(--soluk);
-  font-size:12px;
-  line-height:1.5;
-}
-
-.iyi{
-  color:#8cf0c8;
-}
-
-.uyari{
-  color:#ffd78b;
-}
-
-.kotu{
-  color:#ff9cab;
-}
-
+.lig{font-size:11px;color:var(--soluk)}
+.takimlar{font-size:18px;font-weight:850;margin-top:3px}
+.saat{color:var(--mavi);font-weight:850;font-size:13px;white-space:nowrap}
+.durum{color:var(--soluk);font-size:12px;line-height:1.5}
+.iyi{color:#8cf0c8}
+.uyari{color:#ffd78b}
+.kotu{color:#ff9cab}
 .istatistikler{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:7px;
+  gap:7px
 }
-
-.istatistik{
-  text-align:center;
-}
-
-.istatistik b{
-  display:block;
-  font-size:22px;
-}
-
-.istatistik small{
-  color:var(--soluk);
-  font-size:10px;
-}
-
+.istatistik{text-align:center}
+.istatistik b{display:block;font-size:22px}
+.istatistik small{color:var(--soluk);font-size:10px}
 .sekmeler{
   display:flex;
   gap:7px;
   overflow:auto;
-  margin:12px 0;
+  margin:12px 0
 }
-
 .sekme{
   background:#0d1726;
   color:var(--soluk);
   border:1px solid var(--cizgi);
   border-radius:999px;
   white-space:nowrap;
-  padding:9px 12px;
+  padding:9px 12px
 }
-
-.sekme.aktif{
-  background:#19394d;
-  color:white;
-}
-
+.sekme.aktif{background:#19394d;color:#fff}
 .anaTahmin{
   display:grid;
   grid-template-columns:1fr auto;
   gap:10px;
   margin-top:12px;
   padding-top:12px;
-  border-top:1px solid var(--cizgi);
+  border-top:1px solid var(--cizgi)
 }
-
-.pazarAdi{
-  font-size:17px;
-  font-weight:900;
-}
-
-.buyukYuzde{
-  font-size:27px;
-  font-weight:900;
-}
-
+.pazarAdi{font-size:17px;font-weight:900}
+.buyukYuzde{font-size:27px;font-weight:900}
 .sinif{
   display:inline-block;
   margin-left:6px;
   border-radius:999px;
   padding:4px 8px;
   font-size:10px;
-  font-weight:900;
+  font-weight:900
 }
-
-.sinifAarti{
-  background:#104934;
-  color:#9cf4d0;
-}
-
-.sinifA{
-  background:#193d60;
-  color:#bbddff;
-}
-
-.sinifB{
-  background:#4a3817;
-  color:#ffe79c;
-}
-
-.sinifOynama{
-  background:#41242f;
-  color:#ffb9c6;
-}
-
+.sinifAarti{background:#104934;color:#9cf4d0}
+.sinifA{background:#193d60;color:#bbddff}
+.sinifB{background:#4a3817;color:#ffe79c}
+.sinifOynama{background:#41242f;color:#ffb9c6}
 .metrikler{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:7px;
-  margin-top:10px;
+  margin-top:10px
 }
-
 .metrik{
   background:#0b1523;
   border:1px solid #213149;
   border-radius:11px;
-  padding:9px;
+  padding:9px
 }
-
 .metrik small{
   display:block;
   color:var(--soluk);
   font-size:9px;
-  margin-bottom:3px;
+  margin-bottom:3px
 }
-
-.metrik b{
-  font-size:14px;
-}
-
+.metrik b{font-size:14px}
 .bolum{
   margin-top:12px;
   padding-top:11px;
-  border-top:1px solid var(--cizgi);
+  border-top:1px solid var(--cizgi)
 }
-
 .bolumBaslik{
   font-size:11px;
   font-weight:900;
   color:#bed0e6;
-  margin-bottom:7px;
+  margin-bottom:7px
 }
-
 .aciklama{
   font-size:12px;
   line-height:1.6;
-  color:#bdc9da;
+  color:#bdc9da
 }
-
 .cubuk{
   height:6px;
   background:#07101d;
   border-radius:999px;
   overflow:hidden;
-  margin-top:6px;
+  margin-top:6px
 }
-
-.cubukDolgu{
-  height:100%;
-  background:var(--yesil);
-}
-
+.cubukDolgu{height:100%;background:var(--yesil)}
 .kaynak{
   display:inline-block;
   margin-top:9px;
@@ -292,73 +160,59 @@ button{
   color:#9ac7e9;
   border-radius:999px;
   padding:5px 8px;
-  font-size:9px;
+  font-size:9px
 }
-
 .oranAlanlari{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:8px;
-  margin-top:8px;
+  margin-top:8px
 }
-
 .oranKarti{
   background:#091521;
   border:1px solid #26364d;
   border-radius:12px;
-  padding:10px;
+  padding:10px
 }
-
 .oranKarti label{
   display:block;
   color:var(--soluk);
   font-size:10px;
-  margin-bottom:6px;
+  margin-bottom:6px
 }
-
-select,
-input[type="number"]{
+select,input[type="number"]{
   width:100%;
   padding:10px;
   background:#07101d;
   border:1px solid #31425d;
   border-radius:10px;
   color:white;
-  font-size:16px;
+  font-size:16px
 }
-
 .oranVeKupon{
   display:grid;
   grid-template-columns:1fr auto;
   align-items:center;
   gap:8px;
-  margin-top:7px;
+  margin-top:7px
 }
-
 .oranVeKupon input[type="checkbox"]{
   width:22px;
-  height:22px;
+  height:22px
 }
-
 .oranSonucu{
   margin-top:8px;
   font-size:11px;
   line-height:1.55;
-  color:#bdc9da;
+  color:#bdc9da
 }
-
 .oranGecmisi{
   margin-top:8px;
   padding-top:7px;
   border-top:1px dashed #26364d;
   font-size:10px;
-  color:var(--soluk);
+  color:var(--soluk)
 }
-
-.pazarSecici{
-  margin-top:7px;
-}
-
 .kuponPanel{
   position:fixed;
   left:0;
@@ -368,68 +222,41 @@ input[type="number"]{
   background:rgba(7,16,29,.97);
   backdrop-filter:blur(18px);
   border-top:1px solid #30415a;
-  padding:
-    10px
-    12px
-    calc(10px + env(safe-area-inset-bottom));
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom))
 }
-
-.kuponIc{
-  max-width:850px;
-  margin:auto;
-}
-
+.kuponIc{max-width:850px;margin:auto}
 .kuponOzet{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:6px;
-  margin-top:8px;
+  margin-top:8px
 }
-
-.kuponOzet .metrik{
-  text-align:center;
-}
-
+.kuponOzet .metrik{text-align:center}
 .kuponAyrinti{
   max-height:240px;
   overflow:auto;
-  margin-top:8px;
+  margin-top:8px
 }
-
 .kuponAyagi{
   border-top:1px solid #223149;
   padding:8px 0;
-  font-size:11px;
+  font-size:11px
 }
-
 .kuponButonlari{
   display:flex;
   gap:7px;
-  margin-top:9px;
+  margin-top:9px
 }
-
-.kuponButonlari button{
-  flex:1;
-}
-
+.kuponButonlari button{flex:1}
 .bosMesaj{
   text-align:center;
   padding:35px 10px;
-  color:var(--soluk);
+  color:var(--soluk)
 }
-
-.gizli{
-  display:none;
-}
-
+.gizli{display:none}
 @media(max-width:520px){
-  .oranAlanlari{
-    grid-template-columns:1fr;
-  }
-
-  .kuponOzet{
-    grid-template-columns:repeat(2,1fr);
-  }
+  .oranAlanlari{grid-template-columns:1fr}
+  .kuponOzet{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -439,897 +266,320 @@ input[type="number"]{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-
-<p class="altBaslik">
-Futbol Karar Motoru • V1.4
-</p>
-
+<p class="altBaslik">Futbol Karar Motoru • V1.5</p>
 
 <section class="kart">
-
   <div class="ustSatir">
-
     <div>
-
-      <b>
-        Veri Sistemi
-      </b>
-
-      <div class="durum">
-        Güncel fikstür + iki sezonluk geçmiş maç motoru
-      </div>
-
+      <b>Veri Sistemi</b>
+      <div class="durum">Güncel fikstür + iki sezonluk geçmiş maç motoru</div>
     </div>
-
-    <div class="iyi">
-      ✓ Hazır
-    </div>
-
+    <div class="iyi">✓ Hazır</div>
   </div>
-
 </section>
-
 
 <section class="kart">
-
   <div class="ustSatir">
-
     <div>
-
-      <div class="lig">
-        BUGÜN
-      </div>
-
-      <div
-        id="bugun"
-        style="font-size:19px;font-weight:900">
-      </div>
-
+      <div class="lig">BUGÜN</div>
+      <div id="bugun" style="font-size:19px;font-weight:900"></div>
     </div>
-
-    <button
-      class="birincil"
-      onclick="tara(true)">
-
-      Tara ve Analiz Et
-
-    </button>
-
+    <button class="birincil" onclick="tara(true)">Tara ve Analiz Et</button>
   </div>
-
-  <div
-    id="taramaDurumu"
-    class="durum"
-    style="margin-top:10px">
-
-    Hazır.
-
-  </div>
-
+  <div id="taramaDurumu" class="durum" style="margin-top:10px">Hazır.</div>
 </section>
-
 
 <section class="istatistikler">
-
   <div class="kart istatistik">
     <b id="macSayisi">0</b>
     <small>MAÇ</small>
   </div>
-
   <div class="kart istatistik">
     <b id="gucluSayisi">0</b>
     <small>A / A+</small>
   </div>
-
   <div class="kart istatistik">
     <b id="oynamaSayisi">0</b>
     <small>OYNAMA</small>
   </div>
-
   <div class="kart istatistik">
     <b id="apiSayisi">0</b>
     <small>API</small>
   </div>
-
 </section>
 
-
 <div class="sekmeler">
-
-  <button
-    class="sekme aktif"
-    data-sekme="guclu">
-
-    En Güçlüler
-
-  </button>
-
-  <button
-    class="sekme"
-    data-sekme="tum">
-
-    Tüm Maçlar
-
-  </button>
-
-  <button
-    class="sekme"
-    data-sekme="kuponlar">
-
-    Kupon Geçmişi
-
-  </button>
-
+  <button class="sekme aktif" data-sekme="guclu">En Güçlüler</button>
+  <button class="sekme" data-sekme="tum">Tüm Maçlar</button>
+  <button class="sekme" data-sekme="kuponlar">Kupon Geçmişi</button>
 </div>
-
 
 <div id="icerik"></div>
 
 </main>
 
-
-<section
-  id="kuponPanel"
-  class="kuponPanel gizli">
-
+<section id="kuponPanel" class="kuponPanel gizli">
   <div class="kuponIc">
 
     <div class="ustSatir">
-
       <div>
-
-        <b>
-          🎟️ Aktif Kupon
-        </b>
-
-        <div
-          id="kuponSecimSayisi"
-          class="durum">
-        </div>
-
+        <b>🎟️ Aktif Kupon</b>
+        <div id="kuponSecimSayisi" class="durum"></div>
       </div>
-
-      <button
-        class="ikincil"
-        onclick="kuponAyrintiAcKapat()">
-
-        Ayrıntı
-
-      </button>
-
+      <button class="ikincil" onclick="kuponAyrintiAcKapat()">Ayrıntı</button>
     </div>
-
 
     <div class="kuponOzet">
-
       <div class="metrik">
-
-        <small>
-          Toplam Oran
-        </small>
-
-        <b id="toplamOran">
-          1.00
-        </b>
-
+        <small>Toplam Oran</small>
+        <b id="toplamOran">1.00</b>
       </div>
-
-
       <div class="metrik">
-
-        <small>
-          Ortalama Güven
-        </small>
-
-        <b id="ortalamaGuven">
-          —
-        </b>
-
+        <small>Ortalama Güven</small>
+        <b id="ortalamaGuven">—</b>
       </div>
-
-
       <div class="metrik">
-
-        <small>
-          En Düşük Güven
-        </small>
-
-        <b id="enDusukGuven">
-          —
-        </b>
-
+        <small>En Düşük Güven</small>
+        <b id="enDusukGuven">—</b>
       </div>
-
-
       <div class="metrik">
-
-        <small>
-          Birleşik Olasılık
-        </small>
-
-        <b id="birlesikOlasilik">
-          —
-        </b>
-
+        <small>Birleşik Olasılık</small>
+        <b id="birlesikOlasilik">—</b>
       </div>
-
     </div>
 
+    <div id="kuponAyrinti" class="gizli">
 
-    <div
-      id="kuponAyrinti"
-      class="gizli">
-
-      <div
-        id="kuponAyaklari"
-        class="kuponAyrinti">
-      </div>
-
+      <div id="kuponAyaklari" class="kuponAyrinti"></div>
 
       <div class="oranAlanlari">
-
         <div class="oranKarti">
-
-          <label>
-            Mevcut Kasa
-          </label>
-
-          <input
-            id="kasa"
-            type="number"
-            inputmode="decimal"
-            placeholder="1000">
-
+          <label>Mevcut Kasa</label>
+          <input id="kasa" type="number" inputmode="decimal" placeholder="1000">
         </div>
-
-
         <div class="oranKarti">
-
-          <label>
-            Yatırılacak Tutar
-          </label>
-
-          <input
-            id="yatirilan"
-            type="number"
-            inputmode="decimal"
-            placeholder="1000"
-            oninput="kuponuGuncelle()">
-
+          <label>Yatırılacak Tutar</label>
+          <input id="yatirilan" type="number" inputmode="decimal" placeholder="1000" oninput="kuponuGuncelle()">
         </div>
-
       </div>
-
 
       <div class="kart" style="margin-top:8px">
-
-        <small class="durum">
-          Potansiyel Dönüş
-        </small>
-
-        <div
-          id="potansiyelDonus"
-          style="font-size:23px;font-weight:900">
-
-          0 TL
-
-        </div>
-
+        <small class="durum">Potansiyel Dönüş</small>
+        <div id="potansiyelDonus" style="font-size:23px;font-weight:900">0 TL</div>
       </div>
 
-
       <div class="kuponButonlari">
-
-        <button
-          class="birincil"
-          onclick="kuponuKaydet()">
-
-          Kuponu Kaydet
-
-        </button>
-
-        <button
-          class="silButonu"
-          onclick="kuponuTemizle()">
-
-          Temizle
-
-        </button>
-
+        <button class="birincil" onclick="kuponuKaydet()">Kuponu Kaydet</button>
+        <button class="tehlike" onclick="kuponuTemizle()">Temizle</button>
       </div>
 
     </div>
-
   </div>
-
 </section>
-
 
 <script>
 
-const API =
-  "https://v3.football.api-sports.io";
-
+const API = "https://v3.football.api-sports.io";
 
 const DESTEKLENEN_LIGLER = {
-
-  39:{
-    ad:"Premier League",
-    veri:"premierleague"
-  },
-
-  40:{
-    ad:"Championship",
-    veri:"championship"
-  },
-
-  78:{
-    ad:"Bundesliga",
-    veri:"bundesliga"
-  },
-
-  135:{
-    ad:"Serie A",
-    veri:"seriea"
-  },
-
-  140:{
-    ad:"La Liga",
-    veri:"laliga"
-  },
-
-  61:{
-    ad:"Ligue 1",
-    veri:"ligue1"
-  },
-
-  88:{
-    ad:"Eredivisie",
-    veri:"eredivisie"
-  },
-
-  89:{
-    ad:"Eerste Divisie",
-    veri:null
-  },
-
-  203:{
-    ad:"Süper Lig",
-    veri:null
-  },
-
-  204:{
-    ad:"Türkiye 1. Lig",
-    veri:null
-  },
-
-  144:{
-    ad:"Belçika Ligi",
-    veri:null
-  },
-
-  2:{
-    ad:"Şampiyonlar Ligi",
-    veri:null
-  },
-
-  3:{
-    ad:"Avrupa Ligi",
-    veri:null
-  },
-
-  848:{
-    ad:"Konferans Ligi",
-    veri:null
-  }
-
+  39:{ad:"Premier League",veri:"premierleague"},
+  40:{ad:"Championship",veri:"championship"},
+  78:{ad:"Bundesliga",veri:"bundesliga"},
+  135:{ad:"Serie A",veri:"seriea"},
+  140:{ad:"La Liga",veri:"laliga"},
+  61:{ad:"Ligue 1",veri:"ligue1"},
+  88:{ad:"Eredivisie",veri:"eredivisie"},
+  89:{ad:"Eerste Divisie",veri:null},
+  203:{ad:"Süper Lig",veri:"superlig"},
+  204:{ad:"Türkiye 1. Lig",veri:null},
+  144:{ad:"Belçika Ligi",veri:"belcika"},
+  2:{ad:"Şampiyonlar Ligi",veri:null},
+  3:{ad:"Avrupa Ligi",veri:null},
+  848:{ad:"Konferans Ligi",veri:null}
 };
 
-
 let durum = {
-
   analizler:[],
   sekme:"guclu",
   apiSayisi:0,
   kupon:[]
-
 };
 
-
-const $ =
-  secici =>
-    document.querySelector(secici);
-
+const $ = secici => document.querySelector(secici);
 
 function apiAnahtari(){
-
-  return localStorage.getItem(
-    "goalgrid_api_key"
-  ) || "";
-
+  return localStorage.getItem("goalgrid_api_key") || "";
 }
-
 
 async function api(path){
-
   durum.apiSayisi++;
+  $("#apiSayisi").textContent = durum.apiSayisi;
 
-  $("#apiSayisi").textContent =
-    durum.apiSayisi;
+  const cevap = await fetch(API + path,{
+    headers:{
+      "x-apisports-key":apiAnahtari()
+    }
+  });
 
+  const veri = await cevap.json();
 
-  const cevap =
-    await fetch(
-      API + path,
-      {
-        headers:{
-          "x-apisports-key":
-            apiAnahtari()
-        }
-      }
-    );
-
-
-  const veri =
-    await cevap.json();
-
-
-  if(
-    veri.errors &&
-    Object.keys(
-      veri.errors
-    ).length
-  ){
-
-    throw new Error(
-      JSON.stringify(
-        veri.errors
-      )
-    );
-
+  if(veri.errors && Object.keys(veri.errors).length){
+    throw new Error(JSON.stringify(veri.errors));
   }
-
 
   return veri.response || [];
-
 }
-
 
 function bugununTarihi(){
-
-  return new Intl.DateTimeFormat(
-    "en-CA",
-    {
-      timeZone:"Europe/Istanbul",
-      year:"numeric",
-      month:"2-digit",
-      day:"2-digit"
-    }
-  ).format(
-    new Date()
-  );
-
+  return new Intl.DateTimeFormat("en-CA",{
+    timeZone:"Europe/Istanbul",
+    year:"numeric",
+    month:"2-digit",
+    day:"2-digit"
+  }).format(new Date());
 }
-
 
 async function ligVerisiAl(lig){
-
-  const onbellekAnahtari =
-    "gg_openfootball_"
-    + lig;
-
-
-  const eski =
-    localStorage.getItem(
-      onbellekAnahtari
-    );
-
+  const anahtar = "goalgrid_lig_v15_" + lig;
+  const eski = localStorage.getItem(anahtar);
 
   if(eski){
-
     try{
-
-      const kayit =
-        JSON.parse(eski);
-
-
-      if(
-        Date.now() -
-        kayit.zaman
-        <
-        30 * 60 * 1000
-      ){
-
-        return kayit.veri;
-
+      const kayit = JSON.parse(eski);
+      if(Date.now() - kayit.zaman < 30*60*1000){
+        return kayit.maclar;
       }
-
     }catch{}
-
   }
 
-
-  const cevap =
-    await fetch(
-      `/data?league=${encodeURIComponent(lig)}`
-    );
-
+  const cevap = await fetch(`/data?league=${encodeURIComponent(lig)}`);
 
   if(!cevap.ok){
-
-    throw new Error(
-      `Lig verisi alınamadı (${cevap.status})`
-    );
-
+    throw new Error(`Lig verisi alınamadı (${cevap.status})`);
   }
 
+  const veri = await cevap.json();
 
-  const json =
-    await cevap.json();
-
-
-  if(
-    !json.ok
-  ){
-
-    throw new Error(
-      json.hata ||
-      "Lig verisi alınamadı."
-    );
-
+  if(!veri.ok){
+    throw new Error(veri.hata || "Lig verisi alınamadı");
   }
 
+  const maclar = Array.isArray(veri.maclar) ? veri.maclar : [];
 
-  const maclar =
-    Array.isArray(json.maclar)
-    ? json.maclar
-    : [];
-
-
-  localStorage.setItem(
-    onbellekAnahtari,
-    JSON.stringify({
-      zaman:
-        Date.now(),
-
-      veri:
-        maclar
-    })
-  );
-
+  localStorage.setItem(anahtar,JSON.stringify({
+    zaman:Date.now(),
+    maclar
+  }));
 
   return maclar;
-
 }
-
 
 function norm(deger){
-
-  return String(
-    deger || ""
-  )
-  .toLocaleLowerCase("tr")
-  .normalize("NFD")
-  .replace(
-    /[\u0300-\u036f]/g,
-    ""
-  )
-  .replace(
-    /[^a-z0-9]/g,
-    ""
-  );
-
+  return String(deger||"")
+    .toLocaleLowerCase("tr")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9]/g,"");
 }
-
 
 const TAKIM_ESLESTIRME = {
-
-  cagliari:
-    "cagliaricalcio",
-
-  lecce:
-    "uslecce",
-
-  lazio:
-    "sslazio",
-
-  udinese:
-    "udinesecalcio",
-
-  inter:
-    "fcinternazionalemilano",
-
-  internazionale:
-    "fcinternazionalemilano",
-
-  napoli:
-    "sscnapoli",
-
-  roma:
-    "asroma",
-
-  atalanta:
-    "atalantabc",
-
-  milan:
-    "acmilan",
-
-  juventus:
-    "juventusfc",
-
-  fiorentina:
-    "acffiorentina",
-
-  bologna:
-    "bolognafc1909",
-
-  torino:
-    "torinofc",
-
-  parma:
-    "parmacalcio1913",
-
-  genoa:
-    "genoacfc",
-
-  como:
-    "como1907",
-
-  sassuolo:
-    "ussassuolocalcio",
-
-  getafe:
-    "getafecf",
-
-  celtavigo:
-    "rcceltadevigo",
-
-  realsociedad:
-    "realsociedad",
-
-  barcelona:
-    "fcbarcelona",
-
-  realmadrid:
-    "realmadridcf",
-
-  atleticoMadrid:
-    "atleticodemadrid",
-
-  atleticomadrid:
-    "atleticodemadrid",
-
-  manchesterunited:
-    "manchesterunitedfc",
-
-  manchestercity:
-    "manchestercityfc",
-
-  liverpool:
-    "liverpoolfc",
-
-  arsenal:
-    "arsenalfc",
-
-  chelsea:
-    "chelseafc",
-
-  tottenham:
-    "tottenhamhotspurfc",
-
-  bayernmunich:
-    "fcbayernmunchen",
-
-  bayernmunchen:
-    "fcbayernmunchen"
-
+  cagliari:"cagliaricalcio",
+  lecce:"uslecce",
+  lazio:"sslazio",
+  udinese:"udinesecalcio",
+  inter:"fcinternazionalemilano",
+  internazionale:"fcinternazionalemilano",
+  napoli:"sscnapoli",
+  roma:"asroma",
+  atalanta:"atalantabc",
+  milan:"acmilan",
+  juventus:"juventusfc",
+  fiorentina:"acffiorentina",
+  bologna:"bolognafc1909",
+  torino:"torinofc",
+  parma:"parmacalcio1913",
+  genoa:"genoacfc",
+  como:"como1907",
+  sassuolo:"ussassuolocalcio",
+  getafe:"getafecf",
+  celtavigo:"rcceltadevigo",
+  barcelona:"fcbarcelona",
+  realmadrid:"realmadridcf",
+  atleticomadrid:"atleticodemadrid",
+  manchesterunited:"manchesterunitedfc",
+  manchestercity:"manchestercityfc",
+  liverpool:"liverpoolfc",
+  arsenal:"arsenalfc",
+  chelsea:"chelseafc",
+  tottenham:"tottenhamhotspurfc",
+  bayernmunich:"fcbayernmunchen",
+  bayernmunchen:"fcbayernmunchen",
+  caykurrizespor:"rizespor",
+  gaziantepfk:"gaziantep",
+  istanbulbasaksehir:"basaksehir",
+  goztepe:"goztepe",
+  alanyaspor:"alanyaspor"
 };
 
-
 function takimAnahtari(ad){
-
-  const temiz =
-    norm(ad);
-
-
-  return(
-    TAKIM_ESLESTIRME[
-      temiz
-    ]
-    ||
-    temiz
-  );
-
+  const temiz = norm(ad);
+  return TAKIM_ESLESTIRME[temiz] || temiz;
 }
 
+function ayniTakim(a,b){
+  const x = takimAnahtari(a);
+  const y = takimAnahtari(b);
 
-function ayniTakim(
-  birinci,
-  ikinci
-){
-
-  const a =
-    takimAnahtari(
-      birinci
-    );
-
-
-  const b =
-    takimAnahtari(
-      ikinci
-    );
-
-
-  if(
-    !a ||
-    !b
-  ){
-
-    return false;
-
-  }
-
-
-  if(
-    a === b
-  ){
-
-    return true;
-
-  }
-
+  if(!x || !y) return false;
+  if(x===y) return true;
 
   return(
-    (
-      a.length >= 6
-      &&
-      b.includes(a)
-    )
+    (x.length>=6 && y.includes(x))
     ||
-    (
-      b.length >= 6
-      &&
-      a.includes(b)
-    )
+    (y.length>=6 && x.includes(y))
   );
-
 }
-
 
 function tamamlanmisMac(mac){
-
   return(
-    mac
-    &&
-    mac.score
-    &&
-    Array.isArray(
-      mac.score.ft
-    )
-    &&
-    mac.score.ft.length >= 2
-    &&
-    Number.isFinite(
-      Number(
-        mac.score.ft[0]
-      )
-    )
-    &&
-    Number.isFinite(
-      Number(
-        mac.score.ft[1]
-      )
-    )
+    mac &&
+    mac.score &&
+    Array.isArray(mac.score.ft) &&
+    mac.score.ft.length>=2 &&
+    Number.isFinite(Number(mac.score.ft[0])) &&
+    Number.isFinite(Number(mac.score.ft[1]))
   );
-
 }
-
 
 function macTarihi(mac){
+  return mac?.date || "0000-00-00";
+}
 
-  return(
-    mac?.date
-    ||
-    "0000-00-00"
+function sonMaclar(takim,tumMaclar,hedefTarih,saha=null){
+  let liste = tumMaclar.filter(mac =>
+    tamamlanmisMac(mac) &&
+    macTarihi(mac)<hedefTarih &&
+    (
+      ayniTakim(takim,mac.team1) ||
+      ayniTakim(takim,mac.team2)
+    )
   );
 
-}
-
-
-function sonMaclar(
-  takim,
-  tumMaclar,
-  hedefTarih,
-  saha=null
-){
-
-  let liste =
-    tumMaclar.filter(
-      mac =>
-
-        tamamlanmisMac(mac)
-
-        &&
-
-        macTarihi(mac) <
-        hedefTarih
-
-        &&
-
-        (
-          ayniTakim(
-            takim,
-            mac.team1
-          )
-
-          ||
-
-          ayniTakim(
-            takim,
-            mac.team2
-          )
-        )
-
-    );
-
-
-  if(
-    saha === "ic"
-  ){
-
-    liste =
-      liste.filter(
-        mac =>
-          ayniTakim(
-            takim,
-            mac.team1
-          )
-      );
-
+  if(saha==="ic"){
+    liste=liste.filter(mac=>ayniTakim(takim,mac.team1));
   }
 
-
-  if(
-    saha === "dis"
-  ){
-
-    liste =
-      liste.filter(
-        mac =>
-          ayniTakim(
-            takim,
-            mac.team2
-          )
-      );
-
+  if(saha==="dis"){
+    liste=liste.filter(mac=>ayniTakim(takim,mac.team2));
   }
-
 
   return liste
-    .sort(
-      (a,b) =>
-        macTarihi(b)
-        .localeCompare(
-          macTarihi(a)
-        )
-    )
-    .slice(
-      0,
-      10
-    );
-
+    .sort((a,b)=>macTarihi(b).localeCompare(macTarihi(a)))
+    .slice(0,10);
 }
 
-
-function formHesapla(
-  takim,
-  maclar
-){
-
-  if(
-    !maclar.length
-  ){
-
+function formHesapla(takim,maclar){
+  if(!maclar.length){
     return{
       adet:0,
       attigi:0,
@@ -1345,15 +595,12 @@ function formHesapla(
       maglubiyet:0,
       golYememe:0
     };
-
   }
-
 
   let attigi=0;
   let yedigi=0;
   let puan=0;
   let agirlikToplam=0;
-
   let kgVar=0;
   let ust15=0;
   let ust25=0;
@@ -1361,3177 +608,1144 @@ function formHesapla(
   let beraberlik=0;
   let maglubiyet=0;
   let golYememe=0;
-
   const toplamGoller=[];
 
+  maclar.forEach((mac,index)=>{
+    const ev=ayniTakim(takim,mac.team1);
+    const skor=mac.score.ft;
+    const atti=ev?Number(skor[0]):Number(skor[1]);
+    const yedi=ev?Number(skor[1]):Number(skor[0]);
+    const agirlik=Math.pow(.90,index);
 
-  maclar.forEach(
-    (mac,index) => {
+    attigi+=atti*agirlik;
+    yedigi+=yedi*agirlik;
 
-      const ev =
-        ayniTakim(
-          takim,
-          mac.team1
-        );
-
-
-      const skor =
-        mac.score.ft;
-
-
-      const atti =
-        ev
-        ? Number(skor[0])
-        : Number(skor[1]);
-
-
-      const yedi =
-        ev
-        ? Number(skor[1])
-        : Number(skor[0]);
-
-
-      const agirlik =
-        Math.pow(
-          .90,
-          index
-        );
-
-
-      attigi +=
-        atti *
-        agirlik;
-
-
-      yedigi +=
-        yedi *
-        agirlik;
-
-
-      if(
-        atti > yedi
-      ){
-
-        puan +=
-          3 *
-          agirlik;
-
-        galibiyet++;
-
-      }else if(
-        atti === yedi
-      ){
-
-        puan +=
-          1 *
-          agirlik;
-
-        beraberlik++;
-
-      }else{
-
-        maglubiyet++;
-
-      }
-
-
-      agirlikToplam +=
-        agirlik;
-
-
-      if(
-        atti > 0
-        &&
-        yedi > 0
-      ){
-
-        kgVar++;
-
-      }
-
-
-      if(
-        atti + yedi >= 2
-      ){
-
-        ust15++;
-
-      }
-
-
-      if(
-        atti + yedi >= 3
-      ){
-
-        ust25++;
-
-      }
-
-
-      if(
-        yedi === 0
-      ){
-
-        golYememe++;
-
-      }
-
-
-      toplamGoller.push(
-        atti +
-        yedi
-      );
-
+    if(atti>yedi){
+      puan+=3*agirlik;
+      galibiyet++;
+    }else if(atti===yedi){
+      puan+=1*agirlik;
+      beraberlik++;
+    }else{
+      maglubiyet++;
     }
-  );
 
+    agirlikToplam+=agirlik;
 
-  const golOrt =
-    toplamGoller.reduce(
-      (a,b)=>a+b,
-      0
-    )
-    /
-    toplamGoller.length;
+    if(atti>0 && yedi>0) kgVar++;
+    if(atti+yedi>=2) ust15++;
+    if(atti+yedi>=3) ust25++;
+    if(yedi===0) golYememe++;
 
+    toplamGoller.push(atti+yedi);
+  });
 
-  const varyans =
-    toplamGoller.reduce(
-      (toplam,deger) =>
-        toplam
-        +
-        Math.pow(
-          deger -
-          golOrt,
-          2
-        ),
-      0
-    )
-    /
-    toplamGoller.length;
+  const golOrt=toplamGoller.reduce((a,b)=>a+b,0)/toplamGoller.length;
 
+  const varyans=toplamGoller.reduce(
+    (toplam,deger)=>toplam+Math.pow(deger-golOrt,2),
+    0
+  )/toplamGoller.length;
 
   return{
-
-    adet:
-      maclar.length,
-
-    attigi:
-      attigi /
-      agirlikToplam,
-
-    yedigi:
-      yedigi /
-      agirlikToplam,
-
-    puanOrt:
-      puan /
-      agirlikToplam,
-
-    kgVar:
-      kgVar /
-      maclar.length,
-
-    ust15:
-      ust15 /
-      maclar.length,
-
-    ust25:
-      ust25 /
-      maclar.length,
-
+    adet:maclar.length,
+    attigi:attigi/agirlikToplam,
+    yedigi:yedigi/agirlikToplam,
+    puanOrt:puan/agirlikToplam,
+    kgVar:kgVar/maclar.length,
+    ust15:ust15/maclar.length,
+    ust25:ust25/maclar.length,
     golOrt,
-
-    oynaklik:
-      varyans,
-
+    oynaklik:varyans,
     galibiyet,
-
     beraberlik,
-
     maglubiyet,
-
-    golYememe:
-      golYememe /
-      maclar.length
-
+    golYememe:golYememe/maclar.length
   };
-
 }
 
-
-function poisson(
-  gol,
-  beklenen
-){
-
+function poisson(gol,beklenen){
   let faktoriyel=1;
-
-
-  for(
-    let i=2;
-    i<=gol;
-    i++
-  ){
-
-    faktoriyel *= i;
-
-  }
-
-
-  return(
-    Math.exp(
-      -beklenen
-    )
-    *
-    Math.pow(
-      beklenen,
-      gol
-    )
-    /
-    faktoriyel
-  );
-
+  for(let i=2;i<=gol;i++) faktoriyel*=i;
+  return Math.exp(-beklenen)*Math.pow(beklenen,gol)/faktoriyel;
 }
 
+function pazarModeli(evBeklenen,depBeklenen){
+  let ev=0,beraberlik=0,dep=0,kgVar=0,ust15=0,ust25=0,ust35=0;
 
-function pazarModeli(
-  evBeklenen,
-  depBeklenen
-){
+  for(let eg=0;eg<=8;eg++){
+    for(let dg=0;dg<=8;dg++){
+      const p=poisson(eg,evBeklenen)*poisson(dg,depBeklenen);
 
-  let ev=0;
-  let beraberlik=0;
-  let dep=0;
+      if(eg>dg) ev+=p;
+      else if(eg===dg) beraberlik+=p;
+      else dep+=p;
 
-  let kgVar=0;
-  let ust15=0;
-  let ust25=0;
-  let ust35=0;
-
-
-  for(
-    let eg=0;
-    eg<=8;
-    eg++
-  ){
-
-    for(
-      let dg=0;
-      dg<=8;
-      dg++
-    ){
-
-      const olasilik =
-        poisson(
-          eg,
-          evBeklenen
-        )
-        *
-        poisson(
-          dg,
-          depBeklenen
-        );
-
-
-      if(
-        eg > dg
-      ){
-
-        ev += olasilik;
-
-      }else if(
-        eg === dg
-      ){
-
-        beraberlik +=
-          olasilik;
-
-      }else{
-
-        dep +=
-          olasilik;
-
-      }
-
-
-      if(
-        eg > 0
-        &&
-        dg > 0
-      ){
-
-        kgVar +=
-          olasilik;
-
-      }
-
-
-      if(
-        eg + dg >= 2
-      ){
-
-        ust15 +=
-          olasilik;
-
-      }
-
-
-      if(
-        eg + dg >= 3
-      ){
-
-        ust25 +=
-          olasilik;
-
-      }
-
-
-      if(
-        eg + dg >= 4
-      ){
-
-        ust35 +=
-          olasilik;
-
-      }
-
+      if(eg>0 && dg>0) kgVar+=p;
+      if(eg+dg>=2) ust15+=p;
+      if(eg+dg>=3) ust25+=p;
+      if(eg+dg>=4) ust35+=p;
     }
-
   }
 
-
-  return{
-    ev,
-    beraberlik,
-    dep,
-    kgVar,
-    ust15,
-    ust25,
-    ust35
-  };
-
+  return{ev,beraberlik,dep,kgVar,ust15,ust25,ust35};
 }
 
-
-function karistir(
-  model,
-  gecmis,
-  modelAgirligi=.70
-){
-
-  return(
-    model *
-    modelAgirligi
-    +
-    gecmis *
-    (
-      1-modelAgirligi
-    )
-  );
-
+function karistir(model,gecmis,modelAgirligi=.70){
+  return model*modelAgirligi + gecmis*(1-modelAgirligi);
 }
 
+function veriKalitesi(evAdet,depAdet){
+  const adet=Math.min(evAdet,depAdet);
 
-function veriKalitesi(
-  evAdet,
-  depAdet
-){
-
-  const adet =
-    Math.min(
-      evAdet,
-      depAdet
-    );
-
-
-  if(
-    adet >= 10
-  ) return 100;
-
-  if(
-    adet >= 8
-  ) return 90;
-
-  if(
-    adet >= 6
-  ) return 80;
-
-  if(
-    adet >= 5
-  ) return 72;
-
-  if(
-    adet >= 4
-  ) return 62;
-
-  if(
-    adet >= 3
-  ) return 50;
-
-  if(
-    adet >= 2
-  ) return 38;
-
+  if(adet>=10) return 100;
+  if(adet>=8) return 90;
+  if(adet>=6) return 80;
+  if(adet>=5) return 72;
+  if(adet>=4) return 62;
+  if(adet>=3) return 50;
+  if(adet>=2) return 38;
   return 10;
-
 }
 
+function sinifVer(puan,veriPuani,anaOlasilik){
+  if(veriPuani<45) return["OYNAMA","sinifOynama"];
 
-function sinifVer(
-  puan,
-  veriPuani
-){
-
-  if(
-    veriPuani < 45
-  ){
-
-    return[
-      "OYNAMA",
-      "sinifOynama"
-    ];
-
+  if(anaOlasilik>=.80 && puan>=88){
+    return["A+","sinifAarti"];
   }
 
-
-  if(
-    puan >= 88
-  ){
-
-    return[
-      "A+",
-      "sinifAarti"
-    ];
-
+  if(anaOlasilik>=.73 && puan>=82){
+    return["A","sinifA"];
   }
 
-
-  if(
-    puan >= 81
-  ){
-
-    return[
-      "A",
-      "sinifA"
-    ];
-
+  if(anaOlasilik>=.66 && puan>=74){
+    return["B","sinifB"];
   }
 
-
-  if(
-    puan >= 72
-  ){
-
-    return[
-      "B",
-      "sinifB"
-    ];
-
-  }
-
-
-  return[
-    "OYNAMA",
-    "sinifOynama"
-  ];
-
+  return["OYNAMA","sinifOynama"];
 }
 
+function analizEt(fikstur,macHavuzu){
+  const ev=fikstur.teams.home.name;
+  const dep=fikstur.teams.away.name;
+  const tarih=fikstur.fixture.date.slice(0,10);
 
-function analizEt(
-  fikstur,
-  macHavuzu
-){
+  const evSon=sonMaclar(ev,macHavuzu,tarih);
+  const depSon=sonMaclar(dep,macHavuzu,tarih);
+  const evIc=sonMaclar(ev,macHavuzu,tarih,"ic");
+  const depDis=sonMaclar(dep,macHavuzu,tarih,"dis");
 
-  const ev =
-    fikstur.teams.home.name;
+  const evForm=formHesapla(ev,evSon);
+  const depForm=formHesapla(dep,depSon);
+  const evIcForm=formHesapla(ev,evIc);
+  const depDisForm=formHesapla(dep,depDis);
 
+  const veriPuani=veriKalitesi(evForm.adet,depForm.adet);
 
-  const dep =
-    fikstur.teams.away.name;
-
-
-  const tarih =
-    fikstur.fixture.date
-    .slice(
-      0,
-      10
-    );
-
-
-  const evSon =
-    sonMaclar(
-      ev,
-      macHavuzu,
-      tarih
-    );
-
-
-  const depSon =
-    sonMaclar(
-      dep,
-      macHavuzu,
-      tarih
-    );
-
-
-  const evIc =
-    sonMaclar(
-      ev,
-      macHavuzu,
-      tarih,
-      "ic"
-    );
-
-
-  const depDis =
-    sonMaclar(
-      dep,
-      macHavuzu,
-      tarih,
-      "dis"
-    );
-
-
-  const evForm =
-    formHesapla(
-      ev,
-      evSon
-    );
-
-
-  const depForm =
-    formHesapla(
-      dep,
-      depSon
-    );
-
-
-  const evIcForm =
-    formHesapla(
-      ev,
-      evIc
-    );
-
-
-  const depDisForm =
-    formHesapla(
-      dep,
-      depDis
-    );
-
-
-  const veriPuani =
-    veriKalitesi(
-      evForm.adet,
-      depForm.adet
-    );
-
-
-  if(
-    evForm.adet < 2
-    ||
-    depForm.adet < 2
-  ){
-
+  if(evForm.adet<2 || depForm.adet<2){
     return{
-
       fikstur,
-
-      sinif:
-        "OYNAMA",
-
-      sinifCss:
-        "sinifOynama",
-
-      anaPazar:
-        "VERİ YETERSİZ",
-
-      anaOlasilik:
-        0,
-
-      puan:
-        0,
-
+      sinif:"OYNAMA",
+      sinifCss:"sinifOynama",
+      anaPazar:"VERİ YETERSİZ",
+      anaOlasilik:0,
+      puan:0,
       veriPuani,
-
-      neden:
-        "Takımlardan biri için yeterli geçmiş maç bulunamadı.",
-
-      kaynak:
-        "OpenFootball",
-
+      neden:"Takımlardan biri için yeterli geçmiş maç bulunamadı.",
+      kaynak:"OpenFootball",
       evForm:null,
       depForm:null
-
     };
-
   }
 
+  const evAtak=evIcForm.adet>=3
+    ?karistir(evIcForm.attigi,evForm.attigi,.62)
+    :evForm.attigi;
 
-  const evAtak =
-    evIcForm.adet >= 3
-    ? karistir(
-        evIcForm.attigi,
-        evForm.attigi,
-        .62
-      )
-    : evForm.attigi;
+  const evSavunma=evIcForm.adet>=3
+    ?karistir(evIcForm.yedigi,evForm.yedigi,.62)
+    :evForm.yedigi;
 
+  const depAtak=depDisForm.adet>=3
+    ?karistir(depDisForm.attigi,depForm.attigi,.62)
+    :depForm.attigi;
 
-  const evSavunma =
-    evIcForm.adet >= 3
-    ? karistir(
-        evIcForm.yedigi,
-        evForm.yedigi,
-        .62
-      )
-    : evForm.yedigi;
+  const depSavunma=depDisForm.adet>=3
+    ?karistir(depDisForm.yedigi,depForm.yedigi,.62)
+    :depForm.yedigi;
 
+  let evBeklenen=.48*evAtak + .34*depSavunma + .18*1.38;
+  let depBeklenen=.48*depAtak + .34*evSavunma + .18*1.15;
 
-  const depAtak =
-    depDisForm.adet >= 3
-    ? karistir(
-        depDisForm.attigi,
-        depForm.attigi,
-        .62
-      )
-    : depForm.attigi;
+  evBeklenen=Math.max(.25,Math.min(3.6,evBeklenen));
+  depBeklenen=Math.max(.20,Math.min(3.4,depBeklenen));
 
+  const poissonSonuc=pazarModeli(evBeklenen,depBeklenen);
 
-  const depSavunma =
-    depDisForm.adet >= 3
-    ? karistir(
-        depDisForm.yedigi,
-        depForm.yedigi,
-        .62
-      )
-    : depForm.yedigi;
-
-
-  let evBeklenen =
-    .48 *
-    evAtak
-
-    +
-
-    .34 *
-    depSavunma
-
-    +
-
-    .18 *
-    1.38;
-
-
-  let depBeklenen =
-    .48 *
-    depAtak
-
-    +
-
-    .34 *
-    evSavunma
-
-    +
-
-    .18 *
-    1.15;
-
-
-  evBeklenen =
-    Math.max(
-      .25,
-      Math.min(
-        3.6,
-        evBeklenen
-      )
-    );
-
-
-  depBeklenen =
-    Math.max(
-      .20,
-      Math.min(
-        3.4,
-        depBeklenen
-      )
-    );
-
-
-  const poissonSonuc =
-    pazarModeli(
-      evBeklenen,
-      depBeklenen
-    );
-
-
-  const tarihsel = {
-
-    kgVar:
-      (
-        evForm.kgVar
-        +
-        depForm.kgVar
-      )
-      /
-      2,
-
-    ust15:
-      (
-        evForm.ust15
-        +
-        depForm.ust15
-      )
-      /
-      2,
-
-    ust25:
-      (
-        evForm.ust25
-        +
-        depForm.ust25
-      )
-      /
-      2
-
+  const tarihsel={
+    kgVar:(evForm.kgVar+depForm.kgVar)/2,
+    ust15:(evForm.ust15+depForm.ust15)/2,
+    ust25:(evForm.ust25+depForm.ust25)/2
   };
 
-
-  const pazarlar = {
-
-    "1.5 Üst":
-      karistir(
-        poissonSonuc.ust15,
-        tarihsel.ust15
-      ),
-
-    "2.5 Üst":
-      karistir(
-        poissonSonuc.ust25,
-        tarihsel.ust25
-      ),
-
-    "KG Var":
-      karistir(
-        poissonSonuc.kgVar,
-        tarihsel.kgVar
-      ),
-
-    "1X":
-      poissonSonuc.ev
-      +
-      poissonSonuc.beraberlik,
-
-    "X2":
-      poissonSonuc.dep
-      +
-      poissonSonuc.beraberlik,
-
-    "Ev Sahibi":
-      poissonSonuc.ev,
-
-    "Beraberlik":
-      poissonSonuc.beraberlik,
-
-    "Deplasman":
-      poissonSonuc.dep,
-
-    "3.5 Üst":
-      poissonSonuc.ust35
-
+  const pazarlar={
+    "1.5 Üst":karistir(poissonSonuc.ust15,tarihsel.ust15),
+    "2.5 Üst":karistir(poissonSonuc.ust25,tarihsel.ust25),
+    "KG Var":karistir(poissonSonuc.kgVar,tarihsel.kgVar),
+    "1X":poissonSonuc.ev+poissonSonuc.beraberlik,
+    "X2":poissonSonuc.dep+poissonSonuc.beraberlik,
+    "Ev Sahibi":poissonSonuc.ev,
+    "Beraberlik":poissonSonuc.beraberlik,
+    "Deplasman":poissonSonuc.dep,
+    "3.5 Üst":poissonSonuc.ust35
   };
 
+  const siralama=Object.entries(pazarlar)
+    .map(([ad,olasilik])=>({ad,olasilik}))
+    .sort((a,b)=>b.olasilik-a.olasilik);
 
-  const siralama =
-    Object.entries(
-      pazarlar
-    )
-    .map(
-      ([ad,olasilik]) => ({
-        ad,
-        olasilik
-      })
-    )
-    .sort(
-      (a,b) =>
-        b.olasilik -
-        a.olasilik
-    );
+  const ana=siralama[0];
+  const alternatif=siralama[1];
 
+  const uyum=100-Math.min(
+    100,
+    Math.abs(poissonSonuc.ust25-tarihsel.ust25)*120 +
+    Math.abs(poissonSonuc.kgVar-tarihsel.kgVar)*90
+  );
 
-  const ana =
-    siralama[0];
+  const oynaklik=Math.min(
+    100,
+    ((evForm.oynaklik+depForm.oynaklik)/2)*22
+  );
 
+  const istikrar=Math.max(0,100-oynaklik);
 
-  const alternatif =
-    siralama[1];
+  let puan=
+    ana.olasilik*78 +
+    veriPuani*.08 +
+    uyum*.07 +
+    istikrar*.07;
 
+  if(veriPuani<60) puan-=8;
+  if(ana.olasilik<.65) puan-=6;
 
-  const uyum =
-    100
-    -
-    Math.min(
-      100,
+  puan=Math.round(
+    Math.max(0,Math.min(96,puan))
+  );
 
-      Math.abs(
-        poissonSonuc.ust25
-        -
-        tarihsel.ust25
-      )
-      *
-      120
-
-      +
-
-      Math.abs(
-        poissonSonuc.kgVar
-        -
-        tarihsel.kgVar
-      )
-      *
-      90
-    );
-
-
-  const oynaklik =
-    Math.min(
-      100,
-
-      (
-        (
-          evForm.oynaklik
-          +
-          depForm.oynaklik
-        )
-        /
-        2
-      )
-      *
-      22
-    );
-
-
-  const istikrar =
-    Math.max(
-      0,
-      100 -
-      oynaklik
-    );
-
-
-  let puan =
-    ana.olasilik *
-    100;
-
-
-  puan +=
-    veriPuani *
-    .055;
-
-
-  puan +=
-    uyum *
-    .04;
-
-
-  puan +=
-    istikrar *
-    .02;
-
-
-  if(
-    veriPuani < 60
-  ){
-
-    puan -= 7;
-
-  }
-
-
-  puan =
-    Math.round(
-      Math.max(
-        0,
-        Math.min(
-          96,
-          puan
-        )
-      )
-    );
-
-
-  const sinif =
-    sinifVer(
-      puan,
-      veriPuani
-    );
-
+  const sinif=sinifVer(
+    puan,
+    veriPuani,
+    ana.olasilik
+  );
 
   const riskler=[];
 
-
-  if(
-    veriPuani < 70
-  ){
-
-    riskler.push(
-      "Geçmiş maç örneklemi sınırlı"
-    );
-
+  if(veriPuani<70){
+    riskler.push("Geçmiş maç örneklemi sınırlı");
   }
 
-
-  if(
-    oynaklik >= 65
-  ){
-
-    riskler.push(
-      "Maç skorları yüksek oynaklık gösteriyor"
-    );
-
+  if(oynaklik>=65){
+    riskler.push("Maç skorları yüksek oynaklık gösteriyor");
   }
 
-
-  if(
-    evForm.golYememe <
-    .20
-    &&
-    depForm.golYememe <
-    .20
-  ){
-
-    riskler.push(
-      "İki takımın da savunma güvenilirliği düşük"
-    );
-
+  if(evForm.golYememe<.20 && depForm.golYememe<.20){
+    riskler.push("İki takımın da savunma güvenilirliği düşük");
   }
-
 
   return{
-
     fikstur,
-
     evBeklenen,
     depBeklenen,
-
     pazarlar,
-
     evForm,
     depForm,
-
     veriPuani,
-
-    uyum:
-      Math.round(
-        uyum
-      ),
-
-    oynaklik:
-      Math.round(
-        oynaklik
-      ),
-
-    istikrar:
-      Math.round(
-        istikrar
-      ),
-
+    uyum:Math.round(uyum),
+    oynaklik:Math.round(oynaklik),
+    istikrar:Math.round(istikrar),
     puan,
-
-    sinif:
-      sinif[0],
-
-    sinifCss:
-      sinif[1],
-
-    anaPazar:
-      ana.ad,
-
-    anaOlasilik:
-      ana.olasilik,
-
+    sinif:sinif[0],
+    sinifCss:sinif[1],
+    anaPazar:ana.ad,
+    anaOlasilik:ana.olasilik,
     alternatif,
-
     riskler,
-
-    kaynak:
-      "OpenFootball • 2025/26 + 2026/27"
-
+    kaynak:"OpenFootball • 2025/26 + 2026/27"
   };
-
 }
 
-
-function veriYokAnalizi(
-  fikstur
-){
-
+function veriYokAnalizi(fikstur){
   return{
-
     fikstur,
-
-    sinif:
-      "OYNAMA",
-
-    sinifCss:
-      "sinifOynama",
-
-    anaPazar:
-      "GEÇMİŞ VERİ KAYNAĞI YOK",
-
-    anaOlasilik:
-      0,
-
-    puan:
-      0,
-
-    veriPuani:
-      0,
-
-    neden:
-      "Bu lig için ücretsiz geçmiş maç kaynağı henüz GoalGrid'e bağlanmadı.",
-
-    kaynak:
-      "Yalnızca güncel fikstür",
-
+    sinif:"OYNAMA",
+    sinifCss:"sinifOynama",
+    anaPazar:"GEÇMİŞ VERİ KAYNAĞI YOK",
+    anaOlasilik:0,
+    puan:0,
+    veriPuani:0,
+    neden:"Bu lig için ücretsiz geçmiş maç kaynağı henüz bağlanmadı.",
+    kaynak:"Yalnızca güncel fikstür",
     evForm:null,
     depForm:null
-
   };
-
 }
 
-
-async function tara(
-  zorla=false
-){
-
-  if(
-    !apiAnahtari()
-  ){
-
-    alert(
-      "API anahtarı bu telefonda kayıtlı değil."
-    );
-
+async function tara(zorla=true){
+  if(!apiAnahtari()){
+    alert("API anahtarı bu telefonda kayıtlı değil.");
     return;
-
   }
-
 
   durum.apiSayisi=0;
+  $("#apiSayisi").textContent="0";
 
-  $("#apiSayisi").textContent=
-    "0";
+  const tarih=bugununTarihi();
 
-
-  const tarih =
-    bugununTarihi();
-
-
-  const analizOnbellek =
-    "goalgrid_v14_"
-    +
-    tarih;
-
-
-  if(
-    !zorla
-  ){
-
-    const eski =
-      localStorage.getItem(
-        analizOnbellek
-      );
-
-
-    if(eski){
-
-      try{
-
-        const kayit =
-          JSON.parse(
-            eski
-          );
-
-
-        if(
-          Date.now() -
-          kayit.zaman
-          <
-          90 *
-          60 *
-          1000
-        ){
-
-          durum.analizler =
-            kayit.analizler
-            ||
-            [];
-
-
-          ekraniCiz();
-
-
-          $("#taramaDurumu").textContent =
-            "✓ Son analiz telefon hafızasından açıldı.";
-
-
-          return;
-
-        }
-
-      }catch{}
-
-    }
-
-  }
-
-
-  $("#taramaDurumu").textContent =
-    "Bugünün fikstürü alınıyor…";
-
+  $("#taramaDurumu").textContent="Bugünün fikstürü alınıyor…";
 
   try{
+    const tumFikstur=await api(
+      `/fixtures?date=${tarih}&timezone=Europe/Istanbul`
+    );
 
-    const tumFikstur =
-      await api(
-        `/fixtures?date=${tarih}&timezone=Europe/Istanbul`
-      );
+    const fiksturler=tumFikstur.filter(
+      mac=>Boolean(DESTEKLENEN_LIGLER[mac.league.id])
+    );
 
-
-    const fiksturler =
-      tumFikstur.filter(
-        mac =>
-          Boolean(
-            DESTEKLENEN_LIGLER[
-              mac.league.id
-            ]
-          )
-      );
-
-
-    const gerekliVeriler =
-      [
-        ...new Set(
-          fiksturler
-          .map(
-            mac =>
-              DESTEKLENEN_LIGLER[
-                mac.league.id
-              ].veri
-          )
+    const gerekliVeriler=[
+      ...new Set(
+        fiksturler
+          .map(mac=>DESTEKLENEN_LIGLER[mac.league.id].veri)
           .filter(Boolean)
-        )
-      ];
+      )
+    ];
 
-
-    $("#taramaDurumu").textContent =
-      `${fiksturler.length} maç bulundu. ${gerekliVeriler.length} lig için iki sezonluk geçmiş veri alınıyor…`;
-
+    $("#taramaDurumu").textContent=
+      `${fiksturler.length} maç bulundu. ${gerekliVeriler.length} lig için geçmiş veriler alınıyor…`;
 
     const havuzlar={};
 
-
-    for(
-      const veriKodu
-      of gerekliVeriler
-    ){
-
+    for(const veriKodu of gerekliVeriler){
       try{
-
-        havuzlar[
-          veriKodu
-        ] =
-          await ligVerisiAl(
-            veriKodu
-          );
-
+        havuzlar[veriKodu]=await ligVerisiAl(veriKodu);
       }catch(hata){
-
-        console.error(
-          veriKodu,
-          hata
-        );
-
-
-        havuzlar[
-          veriKodu
-        ]=[];
-
+        console.error(veriKodu,hata);
+        havuzlar[veriKodu]=[];
       }
-
     }
 
+    durum.analizler=fiksturler
+      .map(fikstur=>{
+        const ayar=DESTEKLENEN_LIGLER[fikstur.league.id];
 
-    durum.analizler =
-      fiksturler
-      .map(
-        fikstur => {
-
-          const ayar =
-            DESTEKLENEN_LIGLER[
-              fikstur.league.id
-            ];
-
-
-          if(
-            !ayar.veri
-          ){
-
-            return veriYokAnalizi(
-              fikstur
-            );
-
-          }
-
-
-          const macHavuzu =
-            havuzlar[
-              ayar.veri
-            ]
-            ||
-            [];
-
-
-          if(
-            !macHavuzu.length
-          ){
-
-            return{
-
-              ...veriYokAnalizi(
-                fikstur
-              ),
-
-              anaPazar:
-                "VERİ KAYNAĞINA ERİŞİLEMEDİ",
-
-              neden:
-                `${ayar.ad} geçmiş verisi alınamadı.`
-
-            };
-
-          }
-
-
-          return analizEt(
-            fikstur,
-            macHavuzu
-          );
-
+        if(!ayar.veri){
+          return veriYokAnalizi(fikstur);
         }
-      )
-      .sort(
-        (a,b) =>
-          b.puan -
-          a.puan
-      );
 
+        const macHavuzu=havuzlar[ayar.veri] || [];
 
-    localStorage.setItem(
-      analizOnbellek,
-      JSON.stringify({
-        zaman:
-          Date.now(),
+        if(!macHavuzu.length){
+          return{
+            ...veriYokAnalizi(fikstur),
+            anaPazar:"VERİ KAYNAĞINA ERİŞİLEMEDİ",
+            neden:`${ayar.ad} geçmiş verisi alınamadı.`
+          };
+        }
 
-        analizler:
-          durum.analizler
+        return analizEt(fikstur,macHavuzu);
       })
-    );
-
+      .sort((a,b)=>b.puan-a.puan);
 
     ekraniCiz();
 
-
-    $("#taramaDurumu").textContent =
-      `✓ ${fiksturler.length} maç analiz edildi • ${durum.apiSayisi} API çağrısı kullanıldı.`;
-
+    $("#taramaDurumu").textContent=
+      `✓ ${fiksturler.length} maç analiz edildi • ${durum.apiSayisi} API çağrısı.`;
 
   }catch(hata){
-
-    $("#taramaDurumu").textContent =
-      "Hata: "
-      +
-      hata.message;
-
+    $("#taramaDurumu").textContent="Hata: "+hata.message;
   }
-
 }
-
 
 function kodla(deger){
-
-  return norm(
-    deger
-  );
-
+  return norm(deger);
 }
-
 
 function oranGecmisiOku(){
-
   try{
-
     return JSON.parse(
-      localStorage.getItem(
-        "goalgrid_oran_gecmisi_v14"
-      )
+      localStorage.getItem("goalgrid_oran_gecmisi_v15")
     ) || [];
-
   }catch{
-
     return [];
-
   }
-
 }
 
+function oranGecmisiKaydet(kayit){
+  const liste=oranGecmisiOku();
+  liste.push(kayit);
 
-function oranGecmisiKaydet(
-  kayit
-){
-
-  const liste =
-    oranGecmisiOku();
-
-
-  liste.push(
-    kayit
-  );
-
-
-  if(
-    liste.length >
-    5000
-  ){
-
-    liste.splice(
-      0,
-      liste.length -
-      5000
-    );
-
+  if(liste.length>5000){
+    liste.splice(0,liste.length-5000);
   }
-
 
   localStorage.setItem(
-    "goalgrid_oran_gecmisi_v14",
-    JSON.stringify(
-      liste
-    )
+    "goalgrid_oran_gecmisi_v15",
+    JSON.stringify(liste)
   );
-
 }
 
-
-function sonOranlar(
-  macId,
-  pazar,
-  tur
-){
-
-  return oranGecmisiOku()
-    .filter(
-      kayit =>
-        kayit.macId ===
-        macId
-
-        &&
-
-        kayit.pazar ===
-        pazar
-
-        &&
-
-        kayit.tur ===
-        tur
-    )
+function oranGecmisiYazisi(macId,pazar,tur){
+  const liste=oranGecmisiOku()
+    .filter(x=>x.macId===macId && x.pazar===pazar && x.tur===tur)
     .slice(-4)
     .reverse();
 
+  if(!liste.length){
+    return "Bu pazar için daha önce oran girmedin.";
+  }
+
+  return liste.map(kayit=>{
+    const saat=new Date(kayit.zaman).toLocaleTimeString(
+      "tr-TR",
+      {hour:"2-digit",minute:"2-digit"}
+    );
+
+    return `${saat} • ${kayit.site} ${kayit.oran.toFixed(2)}`;
+  }).join("<br>");
 }
 
-
-function oranGecmisiYazisi(
-  macId,
-  pazar,
-  tur
-){
-
-  const kayitlar =
-    sonOranlar(
-      macId,
-      pazar,
-      tur
-    );
-
-
-  if(
-    !kayitlar.length
-  ){
-
-    return(
-      "Bu pazar için daha önce oran girmedin."
-    );
-
-  }
-
-
-  return kayitlar
-    .map(
-      kayit => {
-
-        const saat =
-          new Date(
-            kayit.zaman
-          )
-          .toLocaleTimeString(
-            "tr-TR",
-            {
-              hour:"2-digit",
-              minute:"2-digit"
-            }
-          );
-
-
-        return(
-          `${saat} • ${kayit.site} ${kayit.oran.toFixed(2)}`
-        );
-
-      }
-    )
-    .join(
-      "<br>"
-    );
-
-}
-
-
-function oranDegerlendir(
-  analizIndex,
-  pazar,
-  tur
-){
-
-  const analiz =
-    durum.analizler[
-      analizIndex
-    ];
-
-
-  const kod =
-    kodla(
-      pazar
-    );
-
-
-  const oranKutusu =
-    $(
-      `#oran_${tur}_${analizIndex}_${kod}`
-    );
-
-
-  const oran =
-    Number(
-      oranKutusu.value
-    );
-
-
-  if(
-    !Number.isFinite(oran)
-    ||
-    oran <= 1
-  ){
-
-    alert(
-      "Geçerli bir oran gir."
-    );
-
-    return;
-
-  }
-
-
-  const site =
-    tur === "yurtdisi"
-    ? "Jojobet"
-    : $(
-        `#site_${tur}_${analizIndex}_${kod}`
-      ).value;
-
-
-  const modelOlasilik =
-    analiz.pazarlar[
-      pazar
-    ]
-    ||
-    0;
-
-
-  const piyasaOlasilik =
-    1 /
-    oran;
-
-
-  const adilOran =
-    modelOlasilik >
-    0
-    ? 1 /
-      modelOlasilik
-    : null;
-
-
-  const olasilikFarki =
-    (
-      modelOlasilik -
-      piyasaOlasilik
-    )
-    *
-    100;
-
-
-  const deger =
-    (
-      oran *
-      modelOlasilik
-      -
-      1
-    )
-    *
-    100;
-
-
-  let yorum =
-    "Değer görünmüyor";
-
-
-  if(
-    deger >= 12
-  ){
-
-    yorum =
-      "Çok güçlü değer";
-
-  }else if(
-    deger >= 7
-  ){
-
-    yorum =
-      "Güçlü değer";
-
-  }else if(
-    deger >= 3
-  ){
-
-    yorum =
-      "Olumlu değer";
-
-  }else if(
-    deger >= 0
-  ){
-
-    yorum =
-      "Sınırlı değer";
-
-  }
-
-
-  const kayit = {
-
-    zaman:
-      new Date()
-      .toISOString(),
-
-    macId:
-      analiz.fikstur.fixture.id,
-
-    lig:
-      analiz.fikstur.league.name,
-
-    ev:
-      analiz.fikstur.teams.home.name,
-
-    dep:
-      analiz.fikstur.teams.away.name,
-
-    pazar,
-
-    tur,
-
-    site,
-
-    oran,
-
-    modelOlasilik,
-
-    piyasaOlasilik,
-
-    adilOran,
-
-    olasilikFarki,
-
-    deger,
-
-    goalGridPuani:
-      analiz.puan
-
-  };
-
-
-  oranGecmisiKaydet(
-    kayit
+function oranDegerlendir(analizIndex,pazar,tur){
+  const analiz=durum.analizler[analizIndex];
+  const kod=kodla(pazar);
+
+  const oran=Number(
+    $(`#oran_${tur}_${analizIndex}_${kod}`).value
   );
 
+  if(!Number.isFinite(oran) || oran<=1){
+    alert("Geçerli bir oran gir.");
+    return;
+  }
 
-  $(
-    `#oranSonucu_${tur}_${analizIndex}_${kod}`
-  ).innerHTML =
-    `
+  const site=tur==="yurtdisi"
+    ?"Jojobet"
+    :$(`#site_${tur}_${analizIndex}_${kod}`).value;
+
+  const modelOlasilik=analiz.pazarlar[pazar] || 0;
+  const piyasaOlasilik=1/oran;
+  const adilOran=modelOlasilik>0 ? 1/modelOlasilik : null;
+  const olasilikFarki=(modelOlasilik-piyasaOlasilik)*100;
+  const deger=(oran*modelOlasilik-1)*100;
+
+  let yorum="Değer görünmüyor";
+
+  if(deger>=12) yorum="Çok güçlü değer";
+  else if(deger>=7) yorum="Güçlü değer";
+  else if(deger>=3) yorum="Olumlu değer";
+  else if(deger>=0) yorum="Sınırlı değer";
+
+  oranGecmisiKaydet({
+    zaman:new Date().toISOString(),
+    macId:analiz.fikstur.fixture.id,
+    lig:analiz.fikstur.league.name,
+    ev:analiz.fikstur.teams.home.name,
+    dep:analiz.fikstur.teams.away.name,
+    pazar,
+    tur,
+    site,
+    oran,
+    modelOlasilik,
+    piyasaOlasilik,
+    adilOran,
+    olasilikFarki,
+    deger,
+    goalGridPuani:analiz.puan
+  });
+
+  $(`#oranSonucu_${tur}_${analizIndex}_${kod}`).innerHTML=`
     Model olasılığı: <b>%${(modelOlasilik*100).toFixed(1)}</b><br>
     Piyasa olasılığı: %${(piyasaOlasilik*100).toFixed(1)}<br>
     Adil oran: <b>${adilOran?adilOran.toFixed(2):"—"}</b><br>
     Olasılık farkı: ${olasilikFarki>=0?"+":""}${olasilikFarki.toFixed(1)} puan<br>
     Oransal değer: ${deger>=0?"+":""}${deger.toFixed(1)}%<br>
     <b>${yorum}</b>
-    `;
+  `;
 
-
-  $(
-    `#gecmis_${tur}_${analizIndex}_${kod}`
-  ).innerHTML =
+  $(`#gecmis_${tur}_${analizIndex}_${kod}`).innerHTML=
     oranGecmisiYazisi(
       analiz.fikstur.fixture.id,
       pazar,
       tur
     );
-
 }
 
+function kuponSecimiDegisti(analizIndex,pazar,tur){
+  const analiz=durum.analizler[analizIndex];
+  const kod=kodla(pazar);
 
-function kuponSecimiDegisti(
-  analizIndex,
-  pazar,
-  tur
-){
+  const kutu=$(`#kupon_${tur}_${analizIndex}_${kod}`);
+  const oran=Number($(`#oran_${tur}_${analizIndex}_${kod}`).value);
 
-  const analiz =
-    durum.analizler[
-      analizIndex
-    ];
-
-
-  const kod =
-    kodla(
-      pazar
-    );
-
-
-  const kutu =
-    $(
-      `#kupon_${tur}_${analizIndex}_${kod}`
-    );
-
-
-  const oran =
-    Number(
-      $(
-        `#oran_${tur}_${analizIndex}_${kod}`
-      ).value
-    );
-
-
-  if(
-    kutu.checked
-    &&
-    (
-      !Number.isFinite(oran)
-      ||
-      oran <= 1
-    )
-  ){
-
-    alert(
-      "Kupona eklemeden önce oranı gir."
-    );
-
-    kutu.checked =
-      false;
-
+  if(kutu.checked && (!Number.isFinite(oran)||oran<=1)){
+    alert("Kupona eklemeden önce oranı gir.");
+    kutu.checked=false;
     return;
-
   }
 
+  const site=tur==="yurtdisi"
+    ?"Jojobet"
+    :$(`#site_${tur}_${analizIndex}_${kod}`).value;
 
-  const site =
-    tur === "yurtdisi"
-    ? "Jojobet"
-    : $(
-        `#site_${tur}_${analizIndex}_${kod}`
-      ).value;
+  if(kutu.checked){
+    const ayniMac=durum.kupon.some(
+      secim=>secim.macId===analiz.fikstur.fixture.id
+    );
 
-
-  if(
-    kutu.checked
-  ){
-
-    const ayniMac =
-      durum.kupon.some(
-        secim =>
-          secim.macId ===
-          analiz.fikstur.fixture.id
+    if(ayniMac){
+      const onay=confirm(
+        "Bu maçtan kuponda zaten bir seçim var. Yine de eklemek istiyor musun?"
       );
 
-
-    if(
-      ayniMac
-    ){
-
-      const onay =
-        confirm(
-          "Bu maçtan kuponda zaten bir seçim var. Aynı maçtan birden fazla seçim eklemek riskleri birbirine bağlayabilir. Yine de eklemek istiyor musun?"
-        );
-
-
-      if(
-        !onay
-      ){
-
-        kutu.checked =
-          false;
-
+      if(!onay){
+        kutu.checked=false;
         return;
-
       }
-
     }
 
-
     durum.kupon.push({
-
-      kimlik:
-        Date.now()
-        +
-        Math.random(),
-
-      macId:
-        analiz.fikstur.fixture.id,
-
-      mac:
-        `${analiz.fikstur.teams.home.name} - ${analiz.fikstur.teams.away.name}`,
-
+      kimlik:Date.now()+Math.random(),
+      macId:analiz.fikstur.fixture.id,
+      mac:`${analiz.fikstur.teams.home.name} - ${analiz.fikstur.teams.away.name}`,
       pazar,
-
       tur,
-
       site,
-
       oran,
-
-      modelOlasilik:
-        analiz.pazarlar[
-          pazar
-        ],
-
-      goalGridPuani:
-        analiz.puan
-
+      modelOlasilik:analiz.pazarlar[pazar],
+      goalGridPuani:analiz.puan
     });
 
   }else{
-
-    durum.kupon =
-      durum.kupon.filter(
-        secim =>
-          !(
-            secim.macId ===
-            analiz.fikstur.fixture.id
-
-            &&
-
-            secim.pazar ===
-            pazar
-
-            &&
-
-            secim.tur ===
-            tur
-
-            &&
-
-            secim.site ===
-            site
-          )
-      );
-
+    durum.kupon=durum.kupon.filter(
+      secim=>!(
+        secim.macId===analiz.fikstur.fixture.id &&
+        secim.pazar===pazar &&
+        secim.tur===tur &&
+        secim.site===site
+      )
+    );
   }
-
 
   kuponuGuncelle();
-
 }
 
-
 function kuponuGuncelle(){
-
-  if(
-    !durum.kupon.length
-  ){
-
-    $("#kuponPanel")
-      .classList
-      .add(
-        "gizli"
-      );
-
+  if(!durum.kupon.length){
+    $("#kuponPanel").classList.add("gizli");
     return;
-
   }
 
-
-  $("#kuponPanel")
-    .classList
-    .remove(
-      "gizli"
-    );
-
+  $("#kuponPanel").classList.remove("gizli");
 
   let toplamOran=1;
   let puanToplam=0;
   let enDusuk=100;
   let birlesik=1;
 
+  durum.kupon.forEach(secim=>{
+    toplamOran*=secim.oran;
+    puanToplam+=secim.goalGridPuani;
+    enDusuk=Math.min(enDusuk,secim.goalGridPuani);
+    birlesik*=secim.modelOlasilik;
+  });
 
-  durum.kupon.forEach(
-    secim => {
+  $("#kuponSecimSayisi").textContent=`${durum.kupon.length} seçim`;
+  $("#toplamOran").textContent=toplamOran.toFixed(2);
+  $("#ortalamaGuven").textContent=
+    Math.round(puanToplam/durum.kupon.length)+"/100";
+  $("#enDusukGuven").textContent=enDusuk+"/100";
+  $("#birlesikOlasilik").textContent="%"+(birlesik*100).toFixed(1);
 
-      toplamOran *=
-        secim.oran;
+  $("#kuponAyaklari").innerHTML=durum.kupon.map(secim=>`
+    <div class="kuponAyagi">
+      <b>${secim.mac}</b>
+      <div class="durum">
+        ${secim.pazar} • ${secim.site} @ ${secim.oran.toFixed(2)}
+        • Güven ${secim.goalGridPuani}/100
+      </div>
+    </div>
+  `).join("");
 
+  const yatirilan=Number($("#yatirilan")?.value)||0;
 
-      puanToplam +=
-        secim.goalGridPuani;
-
-
-      enDusuk =
-        Math.min(
-          enDusuk,
-          secim.goalGridPuani
-        );
-
-
-      birlesik *=
-        secim.modelOlasilik;
-
-    }
-  );
-
-
-  $("#kuponSecimSayisi").textContent =
-    `${durum.kupon.length} seçim`;
-
-
-  $("#toplamOran").textContent =
-    toplamOran.toFixed(
-      2
-    );
-
-
-  $("#ortalamaGuven").textContent =
-    Math.round(
-      puanToplam /
-      durum.kupon.length
-    )
-    +
-    "/100";
-
-
-  $("#enDusukGuven").textContent =
-    enDusuk
-    +
-    "/100";
-
-
-  $("#birlesikOlasilik").textContent =
-    "%"
-    +
-    (
-      birlesik *
-      100
-    ).toFixed(
-      1
-    );
-
-
-  $("#kuponAyaklari").innerHTML =
-    durum.kupon
-    .map(
-      secim =>
-        `
-        <div class="kuponAyagi">
-
-          <b>
-            ${secim.mac}
-          </b>
-
-          <div class="durum">
-            ${secim.pazar}
-            •
-            ${secim.site}
-            @
-            ${secim.oran.toFixed(2)}
-            •
-            Güven ${secim.goalGridPuani}/100
-          </div>
-
-        </div>
-        `
-    )
-    .join("");
-
-
-  const yatirilan =
-    Number(
-      $("#yatirilan")?.value
-    )
-    ||
-    0;
-
-
-  $("#potansiyelDonus").textContent =
-    (
-      yatirilan *
-      toplamOran
-    )
-    .toLocaleString(
+  $("#potansiyelDonus").textContent=
+    (yatirilan*toplamOran).toLocaleString(
       "tr-TR",
-      {
-        maximumFractionDigits:2
-      }
-    )
-    +
-    " TL";
-
+      {maximumFractionDigits:2}
+    )+" TL";
 }
-
 
 function kuponAyrintiAcKapat(){
-
-  $("#kuponAyrinti")
-  .classList
-  .toggle(
-    "gizli"
-  );
-
+  $("#kuponAyrinti").classList.toggle("gizli");
 }
-
 
 function kuponuTemizle(){
-
   durum.kupon=[];
 
-
-  document
-  .querySelectorAll(
-    'input[type="checkbox"]'
-  )
-  .forEach(
-    kutu =>
-      kutu.checked =
-      false
+  document.querySelectorAll('input[type="checkbox"]').forEach(
+    kutu=>kutu.checked=false
   );
 
-
   kuponuGuncelle();
-
 }
-
 
 function kuponGecmisiOku(){
-
   try{
-
     return JSON.parse(
-      localStorage.getItem(
-        "goalgrid_kupon_gecmisi_v14"
-      )
+      localStorage.getItem("goalgrid_kupon_gecmisi_v15")
     ) || [];
-
   }catch{
-
     return [];
-
   }
-
 }
 
-
 function kuponuKaydet(){
-
-  if(
-    !durum.kupon.length
-  ){
-
-    return;
-
-  }
-
+  if(!durum.kupon.length) return;
 
   let toplamOran=1;
 
+  durum.kupon.forEach(secim=>{
+    toplamOran*=secim.oran;
+  });
 
-  durum.kupon.forEach(
-    secim =>
-      toplamOran *=
-      secim.oran
-  );
+  const kasa=Number($("#kasa").value)||0;
+  const yatirilan=Number($("#yatirilan").value)||0;
 
-
-  const kasa =
-    Number(
-      $("#kasa").value
-    )
-    ||
-    0;
-
-
-  const yatirilan =
-    Number(
-      $("#yatirilan").value
-    )
-    ||
-    0;
-
-
-  const kayit = {
-
-    kimlik:
-      Date.now(),
-
-    zaman:
-      new Date()
-      .toISOString(),
-
+  const kayit={
+    kimlik:Date.now(),
+    zaman:new Date().toISOString(),
     kasa,
-
     yatirilan,
-
     toplamOran,
-
-    potansiyel:
-      yatirilan *
-      toplamOran,
-
-    secimler:
-      JSON.parse(
-        JSON.stringify(
-          durum.kupon
-        )
-      ),
-
-    sonuc:
-      "Bekliyor"
-
+    potansiyel:yatirilan*toplamOran,
+    secimler:JSON.parse(JSON.stringify(durum.kupon)),
+    sonuc:"Bekliyor"
   };
 
-
-  const kuponlar =
-    kuponGecmisiOku();
-
-
-  kuponlar.unshift(
-    kayit
-  );
-
+  const kuponlar=kuponGecmisiOku();
+  kuponlar.unshift(kayit);
 
   localStorage.setItem(
-    "goalgrid_kupon_gecmisi_v14",
-    JSON.stringify(
-      kuponlar
-    )
+    "goalgrid_kupon_gecmisi_v15",
+    JSON.stringify(kuponlar)
   );
 
-
-  alert(
-    "Kupon geçmişe kaydedildi."
-  );
-
+  alert("Kupon geçmişe kaydedildi.");
 }
 
-
-function metre(
-  ad,
-  puan
-){
-
+function metre(ad,puan){
   return`
-  <div class="metrik">
-
-    <small>
-      ${ad}
-    </small>
-
-    <b>
-      ${puan}/100
-    </b>
-
-    <div class="cubuk">
-
-      <div
-        class="cubukDolgu"
-        style="width:${puan}%">
+    <div class="metrik">
+      <small>${ad}</small>
+      <b>${puan}/100</b>
+      <div class="cubuk">
+        <div class="cubukDolgu" style="width:${puan}%"></div>
       </div>
-
     </div>
-
-  </div>
   `;
-
 }
 
+function oranBolumu(analiz,index){
+  const pazarlar=Object.entries(analiz.pazarlar)
+    .sort((a,b)=>b[1]-a[1])
+    .map(x=>x[0]);
 
-function oranBolumu(
-  analiz,
-  analizIndex
-){
-
-  const pazarlar =
-    Object.entries(
-      analiz.pazarlar
-    )
-    .sort(
-      (a,b) =>
-        b[1] -
-        a[1]
-    )
-    .map(
-      x =>
-        x[0]
-    );
-
-
-  const varsayilan =
-    analiz.anaPazar;
-
-
-  const secenekler =
-    pazarlar
-    .map(
-      pazar =>
-        `
-        <option
-          value="${pazar}"
-          ${pazar===varsayilan?"selected":""}>
-          ${pazar}
-          (%${Math.round(analiz.pazarlar[pazar]*100)})
-        </option>
-        `
-    )
-    .join("");
-
+  const secenekler=pazarlar.map(pazar=>`
+    <option value="${pazar}" ${pazar===analiz.anaPazar?"selected":""}>
+      ${pazar} (%${Math.round(analiz.pazarlar[pazar]*100)})
+    </option>
+  `).join("");
 
   return`
-  <div class="bolum">
+    <div class="bolum">
+      <div class="bolumBaslik">ORAN VE KUPON</div>
 
-    <div class="bolumBaslik">
-      ORAN VE KUPON
-    </div>
-
-
-    <div class="pazarSecici">
-
-      <select
-        id="pazar_${analizIndex}"
-        onchange="oranAlanlariniYenile(${analizIndex})">
-
+      <select id="pazar_${index}" onchange="oranAlanlariniYenile(${index})">
         ${secenekler}
-
       </select>
 
+      <div id="oranAlanlari_${index}">
+        ${tekPazarOranAlani(analiz,index,analiz.anaPazar)}
+      </div>
     </div>
-
-
-    <div
-      id="oranAlanlari_${analizIndex}">
-
-      ${
-        tekPazarOranAlani(
-          analiz,
-          analizIndex,
-          varsayilan
-        )
-      }
-
-    </div>
-
-  </div>
   `;
-
 }
 
+function oranAlanlariniYenile(index){
+  const analiz=durum.analizler[index];
+  const pazar=$(`#pazar_${index}`).value;
 
-function oranAlanlariniYenile(
-  analizIndex
-){
-
-  const analiz =
-    durum.analizler[
-      analizIndex
-    ];
-
-
-  const pazar =
-    $(
-      `#pazar_${analizIndex}`
-    ).value;
-
-
-  $(
-    `#oranAlanlari_${analizIndex}`
-  ).innerHTML =
-    tekPazarOranAlani(
-      analiz,
-      analizIndex,
-      pazar
-    );
-
+  $(`#oranAlanlari_${index}`).innerHTML=
+    tekPazarOranAlani(analiz,index,pazar);
 }
 
-
-function tekPazarOranAlani(
-  analiz,
-  analizIndex,
-  pazar
-){
-
-  const kod =
-    kodla(
-      pazar
-    );
-
-
-  const macId =
-    analiz.fikstur.fixture.id;
-
+function tekPazarOranAlani(analiz,index,pazar){
+  const kod=kodla(pazar);
+  const macId=analiz.fikstur.fixture.id;
 
   return`
-  <div class="oranAlanlari">
+    <div class="oranAlanlari">
 
-    <div class="oranKarti">
+      <div class="oranKarti">
+        <label>Yurtiçi Site</label>
 
-      <label>
-        Yurtiçi Site
-      </label>
+        <select id="site_yurtici_${index}_${kod}">
+          <option>Nesine</option>
+          <option>Misli</option>
+          <option>Bilyoner</option>
+        </select>
 
-      <select
-        id="site_yurtici_${analizIndex}_${kod}">
+        <div class="oranVeKupon">
+          <input
+            id="oran_yurtici_${index}_${kod}"
+            type="number"
+            inputmode="decimal"
+            step="0.01"
+            placeholder="Oran">
 
-        <option>
-          Nesine
-        </option>
+          <input
+            id="kupon_yurtici_${index}_${kod}"
+            type="checkbox"
+            onchange="kuponSecimiDegisti(${index},'${pazar}','yurtici')">
+        </div>
 
-        <option>
-          Misli
-        </option>
+        <button
+          class="ikincil"
+          style="width:100%;margin-top:8px"
+          onclick="oranDegerlendir(${index},'${pazar}','yurtici')">
+          Oranı Kaydet ve Değerlendir
+        </button>
 
-        <option>
-          Bilyoner
-        </option>
+        <div id="oranSonucu_yurtici_${index}_${kod}" class="oranSonucu"></div>
 
-      </select>
-
-
-      <div class="oranVeKupon">
-
-        <input
-          id="oran_yurtici_${analizIndex}_${kod}"
-          type="number"
-          inputmode="decimal"
-          step="0.01"
-          placeholder="Oran">
-
-
-        <input
-          id="kupon_yurtici_${analizIndex}_${kod}"
-          type="checkbox"
-          title="Kupona ekle"
-          onchange="kuponSecimiDegisti(${analizIndex},'${pazar}','yurtici')">
-
+        <div class="oranGecmisi">
+          <b>Son Girişler</b><br>
+          <span id="gecmis_yurtici_${index}_${kod}">
+            ${oranGecmisiYazisi(macId,pazar,"yurtici")}
+          </span>
+        </div>
       </div>
 
+      <div class="oranKarti">
+        <label>Yurtdışı Site</label>
 
-      <button
-        class="ikincil"
-        style="width:100%;margin-top:8px"
-        onclick="oranDegerlendir(${analizIndex},'${pazar}','yurtici')">
-
-        Oranı Kaydet ve Değerlendir
-
-      </button>
-
-
-      <div
-        id="oranSonucu_yurtici_${analizIndex}_${kod}"
-        class="oranSonucu">
-      </div>
-
-
-      <div class="oranGecmisi">
-
-        <b>
-          Son Girişler
-        </b><br>
-
-        <span
-          id="gecmis_yurtici_${analizIndex}_${kod}">
-
-          ${
-            oranGecmisiYazisi(
-              macId,
-              pazar,
-              "yurtici"
-            )
-          }
-
-        </span>
-
-      </div>
-
-    </div>
-
-
-    <div class="oranKarti">
-
-      <label>
-        Yurtdışı Site
-      </label>
-
-      <input
-        type="number"
-        value=""
-        style="display:none">
-
-
-      <div
-        style="
+        <div style="
           padding:10px;
           border:1px solid #31425d;
           border-radius:10px;
           font-weight:850;
           background:#07101d">
-        Jojobet
-      </div>
+          Jojobet
+        </div>
 
+        <div class="oranVeKupon">
+          <input
+            id="oran_yurtdisi_${index}_${kod}"
+            type="number"
+            inputmode="decimal"
+            step="0.01"
+            placeholder="Oran">
 
-      <div class="oranVeKupon">
+          <input
+            id="kupon_yurtdisi_${index}_${kod}"
+            type="checkbox"
+            onchange="kuponSecimiDegisti(${index},'${pazar}','yurtdisi')">
+        </div>
 
-        <input
-          id="oran_yurtdisi_${analizIndex}_${kod}"
-          type="number"
-          inputmode="decimal"
-          step="0.01"
-          placeholder="Oran">
+        <button
+          class="ikincil"
+          style="width:100%;margin-top:8px"
+          onclick="oranDegerlendir(${index},'${pazar}','yurtdisi')">
+          Oranı Kaydet ve Değerlendir
+        </button>
 
+        <div id="oranSonucu_yurtdisi_${index}_${kod}" class="oranSonucu"></div>
 
-        <input
-          id="kupon_yurtdisi_${analizIndex}_${kod}"
-          type="checkbox"
-          title="Kupona ekle"
-          onchange="kuponSecimiDegisti(${analizIndex},'${pazar}','yurtdisi')">
-
-      </div>
-
-
-      <button
-        class="ikincil"
-        style="width:100%;margin-top:8px"
-        onclick="oranDegerlendir(${analizIndex},'${pazar}','yurtdisi')">
-
-        Oranı Kaydet ve Değerlendir
-
-      </button>
-
-
-      <div
-        id="oranSonucu_yurtdisi_${analizIndex}_${kod}"
-        class="oranSonucu">
-      </div>
-
-
-      <div class="oranGecmisi">
-
-        <b>
-          Son Girişler
-        </b><br>
-
-        <span
-          id="gecmis_yurtdisi_${analizIndex}_${kod}">
-
-          ${
-            oranGecmisiYazisi(
-              macId,
-              pazar,
-              "yurtdisi"
-            )
-          }
-
-        </span>
-
+        <div class="oranGecmisi">
+          <b>Son Girişler</b><br>
+          <span id="gecmis_yurtdisi_${index}_${kod}">
+            ${oranGecmisiYazisi(macId,pazar,"yurtdisi")}
+          </span>
+        </div>
       </div>
 
     </div>
-
-  </div>
   `;
-
 }
 
+function macKarti(analiz,index){
+  const f=analiz.fikstur;
 
-function macKarti(
-  analiz,
-  index
-){
+  const saat=new Date(f.fixture.date).toLocaleTimeString(
+    "tr-TR",
+    {
+      hour:"2-digit",
+      minute:"2-digit",
+      timeZone:"Europe/Istanbul"
+    }
+  );
 
-  const fikstur =
-    analiz.fikstur;
-
-
-  const saat =
-    new Date(
-      fikstur.fixture.date
-    )
-    .toLocaleTimeString(
-      "tr-TR",
-      {
-        hour:"2-digit",
-        minute:"2-digit",
-        timeZone:"Europe/Istanbul"
-      }
-    );
-
-
-  if(
-    !analiz.evForm
-  ){
-
+  if(!analiz.evForm){
     return`
+      <section class="kart">
+        <div class="ustSatir">
+          <div>
+            <div class="lig">${f.league.name}</div>
+            <div class="takimlar">
+              ${f.teams.home.name} — ${f.teams.away.name}
+            </div>
+          </div>
+          <div class="saat">${saat}</div>
+        </div>
+
+        <div class="anaTahmin">
+          <div>
+            <div class="pazarAdi">
+              ${analiz.anaPazar}
+              <span class="sinif sinifOynama">OYNAMA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="aciklama kotu">${analiz.neden}</div>
+        <div class="kaynak">${analiz.kaynak}</div>
+      </section>
+    `;
+  }
+
+  return`
     <section class="kart">
 
       <div class="ustSatir">
-
         <div>
-
-          <div class="lig">
-            ${fikstur.league.name}
-          </div>
-
+          <div class="lig">${f.league.name}</div>
           <div class="takimlar">
-            ${fikstur.teams.home.name}
-            —
-            ${fikstur.teams.away.name}
+            ${f.teams.home.name} — ${f.teams.away.name}
           </div>
-
         </div>
-
-        <div class="saat">
-          ${saat}
-        </div>
-
+        <div class="saat">${saat}</div>
       </div>
-
 
       <div class="anaTahmin">
-
         <div>
-
           <div class="pazarAdi">
-
-            ${analiz.anaPazar}
-
-            <span class="sinif sinifOynama">
-              OYNAMA
+            🎯 ${analiz.anaPazar}
+            <span class="sinif ${analiz.sinifCss}">
+              ${analiz.sinif}
             </span>
+          </div>
+          <div class="durum">
+            GoalGrid Güven Puanı: ${analiz.puan}/100
+          </div>
+        </div>
 
+        <div class="buyukYuzde">
+          %${Math.round(analiz.anaOlasilik*100)}
+        </div>
+      </div>
+
+      <div class="metrikler">
+
+        <div class="metrik">
+          <small>Ev Sahibi Beklenen Gol</small>
+          <b>${analiz.evBeklenen.toFixed(2)}</b>
+        </div>
+
+        <div class="metrik">
+          <small>Deplasman Beklenen Gol</small>
+          <b>${analiz.depBeklenen.toFixed(2)}</b>
+        </div>
+
+        <div class="metrik">
+          <small>Toplam Gol Beklentisi</small>
+          <b>${(analiz.evBeklenen+analiz.depBeklenen).toFixed(2)}</b>
+        </div>
+
+        <div class="metrik">
+          <small>1.5 Üst</small>
+          <b>%${Math.round(analiz.pazarlar["1.5 Üst"]*100)}</b>
+        </div>
+
+        <div class="metrik">
+          <small>2.5 Üst</small>
+          <b>%${Math.round(analiz.pazarlar["2.5 Üst"]*100)}</b>
+        </div>
+
+        <div class="metrik">
+          <small>KG Var</small>
+          <b>%${Math.round(analiz.pazarlar["KG Var"]*100)}</b>
+        </div>
+
+        <div class="metrik">
+          <small>1X</small>
+          <b>%${Math.round(analiz.pazarlar["1X"]*100)}</b>
+        </div>
+
+        <div class="metrik">
+          <small>X2</small>
+          <b>%${Math.round(analiz.pazarlar["X2"]*100)}</b>
+        </div>
+
+      </div>
+
+      <div class="bolum">
+        <div class="bolumBaslik">SON 10 MAÇ PROFİLİ</div>
+
+        <div class="metrikler">
+
+          <div class="metrik">
+            <small>Veri Örneklemi</small>
+            <b>${analiz.evForm.adet} / ${analiz.depForm.adet}</b>
+          </div>
+
+          <div class="metrik">
+            <small>Maç Başına Puan</small>
+            <b>
+              ${analiz.evForm.puanOrt.toFixed(2)}
+              /
+              ${analiz.depForm.puanOrt.toFixed(2)}
+            </b>
+          </div>
+
+          <div class="metrik">
+            <small>Attığı Gol</small>
+            <b>
+              ${analiz.evForm.attigi.toFixed(2)}
+              /
+              ${analiz.depForm.attigi.toFixed(2)}
+            </b>
+          </div>
+
+          <div class="metrik">
+            <small>Yediği Gol</small>
+            <b>
+              ${analiz.evForm.yedigi.toFixed(2)}
+              /
+              ${analiz.depForm.yedigi.toFixed(2)}
+            </b>
+          </div>
+
+          <div class="metrik">
+            <small>KG Var Geçmişi</small>
+            <b>
+              %${Math.round(analiz.evForm.kgVar*100)}
+              /
+              %${Math.round(analiz.depForm.kgVar*100)}
+            </b>
+          </div>
+
+          <div class="metrik">
+            <small>2.5 Üst Geçmişi</small>
+            <b>
+              %${Math.round(analiz.evForm.ust25*100)}
+              /
+              %${Math.round(analiz.depForm.ust25*100)}
+            </b>
+          </div>
+
+          <div class="metrik">
+            <small>Gol Yememe</small>
+            <b>
+              %${Math.round(analiz.evForm.golYememe*100)}
+              /
+              %${Math.round(analiz.depForm.golYememe*100)}
+            </b>
+          </div>
+
+          <div class="metrik">
+            <small>Son 10 Sonuç</small>
+            <b>
+              ${analiz.evForm.galibiyet}G
+              ${analiz.evForm.beraberlik}B
+              ${analiz.evForm.maglubiyet}M
+              /
+              ${analiz.depForm.galibiyet}G
+              ${analiz.depForm.beraberlik}B
+              ${analiz.depForm.maglubiyet}M
+            </b>
           </div>
 
         </div>
-
       </div>
 
+      <div class="bolum">
+        <div class="bolumBaslik">MODEL KALİTESİ</div>
 
-      <div class="aciklama kotu">
-        ${analiz.neden}
+        <div class="metrikler">
+          ${metre("Veri Kalitesi",analiz.veriPuani)}
+          ${metre("Model Uyumu",analiz.uyum)}
+          ${metre("Oynaklık",analiz.oynaklik)}
+          ${metre("İstikrar",analiz.istikrar)}
+        </div>
       </div>
 
+      <div class="bolum">
+        <div class="bolumBaslik">NEDEN BU TAHMİN?</div>
 
-      <div class="kaynak">
-        ${analiz.kaynak}
+        <div class="aciklama">
+          Ev sahibi son ${analiz.evForm.adet} maçta maç başına
+          ${analiz.evForm.attigi.toFixed(2)} gol üretip
+          ${analiz.evForm.yedigi.toFixed(2)} gol yedi.
+
+          Deplasman son ${analiz.depForm.adet} maçta maç başına
+          ${analiz.depForm.attigi.toFixed(2)} gol üretip
+          ${analiz.depForm.yedigi.toFixed(2)} gol yedi.
+
+          Model ile tarihsel gol davranışı uyumu
+          ${analiz.uyum}/100.
+
+          En güçlü pazar:
+          ${analiz.anaPazar}
+          (%${Math.round(analiz.anaOlasilik*100)}).
+
+          İkinci seçenek:
+          ${analiz.alternatif.ad}
+          (%${Math.round(analiz.alternatif.olasilik*100)}).
+        </div>
       </div>
+
+      <div class="bolum">
+        <div class="bolumBaslik">RİSKLER</div>
+
+        <div class="aciklama ${analiz.riskler.length?"uyari":"iyi"}">
+          ${
+            analiz.riskler.length
+            ? analiz.riskler.join(" • ")
+            : "Modelin mevcut verisinde belirgin yapısal risk görülmedi."
+          }
+        </div>
+      </div>
+
+      ${oranBolumu(analiz,index)}
+
+      <div class="kaynak">${analiz.kaynak}</div>
 
     </section>
-    `;
-
-  }
-
-
-  return`
-  <section class="kart">
-
-    <div class="ustSatir">
-
-      <div>
-
-        <div class="lig">
-          ${fikstur.league.name}
-        </div>
-
-        <div class="takimlar">
-          ${fikstur.teams.home.name}
-          —
-          ${fikstur.teams.away.name}
-        </div>
-
-      </div>
-
-      <div class="saat">
-        ${saat}
-      </div>
-
-    </div>
-
-
-    <div class="anaTahmin">
-
-      <div>
-
-        <div class="pazarAdi">
-
-          🎯 ${analiz.anaPazar}
-
-          <span class="sinif ${analiz.sinifCss}">
-            ${analiz.sinif}
-          </span>
-
-        </div>
-
-        <div class="durum">
-          GoalGrid Güven Puanı:
-          ${analiz.puan}/100
-        </div>
-
-      </div>
-
-      <div class="buyukYuzde">
-        %${Math.round(analiz.anaOlasilik*100)}
-      </div>
-
-    </div>
-
-
-    <div class="metrikler">
-
-      <div class="metrik">
-
-        <small>
-          Ev Sahibi Beklenen Gol
-        </small>
-
-        <b>
-          ${analiz.evBeklenen.toFixed(2)}
-        </b>
-
-      </div>
-
-
-      <div class="metrik">
-
-        <small>
-          Deplasman Beklenen Gol
-        </small>
-
-        <b>
-          ${analiz.depBeklenen.toFixed(2)}
-        </b>
-
-      </div>
-
-
-      <div class="metrik">
-
-        <small>
-          Toplam Gol Beklentisi
-        </small>
-
-        <b>
-          ${(analiz.evBeklenen+analiz.depBeklenen).toFixed(2)}
-        </b>
-
-      </div>
-
-
-      <div class="metrik">
-
-        <small>
-          1.5 Üst
-        </small>
-
-        <b>
-          %${Math.round(analiz.pazarlar["1.5 Üst"]*100)}
-        </b>
-
-      </div>
-
-
-      <div class="metrik">
-
-        <small>
-          2.5 Üst
-        </small>
-
-        <b>
-          %${Math.round(analiz.pazarlar["2.5 Üst"]*100)}
-        </b>
-
-      </div>
-
-
-      <div class="metrik">
-
-        <small>
-          KG Var
-        </small>
-
-        <b>
-          %${Math.round(analiz.pazarlar["KG Var"]*100)}
-        </b>
-
-      </div>
-
-
-      <div class="metrik">
-
-        <small>
-          1X
-        </small>
-
-        <b>
-          %${Math.round(analiz.pazarlar["1X"]*100)}
-        </b>
-
-      </div>
-
-
-      <div class="metrik">
-
-        <small>
-          X2
-        </small>
-
-        <b>
-          %${Math.round(analiz.pazarlar["X2"]*100)}
-        </b>
-
-      </div>
-
-    </div>
-
-
-    <div class="bolum">
-
-      <div class="bolumBaslik">
-        SON 10 MAÇ PROFİLİ
-      </div>
-
-
-      <div class="metrikler">
-
-        <div class="metrik">
-
-          <small>
-            Veri Örneklemi
-          </small>
-
-          <b>
-            ${analiz.evForm.adet}
-            /
-            ${analiz.depForm.adet}
-          </b>
-
-        </div>
-
-
-        <div class="metrik">
-
-          <small>
-            Maç Başına Puan
-          </small>
-
-          <b>
-            ${analiz.evForm.puanOrt.toFixed(2)}
-            /
-            ${analiz.depForm.puanOrt.toFixed(2)}
-          </b>
-
-        </div>
-
-
-        <div class="metrik">
-
-          <small>
-            Attığı Gol
-          </small>
-
-          <b>
-            ${analiz.evForm.attigi.toFixed(2)}
-            /
-            ${analiz.depForm.attigi.toFixed(2)}
-          </b>
-
-        </div>
-
-
-        <div class="metrik">
-
-          <small>
-            Yediği Gol
-          </small>
-
-          <b>
-            ${analiz.evForm.yedigi.toFixed(2)}
-            /
-            ${analiz.depForm.yedigi.toFixed(2)}
-          </b>
-
-        </div>
-
-
-        <div class="metrik">
-
-          <small>
-            KG Var Geçmişi
-          </small>
-
-          <b>
-            %${Math.round(analiz.evForm.kgVar*100)}
-            /
-            %${Math.round(analiz.depForm.kgVar*100)}
-          </b>
-
-        </div>
-
-
-        <div class="metrik">
-
-          <small>
-            2.5 Üst Geçmişi
-          </small>
-
-          <b>
-            %${Math.round(analiz.evForm.ust25*100)}
-            /
-            %${Math.round(analiz.depForm.ust25*100)}
-          </b>
-
-        </div>
-
-
-        <div class="metrik">
-
-          <small>
-            Gol Yememe
-          </small>
-
-          <b>
-            %${Math.round(analiz.evForm.golYememe*100)}
-            /
-            %${Math.round(analiz.depForm.golYememe*100)}
-          </b>
-
-        </div>
-
-
-        <div class="metrik">
-
-          <small>
-            Son 10 Sonuç
-          </small>
-
-          <b>
-            ${analiz.evForm.galibiyet}G
-            ${analiz.evForm.beraberlik}B
-            ${analiz.evForm.maglubiyet}M
-            /
-            ${analiz.depForm.galibiyet}G
-            ${analiz.depForm.beraberlik}B
-            ${analiz.depForm.maglubiyet}M
-          </b>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="bolum">
-
-      <div class="bolumBaslik">
-        MODEL KALİTESİ
-      </div>
-
-
-      <div class="metrikler">
-
-        ${metre(
-          "Veri Kalitesi",
-          analiz.veriPuani
-        )}
-
-        ${metre(
-          "Model Uyumu",
-          analiz.uyum
-        )}
-
-        ${metre(
-          "Oynaklık",
-          analiz.oynaklik
-        )}
-
-        ${metre(
-          "İstikrar",
-          analiz.istikrar
-        )}
-
-      </div>
-
-    </div>
-
-
-    <div class="bolum">
-
-      <div class="bolumBaslik">
-        NEDEN BU TAHMİN?
-      </div>
-
-      <div class="aciklama">
-
-        Ev sahibi son ${analiz.evForm.adet} maçta
-        maç başına ${analiz.evForm.attigi.toFixed(2)} gol üretip
-        ${analiz.evForm.yedigi.toFixed(2)} gol yedi.
-
-        Deplasman son ${analiz.depForm.adet} maçta
-        maç başına ${analiz.depForm.attigi.toFixed(2)} gol üretip
-        ${analiz.depForm.yedigi.toFixed(2)} gol yedi.
-
-        Model ile tarihsel gol davranışı uyumu
-        ${analiz.uyum}/100.
-
-        En yüksek hesaplanan pazar
-        ${analiz.anaPazar}
-        (%${Math.round(analiz.anaOlasilik*100)}).
-
-        İkinci seçenek
-        ${analiz.alternatif.ad}
-        (%${Math.round(analiz.alternatif.olasilik*100)}).
-
-      </div>
-
-    </div>
-
-
-    <div class="bolum">
-
-      <div class="bolumBaslik">
-        RİSKLER
-      </div>
-
-      <div class="aciklama ${analiz.riskler.length?"uyari":"iyi"}">
-
-        ${
-          analiz.riskler.length
-          ? analiz.riskler.join(" • ")
-          : "Modelin mevcut verisinde belirgin yapısal risk tespit edilmedi."
-        }
-
-      </div>
-
-    </div>
-
-
-    ${
-      oranBolumu(
-        analiz,
-        index
-      )
-    }
-
-
-    <div class="kaynak">
-      ${analiz.kaynak}
-    </div>
-
-  </section>
   `;
-
 }
 
-
 function kuponGecmisiniCiz(){
+  const kuponlar=kuponGecmisiOku();
 
-  const kuponlar =
-    kuponGecmisiOku();
-
-
-  if(
-    !kuponlar.length
-  ){
-
-    $("#icerik").innerHTML =
-      `
+  if(!kuponlar.length){
+    $("#icerik").innerHTML=`
       <div class="bosMesaj">
         Henüz kayıtlı kupon bulunmuyor.
       </div>
-      `;
-
+    `;
     return;
-
   }
 
+  $("#icerik").innerHTML=kuponlar.map(kupon=>`
+    <section class="kart">
 
-  $("#icerik").innerHTML =
-    kuponlar
-    .map(
-      kupon =>
-        `
-        <section class="kart">
+      <div class="ustSatir">
+        <div>
+          <b>${new Date(kupon.zaman).toLocaleString("tr-TR")}</b>
+          <div class="durum">${kupon.secimler.length} seçim</div>
+        </div>
+        <div style="font-size:22px;font-weight:900">
+          ${kupon.toplamOran.toFixed(2)}
+        </div>
+      </div>
 
-          <div class="ustSatir">
-
-            <div>
-
-              <b>
-                ${new Date(kupon.zaman).toLocaleString("tr-TR")}
-              </b>
-
-              <div class="durum">
-                ${kupon.secimler.length} seçim
-              </div>
-
+      <div class="bolum">
+        ${kupon.secimler.map(secim=>`
+          <div class="kuponAyagi">
+            <b>${secim.mac}</b>
+            <div class="durum">
+              ${secim.pazar}
+              • ${secim.site}
+              @ ${secim.oran.toFixed(2)}
+              • Güven ${secim.goalGridPuani}/100
             </div>
-
-            <div style="font-size:22px;font-weight:900">
-              ${kupon.toplamOran.toFixed(2)}
-            </div>
-
           </div>
+        `).join("")}
+      </div>
 
+      <div class="metrikler">
+        <div class="metrik">
+          <small>Yatırılan</small>
+          <b>${kupon.yatirilan.toLocaleString("tr-TR")} TL</b>
+        </div>
+        <div class="metrik">
+          <small>Potansiyel Dönüş</small>
+          <b>${kupon.potansiyel.toLocaleString("tr-TR")} TL</b>
+        </div>
+      </div>
 
-          <div class="bolum">
-
-            ${
-              kupon.secimler
-              .map(
-                secim =>
-                  `
-                  <div class="kuponAyagi">
-
-                    <b>
-                      ${secim.mac}
-                    </b>
-
-                    <div class="durum">
-                      ${secim.pazar}
-                      •
-                      ${secim.site}
-                      @
-                      ${secim.oran.toFixed(2)}
-                      •
-                      Güven ${secim.goalGridPuani}/100
-                    </div>
-
-                  </div>
-                  `
-              )
-              .join("")
-            }
-
-          </div>
-
-
-          <div class="metrikler">
-
-            <div class="metrik">
-
-              <small>
-                Yatırılan
-              </small>
-
-              <b>
-                ${kupon.yatirilan.toLocaleString("tr-TR")} TL
-              </b>
-
-            </div>
-
-
-            <div class="metrik">
-
-              <small>
-                Potansiyel Dönüş
-              </small>
-
-              <b>
-                ${kupon.potansiyel.toLocaleString("tr-TR")} TL
-              </b>
-
-            </div>
-
-          </div>
-
-        </section>
-        `
-    )
-    .join("");
-
+    </section>
+  `).join("");
 }
 
-
 function ekraniCiz(){
+  $("#macSayisi").textContent=durum.analizler.length;
 
-  $("#macSayisi").textContent =
-    durum.analizler.length;
-
-
-  $("#gucluSayisi").textContent =
+  $("#gucluSayisi").textContent=
     durum.analizler.filter(
-      analiz =>
-        analiz.sinif ===
-        "A"
-
-        ||
-
-        analiz.sinif ===
-        "A+"
+      x=>x.sinif==="A" || x.sinif==="A+"
     ).length;
 
-
-  $("#oynamaSayisi").textContent =
+  $("#oynamaSayisi").textContent=
     durum.analizler.filter(
-      analiz =>
-        analiz.sinif ===
-        "OYNAMA"
+      x=>x.sinif==="OYNAMA"
     ).length;
 
-
-  if(
-    durum.sekme ===
-    "kuponlar"
-  ){
-
+  if(durum.sekme==="kuponlar"){
     kuponGecmisiniCiz();
-
     return;
-
   }
 
+  let liste=[...durum.analizler];
 
-  let liste =
-    [...durum.analizler];
-
-
-  if(
-    durum.sekme ===
-    "guclu"
-  ){
-
-    liste =
-      liste.filter(
-        analiz =>
-          analiz.sinif ===
-          "A"
-
-          ||
-
-          analiz.sinif ===
-          "A+"
-      );
-
+  if(durum.sekme==="guclu"){
+    liste=liste.filter(
+      x=>x.sinif==="A" || x.sinif==="A+"
+    );
   }
 
-
-  if(
-    !liste.length
-  ){
-
-    $("#icerik").innerHTML =
-      `
+  if(!liste.length){
+    $("#icerik").innerHTML=`
       <div class="bosMesaj">
         Bu kategoride maç bulunmuyor.
       </div>
-      `;
-
+    `;
     return;
-
   }
 
-
-  $("#icerik").innerHTML =
-    liste
-    .map(
-      analiz =>
-        macKarti(
-          analiz,
-          durum.analizler.indexOf(
-            analiz
-          )
-        )
-    )
-    .join("");
-
+  $("#icerik").innerHTML=
+    liste.map(
+      analiz=>macKarti(
+        analiz,
+        durum.analizler.indexOf(analiz)
+      )
+    ).join("");
 }
 
+document.querySelectorAll(".sekme").forEach(dugme=>{
+  dugme.onclick=()=>{
+    document.querySelectorAll(".sekme").forEach(
+      x=>x.classList.remove("aktif")
+    );
 
-document
-.querySelectorAll(
-  ".sekme"
-)
-.forEach(
-  dugme => {
+    dugme.classList.add("aktif");
+    durum.sekme=dugme.dataset.sekme;
+    ekraniCiz();
+  };
+});
 
-    dugme.onclick =
-      () => {
-
-        document
-        .querySelectorAll(
-          ".sekme"
-        )
-        .forEach(
-          x =>
-            x.classList.remove(
-              "aktif"
-            )
-        );
-
-
-        dugme.classList.add(
-          "aktif"
-        );
-
-
-        durum.sekme =
-          dugme.dataset.sekme;
-
-
-        ekraniCiz();
-
-      };
-
-  }
-);
-
-
-$("#bugun").textContent =
+$("#bugun").textContent=
   new Intl.DateTimeFormat(
     "tr-TR",
     {
@@ -4541,36 +1755,20 @@ $("#bugun").textContent =
       year:"numeric",
       timeZone:"Europe/Istanbul"
     }
-  ).format(
-    new Date()
-  );
+  ).format(new Date());
 
-
-const eskiKasa =
-  localStorage.getItem(
-    "goalgrid_kasa"
-  );
-
+const eskiKasa=localStorage.getItem("goalgrid_kasa");
 
 if(eskiKasa){
-
-  $("#kasa").value =
-    eskiKasa;
-
+  $("#kasa").value=eskiKasa;
 }
 
-
-$("#kasa").addEventListener(
-  "input",
-  () => {
-
-    localStorage.setItem(
-      "goalgrid_kasa",
-      $("#kasa").value
-    );
-
-  }
-);
+$("#kasa").addEventListener("input",()=>{
+  localStorage.setItem(
+    "goalgrid_kasa",
+    $("#kasa").value
+  );
+});
 
 </script>
 
