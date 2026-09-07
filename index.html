@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>GoalGrid V1.9.7</title>
+<title>GoalGrid V1.9.8</title>
 
 <style>
 :root{
@@ -444,7 +444,7 @@ input[type="date"]{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="subtitle">Futbol Karar Motoru • V1.9.7</p>
+<p class="subtitle">Futbol Karar Motoru • V1.9.8</p>
 
 <section class="card">
 
@@ -1030,6 +1030,17 @@ function wantedFixture(fixture){
   const leagueId = Number(fixture.league?.id);
   const leagueName = plain(fixture.league?.name);
   const country = plain(fixture.league?.country);
+  const homeName = plain(fixture.teams?.home?.name || "");
+  const awayName = plain(fixture.teams?.away?.name || "");
+
+  const womenWords=[
+    "women","womens","female","femina","femenina","feminina",
+    "frauen","dames","vrouwen","kadin","kadın"
+  ];
+
+  if(includesAny(leagueName,womenWords)) return false;
+  if(/(^| )(w|women|femina|femenina|frauen)( |$)/.test(homeName)) return false;
+  if(/(^| )(w|women|femina|femenina|frauen)( |$)/.test(awayName)) return false;
 
   // UEFA club competitions are explicitly allowed.
   if([2,3,848].includes(leagueId) || includesAny(leagueName,EUROPE_NAMES)){
@@ -1250,9 +1261,6 @@ function sameTeam(
   ){
     return true;
   }
-
-  }
-
 
   /*
     Kaynakta ID yoksa isim fallback.
@@ -5602,6 +5610,19 @@ showApiState();
 
 updateCoupon();
 
+</script>
+
+
+<script id="goalgrid-v198-init">
+window.addEventListener("DOMContentLoaded",()=>{
+  try{
+    const el=document.querySelector("#selectedDate");
+    if(el && !el.value){ el.value=todayISO(); }
+    if(typeof updateSelectedDateText==="function") updateSelectedDateText();
+    if(typeof showApiState==="function") showApiState();
+    if(typeof render==="function") render();
+  }catch(e){ console.error("GoalGrid init",e); }
+});
 </script>
 
 </body>
