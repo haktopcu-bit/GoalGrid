@@ -1,0 +1,32 @@
+name: GoalGrid Hotfix
+
+on:
+  push:
+    paths:
+      - 'tools/goalgrid_hotfix.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Patch GoalGrid without replacing the design
+        run: python tools/goalgrid_hotfix.py
+      - name: Commit patched index
+        run: |
+          git config user.name "goalgrid-bot"
+          git config user.email "goalgrid-bot@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Fix GoalGrid filters, cup exclusion and team history"
+            git push
+          fi
