@@ -2,24 +2,30 @@ from pathlib import Path
 p=Path('index.html')
 s=p.read_text(encoding='utf-8')
 
-# This script runs on top of the current deployed V1.9.1 index.
-s=s.replace('GoalGrid V1.9.1','GoalGrid V1.9.2').replace('Futbol Karar Motoru • V1.9.1','Futbol Karar Motoru • V1.9.2')
+# Apply on top of V1.9.2.
+s=s.replace('GoalGrid V1.9.2','GoalGrid V1.9.3').replace('Futbol Karar Motoru • V1.9.2','Futbol Karar Motoru • V1.9.3')
 
-# Team aliases that were still causing valid OpenFootball/football-data matches to be missed.
-needle='''  sporting:"sporting"\n\n};'''
-replacement='''  sporting:"sporting",\n\n  necnijmegen:"nec",\n  nec:"nec",\n  excelsiorrotterdam:"excelsior",\n  excelsior:"excelsior",\n  clubbruggekv:"clubbrugge",\n  clubbrugge:"clubbrugge",\n  aekathensfc:"aekathens",\n  aekathens:"aekathens",\n  lasklinz:"lask",\n  lask:"lask",\n  astonvillafc:"astonvilla",\n  astonvilla:"astonvilla"\n\n};'''
-assert needle in s, 'alias tail not found'
-s=s.replace(needle,replacement,1)
-
-# Refresh API history cache and use a conservative request shape.
-s=s.replace('goalgrid_team_v190_','goalgrid_team_v192_')
-s=s.replace('`/fixtures?team=${teamId}&last=40&status=FT&timezone=Europe/Istanbul`','`/fixtures?team=${teamId}&last=20&timezone=Europe/Istanbul`',1)
-
-# Only use API-Football history if the free/league sources do not already provide 2 usable matches.
-old='''  /*\n    Avrupa ve kupa maçlarında en güvenilir takım eşleştirme:\n    API-Football takım ID.\n  */\n\n  try{\n\n    const [\n      homeHistory,\n      awayHistory\n    ] =\n      await Promise.all([\n        loadTeamHistory(\n          fixture.teams.home.id\n        ),\n        loadTeamHistory(\n          fixture.teams.away.id\n        )\n      ]);\n\n\n    if(\n      homeHistory.length\n    ){\n\n      groups.push(\n        homeHistory\n      );\n\n      sources.push(\n        `API-Football ${fixture.teams.home.name} (${homeHistory.length})`\n      );\n\n    }\n\n\n    if(\n      awayHistory.length\n    ){\n\n      groups.push(\n        awayHistory\n      );\n\n      sources.push(\n        `API-Football ${fixture.teams.away.name} (${awayHistory.length})`\n      );\n\n    }\n\n  }catch(error){\n\n    errors.push(\n      "API-Football takım geçmişi: "\n      +\n      error.message\n    );\n\n  }'''
-new='''  /*\n    Önce ücretsiz/lig kaynaklarını kullan. Takım için 2 maçtan az kalırsa\n    yalnız o takım için API-Football geçmişine düş. Böylece günlük API kotası\n    onlarca gereksiz takım çağrısıyla tüketilmez.\n  */\n\n  try{\n    const localMerged = mergeMatches(...groups);\n    const targetDate = String(fixture.fixture?.date || "").slice(0,10);\n\n    const localHomeCount = lastMatches(\n      fixture.teams.home.name, fixture.teams.home.id, localMerged, targetDate\n    ).length;\n\n    const localAwayCount = lastMatches(\n      fixture.teams.away.name, fixture.teams.away.id, localMerged, targetDate\n    ).length;\n\n    const needHome = localHomeCount < 2;\n    const needAway = localAwayCount < 2;\n\n    const [homeHistory,awayHistory] = await Promise.all([\n      needHome ? loadTeamHistory(fixture.teams.home.id) : Promise.resolve([]),\n      needAway ? loadTeamHistory(fixture.teams.away.id) : Promise.resolve([])\n    ]);\n\n    if(homeHistory.length){\n      groups.push(homeHistory);\n      sources.push(`API-Football ${fixture.teams.home.name} (${homeHistory.length})`);\n    }\n\n    if(awayHistory.length){\n      groups.push(awayHistory);\n      sources.push(`API-Football ${fixture.teams.away.name} (${awayHistory.length})`);\n    }\n\n  }catch(error){\n    errors.push("API-Football takım geçmişi: " + error.message);\n  }'''
-assert old in s, 'buildFixtureHistory API block not found'
+# 1) Domestic/national cups must be rejected BEFORE substring league matching.
+old='''  if(\n    BASE_LEAGUES[\n      fixture.league?.id\n    ]\n  ){\n    return true;\n  }\n\n\n  const rule =\n    COUNTRY_RULES[\n      country\n    ];\n\n\n  if(!rule){\n    return false;\n  }\n\n\n  if(\n    includesAny(\n      leagueName,\n      rule.leagues\n    )\n  ){\n    return true;\n  }\n\n\n  /* Ulusal kupa maçları GoalGrid bültenine alınmaz. */\n  if(\n    includesAny(\n      leagueName,\n      rule.cups\n    )\n  ){\n    return false;\n  }'''
+new='''  /*\n    Ulusal kupa / genç kupa adlarını lig adı eşleşmesinden ÖNCE ele.\n    Örn. \"Premier League Cup\" içinde \"premier league\" geçtiği için\n    eski sırada yanlışlıkla lig sanılıyordu.\n  */\n  const domesticCupWords = [\n    "fa cup", "league cup", "premier league cup", "efl cup",\n    "community shield", "copa del rey", "supercopa",\n    "coppa italia", "supercoppa", "dfb pokal", "dfb-pokal",\n    "coupe de france", "trophee des champions",\n    "knvb beker", "johan cruijff schaal",\n    "turkiye kupasi", "türkiye kupası",\n    "belgian cup", "croky cup", "cup", "beker", "pokal", "copa", "coppa", "coupe"\n  ];\n\n  if(includesAny(leagueName, domesticCupWords)){\n    return false;\n  }\n\n  if(\n    BASE_LEAGUES[\n      fixture.league?.id\n    ]\n  ){\n    return true;\n  }\n\n\n  const rule =\n    COUNTRY_RULES[\n      country\n    ];\n\n\n  if(!rule){\n    return false;\n  }\n\n\n  if(\n    includesAny(\n      leagueName,\n      rule.cups\n    )\n  ){\n    return false;\n  }\n\n\n  if(\n    includesAny(\n      leagueName,\n      rule.leagues\n    )\n  ){\n    return true;\n  }'''
+assert old in s, 'wantedFixture block not found'
 s=s.replace(old,new,1)
 
+# 2) API-Football FREE plan does not allow `last`. Use season-based team history instead.
+s=s.replace('goalgrid_team_v192_','goalgrid_team_v193_')
+old='''  const fixtures =\n    await apiFootball(\n      `/fixtures?team=${teamId}&last=20&timezone=Europe/Istanbul`\n    );\n\n\n  const matches =\n    fixtures'''
+new='''  const seasonCandidates = [2026, 2025];\n  const fixtures = [];\n  const seasonErrors = [];\n\n  for(const season of seasonCandidates){\n    try{\n      const seasonFixtures = await apiFootball(\n        `/fixtures?team=${teamId}&season=${season}&timezone=Europe/Istanbul`\n      );\n      fixtures.push(...seasonFixtures);\n    }catch(error){\n      seasonErrors.push(`${season}: ${error.message}`);\n    }\n  }\n\n  if(!fixtures.length && seasonErrors.length){\n    throw new Error(seasonErrors.join(" • "));\n  }\n\n  const matches =\n    fixtures'''
+assert old in s, 'last parameter history block not found'
+s=s.replace(old,new,1)
+
+# Sort returned history newest first, then keep a sane amount in cache.
+old='''      .filter(\n        x =>\n          x.team1 &&\n          x.team2\n      );'''
+new='''      .filter(\n        x =>\n          x.team1 &&\n          x.team2\n      )\n      .sort((a,b)=>String(b.date).localeCompare(String(a.date)))\n      .slice(0,40);'''
+# replace only first occurrence after loadTeamHistory area; there may be other similar blocks.
+pos=s.find('async function loadTeamHistory')
+idx=s.find(old,pos)
+assert idx!=-1, 'loadTeamHistory match filter not found'
+s=s[:idx]+s[idx:].replace(old,new,1)
+
 p.write_text(s,encoding='utf-8')
-print('GoalGrid V1.9.2 applied')
+print('GoalGrid V1.9.3 applied - no Last parameter, domestic cups removed')
