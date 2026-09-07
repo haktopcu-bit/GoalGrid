@@ -2,61 +2,64 @@ export async function onRequestGet(context) {
   const url = new URL(context.request.url);
   const league = url.searchParams.get("league");
 
-  const leagueFiles = {
+  const LIGLER = {
     premierleague: {
-      files: ["en.1.json"],
-      seasons: ["2026-27", "2025-26"]
+      dosya: "en.1.json",
+      sezonlar: ["2026-27", "2025-26"]
     },
 
     championship: {
-      files: ["en.2.json"],
-      seasons: ["2026-27", "2025-26"]
+      dosya: "en.2.json",
+      sezonlar: ["2026-27", "2025-26"]
     },
 
     bundesliga: {
-      files: ["de.1.json"],
-      seasons: ["2026-27", "2025-26"]
+      dosya: "de.1.json",
+      sezonlar: ["2026-27", "2025-26"]
     },
 
     laliga: {
-      files: ["es.1.json"],
-      seasons: ["2026-27", "2025-26"]
+      dosya: "es.1.json",
+      sezonlar: ["2026-27", "2025-26"]
     },
 
     ligue1: {
-      files: ["fr.1.json"],
-      seasons: ["2026-27", "2025-26"]
+      dosya: "fr.1.json",
+      sezonlar: ["2026-27", "2025-26"]
     },
 
     seriea: {
-      files: ["it.1.json"],
-      seasons: ["2026-27", "2025-26"]
+      dosya: "it.1.json",
+      sezonlar: ["2026-27", "2025-26"]
     },
 
     eredivisie: {
-      files: ["nl.1.json"],
-      seasons: ["2026-27", "2025-26"]
+      dosya: "nl.1.json",
+      sezonlar: ["2026-27", "2025-26"]
     },
 
     superlig: {
-      files: ["tr.1.json"],
-      seasons: ["2026-27", "2025-26"]
+      dosya: "tr.1.json",
+      sezonlar: ["2026-27", "2025-26"]
     },
 
     belcika: {
-      files: ["be.1.json"],
-      seasons: ["2026-27", "2025-26"]
+      dosya: "be.1.json",
+      sezonlar: ["2026-27", "2025-26"]
     }
   };
 
-  const config = leagueFiles[league];
+  const ayar = LIGLER[league];
 
-  if (!config) {
-    return json({
-      ok: false,
-      hata: "Bu lig GoalGrid veri katmanında desteklenmiyor.",
-      lig: league
-    }, 400);
+  if (!ayar) {
+    return json(
+      {
+        ok: false,
+        lig: league,
+        hata: "Bu lig GoalGrid veri sisteminde tanımlı değil."
+      },
+      400
+    );
   }
 
   try {
@@ -64,224 +67,282 @@ export async function onRequestGet(context) {
     const kaynaklar = [];
     const hatalar = [];
 
-    for (const season of config.seasons) {
-      let seasonLoaded = false;
+    for (const sezon of ayar.sezonlar) {
+      const kaynak =
+        `https://raw.githubusercontent.com/openfootball/football.json/master/${sezon}/${ayar.dosya}`;
 
-      for (const file of config.files) {
-        const source =
-          `https://raw.githubusercontent.com/openfootball/football.json/master/${season}/${file}`;
-
-        try {
-          const response = await fetch(source, {
-            headers: {
-              "User-Agent": "GoalGrid/1.5"
-            }
-          });
-
-          if (!response.ok) {
-            hatalar.push({
-              sezon: season,
-              dosya: file,
-              durum: response.status
-            });
-
-            continue;
+      try {
+        const cevap = await fetch(kaynak, {
+          headers: {
+            "User-Agent": "GoalGrid/1.5"
           }
+        });
 
-          const data = await response.json();
-
-          const matches =
-            Array.isArray(data.matches)
-              ? data.matches
-              : [];
-
-          if (!matches.length) {
-            hatalar.push({
-              sezon: season,
-              dosya: file,
-              durum: "boş"
-            });
-
-            continue;
-          }
-
-          for (const match of matches) {
-            const normalized =
-              normalizeMatch(match, season);
-
-            if (normalized) {
-              tumMaclar.push(normalized);
-            }
-          }
-
-          kaynaklar.push({
-            sezon: season,
-            dosya: file,
-            macSayisi: matches.length
-          });
-
-          seasonLoaded = true;
-          break;
-
-        } catch (error) {
+        if (!cevap.ok) {
           hatalar.push({
-            sezon: season,
-            dosya: file,
-            durum: error.message
+            sezon,
+            durum: cevap.status
           });
-        }
-      }
 
-      // Bir sezon bulunamadıysa diğer sezona devam et.
-      if (!seasonLoaded) {
-        continue;
+          continue;
+        }
+
+        const veri = await cevap.json();
+
+        const maclar =
+          Array.isArray(veri.matches)
+            ? veri.matches
+            : [];
+
+        if (!maclar.length) {
+          hatalar.push({
+            sezon,
+            durum: "Maç bulunamadı"
+          });
+
+          continue;
+        }
+
+        let eklenen = 0;
+
+        for (const mac of maclar) {
+          const temizMac = maciTemizle(mac, sezon);
+
+          if (temizMac) {
+            tumMaclar.push(temizMac);
+            eklenen++;
+          }
+        }
+
+        kaynaklar.push({
+          sezon,
+          dosya: ayar.dosya,
+          macSayisi: eklenen
+        });
+
+      } catch (hata) {
+        hatalar.push({
+          sezon,
+          durum: hata.message
+        });
       }
     }
 
     if (!tumMaclar.length) {
-      return json({
-        ok: false,
-        hata: "Bu lig için kullanılabilir geçmiş maç verisi bulunamadı.",
-        lig: league,
-        hatalar
-      }, 502);
+      return json(
+        {
+          ok: false,
+          lig: league,
+          hata: "Bu lig için kullanılabilir geçmiş maç bulunamadı.",
+          kaynaklar,
+          hatalar
+        },
+        502
+      );
     }
 
-    // Aynı maçın iki kez gelmesini engelle.
-    const unique = new Map();
+    /*
+      Aynı karşılaşma yanlışlıkla iki kez gelirse
+      tekrarları kaldırıyoruz.
+    */
 
-    for (const match of tumMaclar) {
-      const key = [
-        match.date || "",
-        match.team1 || "",
-        match.team2 || ""
+    const benzersiz = new Map();
+
+    for (const mac of tumMaclar) {
+      const anahtar = [
+        mac.date || "",
+        takimMetni(mac.team1),
+        takimMetni(mac.team2)
       ].join("|");
 
-      if (!unique.has(key)) {
-        unique.set(key, match);
+      if (!benzersiz.has(anahtar)) {
+        benzersiz.set(anahtar, mac);
       }
     }
 
-    const maclar =
-      [...unique.values()]
-        .sort((a, b) => {
-          const aa =
-            `${a.date || ""} ${a.time || "00:00"}`;
+    const maclar = [...benzersiz.values()];
 
-          const bb =
-            `${b.date || ""} ${b.time || "00:00"}`;
+    maclar.sort((a, b) => {
+      const tarihA =
+        `${a.date || ""} ${a.time || "00:00"}`;
 
-          return aa.localeCompare(bb);
-        });
+      const tarihB =
+        `${b.date || ""} ${b.time || "00:00"}`;
 
-    return json({
-      ok: true,
-      lig: league,
-      kaynak: "OpenFootball",
-      kaynaklar,
-      toplamMac: maclar.length,
-      maclar,
-      hatalar
-    }, 200, {
-      "cache-control": "public, max-age=1800"
+      return tarihA.localeCompare(tarihB);
     });
 
-  } catch (error) {
-    return json({
-      ok: false,
-      hata: error.message,
-      lig: league
-    }, 500);
+    return json(
+      {
+        ok: true,
+        lig: league,
+        kaynak: "OpenFootball",
+        sezonlar: ayar.sezonlar,
+        toplamMac: maclar.length,
+        kaynaklar,
+        hatalar,
+        maclar
+      },
+      200,
+      {
+        "cache-control": "public, max-age=1800"
+      }
+    );
+
+  } catch (hata) {
+    return json(
+      {
+        ok: false,
+        lig: league,
+        hata: hata.message
+      },
+      500
+    );
   }
 }
 
 
-function normalizeMatch(match, season) {
-  if (!match || !match.team1 || !match.team2) {
+function maciTemizle(mac, sezon) {
+  if (!mac) {
     return null;
   }
 
-  let ft = null;
-  let ht = null;
+  const ev =
+    takimMetni(mac.team1);
+
+  const dep =
+    takimMetni(mac.team2);
+
+  if (!ev || !dep) {
+    return null;
+  }
+
+  let tamSkor = null;
+  let devreSkoru = null;
 
   /*
-    OpenFootball'da iki farklı skor biçimi görülebiliyor:
+    OpenFootball dosyalarında skor bazen:
 
     score: {
       ft: [2,1],
       ht: [1,0]
     }
 
-    veya
+    bazen de:
 
     score: [2,1]
+
+    biçiminde olabilir.
   */
 
   if (
-    match.score &&
-    !Array.isArray(match.score) &&
-    Array.isArray(match.score.ft)
+    mac.score &&
+    !Array.isArray(mac.score) &&
+    typeof mac.score === "object"
   ) {
-    ft = normalizeScoreArray(match.score.ft);
+    tamSkor =
+      skorTemizle(mac.score.ft);
 
-    if (Array.isArray(match.score.ht)) {
-      ht = normalizeScoreArray(match.score.ht);
-    }
+    devreSkoru =
+      skorTemizle(mac.score.ht);
 
-  } else if (Array.isArray(match.score)) {
-    ft = normalizeScoreArray(match.score);
+  } else if (Array.isArray(mac.score)) {
+    tamSkor =
+      skorTemizle(mac.score);
   }
 
   return {
-    round: match.round || "",
-    date: match.date || "",
-    time: match.time || "",
-    team1: String(match.team1),
-    team2: String(match.team2),
+    round:
+      mac.round || "",
 
-    score: ft
-      ? {
-          ft,
-          ...(ht ? { ht } : {})
-        }
-      : null,
+    date:
+      mac.date || "",
 
-    sezon: season
+    time:
+      mac.time || "",
+
+    team1:
+      ev,
+
+    team2:
+      dep,
+
+    score:
+      tamSkor
+        ? {
+            ft: tamSkor,
+            ...(devreSkoru
+              ? { ht: devreSkoru }
+              : {})
+          }
+        : null,
+
+    sezon
   };
 }
 
 
-function normalizeScoreArray(value) {
+function takimMetni(takim) {
+  /*
+    Bazı veri sürümlerinde takım doğrudan metin,
+    bazılarında nesne olabilir.
+  */
+
+  if (typeof takim === "string") {
+    return takim.trim();
+  }
+
   if (
-    !Array.isArray(value) ||
-    value.length < 2
+    takim &&
+    typeof takim === "object"
+  ) {
+    return String(
+      takim.name ||
+      takim.title ||
+      takim.code ||
+      ""
+    ).trim();
+  }
+
+  return "";
+}
+
+
+function skorTemizle(skor) {
+  if (
+    !Array.isArray(skor) ||
+    skor.length < 2
   ) {
     return null;
   }
 
-  const home = Number(value[0]);
-  const away = Number(value[1]);
+  const ev =
+    Number(skor[0]);
+
+  const dep =
+    Number(skor[1]);
 
   if (
-    !Number.isFinite(home) ||
-    !Number.isFinite(away)
+    !Number.isFinite(ev) ||
+    !Number.isFinite(dep)
   ) {
     return null;
   }
 
-  return [home, away];
+  return [ev, dep];
 }
 
 
 function json(
-  data,
-  status = 200,
-  extraHeaders = {}
+  veri,
+  durum = 200,
+  ekBasliklar = {}
 ) {
   return new Response(
-    JSON.stringify(data),
+    JSON.stringify(veri),
     {
-      status,
+      status: durum,
+
       headers: {
         "content-type":
           "application/json; charset=utf-8",
@@ -289,7 +350,7 @@ function json(
         "access-control-allow-origin":
           "*",
 
-        ...extraHeaders
+        ...ekBasliklar
       }
     }
   );
