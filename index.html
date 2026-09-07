@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>GoalGrid V1.9.4</title>
+<title>GoalGrid V1.9.5</title>
 
 <style>
 :root{
@@ -444,7 +444,7 @@ input[type="date"]{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="subtitle">Futbol Karar Motoru • V1.9.4</p>
+<p class="subtitle">Futbol Karar Motoru • V1.9.5</p>
 
 <section class="card">
 
@@ -3317,6 +3317,70 @@ function noDataAnalysis(
 }
 
 
+async function loadFixturesForDate(date){
+
+  try{
+    return await apiFootball(
+      `/fixtures?date=${date}&timezone=Europe/Istanbul`
+    );
+  }catch(error){
+
+    const msg = String(error?.message || error || "");
+    const blockedDate =
+      msg.includes("Free plans do not have access to this date") ||
+      msg.includes("do not have access to this date");
+
+    if(!blockedDate){
+      throw error;
+    }
+
+    const season = Number(date.slice(0,4));
+    const leagueIds = [39,40,78,135,140,61,88,89,203,204,144,2,3,848];
+    const all=[];
+    const errors=[];
+
+    for(const leagueId of leagueIds){
+      const key=`goalgrid_fixture_season_v195_${leagueId}_${season}`;
+      let fixtures=null;
+
+      try{
+        const raw=localStorage.getItem(key);
+        if(raw){
+          const parsed=JSON.parse(raw);
+          if(Date.now()-parsed.time < 6*60*60*1000){
+            fixtures=parsed.fixtures;
+          }
+        }
+      }catch{}
+
+      if(!fixtures){
+        try{
+          fixtures=await apiFootball(
+            `/fixtures?league=${leagueId}&season=${season}&timezone=Europe/Istanbul`
+          );
+          try{localStorage.setItem(key,JSON.stringify({time:Date.now(),fixtures}));}catch{}
+        }catch(e){
+          errors.push(`${leagueId}: ${e.message}`);
+          continue;
+        }
+      }
+
+      all.push(...fixtures);
+    }
+
+    const filtered = all.filter(x=>
+      String(x.fixture?.date || "").slice(0,10)===date
+    );
+
+    if(!filtered.length && errors.length===leagueIds.length){
+      throw new Error(errors.join(" • "));
+    }
+
+    return filtered;
+  }
+}
+
+
 async function scan(){
 
   if(
@@ -3355,9 +3419,7 @@ async function scan(){
   try{
 
     const fixtures =
-      await apiFootball(
-        `/fixtures?date=${date}&timezone=Europe/Istanbul`
-      );
+      await loadFixturesForDate(date);
 
 
     const selected = fixtures.filter(wantedFixture);
