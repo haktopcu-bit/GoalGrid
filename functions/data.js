@@ -46,6 +46,21 @@ export async function onRequestGet(context) {
     belcika: {
       dosya: "be.1.json",
       sezonlar: ["2026-27", "2025-26"]
+    },
+
+    avusturya: {
+      dosya: "at.1.json",
+      sezonlar: ["2026-27", "2025-26"]
+    },
+
+    yunanistan: {
+      dosya: "gr.1.json",
+      sezonlar: ["2026-27", "2025-26"]
+    },
+
+    portekiz: {
+      dosya: "pt.1.json",
+      sezonlar: ["2026-27", "2025-26"]
     }
   };
 

@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>GoalGrid V1.9.3</title>
+<title>GoalGrid V1.9.4</title>
 
 <style>
 :root{
@@ -444,7 +444,7 @@ input[type="date"]{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="subtitle">Futbol Karar Motoru • V1.9.3</p>
+<p class="subtitle">Futbol Karar Motoru • V1.9.4</p>
 
 <section class="card">
 
@@ -676,6 +676,11 @@ const EUROPE_NAMES = [
   "conference league",
   "uefa conference league",
   "europa conference league"
+];
+
+const UEFA_HISTORY_OPENFOOTBALL = [
+  "premierleague","championship","bundesliga","seriea","laliga","ligue1",
+  "eredivisie","superlig","belcika","avusturya","yunanistan","portekiz"
 ];
 
 
@@ -1023,96 +1028,36 @@ function includesAny(text,words){
 function wantedFixture(fixture){
 
   const leagueId = Number(fixture.league?.id);
+  const leagueName = plain(fixture.league?.name);
+  const country = plain(fixture.league?.country);
 
-  /* GoalGrid sabit ID güvenlik ağı: UEFA + Hollanda ligleri */
-  if([2,3,848,88,89].includes(leagueId)){
+  // UEFA club competitions are explicitly allowed.
+  if([2,3,848].includes(leagueId) || includesAny(leagueName,EUROPE_NAMES)){
     return true;
   }
 
-  const leagueName =
-    plain(
-      fixture.league?.name
-    );
-
-  const country =
-    plain(
-      fixture.league?.country
-    );
-
-
-  if(
-    includesAny(
-      leagueName,
-      EUROPE_NAMES
-    )
-  ){
-    return true;
-  }
-
-
-  /*
-    Ulusal kupa / genç kupa adlarını lig adı eşleşmesinden ÖNCE ele.
-    Örn. "Premier League Cup" içinde "premier league" geçtiği için
-    eski sırada yanlışlıkla lig sanılıyordu.
-  */
-  const domesticCupWords = [
-    "fa cup", "league cup", "premier league cup", "efl cup",
-    "community shield", "copa del rey", "supercopa",
-    "coppa italia", "supercoppa", "dfb pokal", "dfb-pokal",
-    "coupe de france", "trophee des champions",
-    "knvb beker", "johan cruijff schaal",
-    "turkiye kupasi", "türkiye kupası",
-    "belgian cup", "croky cup", "cup", "beker", "pokal", "copa", "coppa", "coupe"
+  // Everything that is a domestic/national cup is rejected before league matching.
+  const cupWords=[
+    "cup","copa","coppa","coupe","pokal","beker","trophy","shield",
+    "supercup","super cup","supercopa","supercoppa","trophee","schaal"
   ];
-
-  if(includesAny(leagueName, domesticCupWords)){
+  if(includesAny(leagueName,cupWords)){
     return false;
   }
 
-  if(
-    BASE_LEAGUES[
-      fixture.league?.id
-    ]
-  ){
+  if([88,89].includes(leagueId)){
     return true;
   }
 
-
-  const rule =
-    COUNTRY_RULES[
-      country
-    ];
-
-
-  if(!rule){
-    return false;
-  }
-
-
-  if(
-    includesAny(
-      leagueName,
-      rule.cups
-    )
-  ){
-    return false;
-  }
-
-
-  if(
-    includesAny(
-      leagueName,
-      rule.leagues
-    )
-  ){
+  if(BASE_LEAGUES[fixture.league?.id]){
     return true;
   }
 
-
-  return false;
-
+  const rule=COUNTRY_RULES[country];
+  if(!rule) return false;
+  if(includesAny(leagueName,rule.cups)) return false;
+  return includesAny(leagueName,rule.leagues);
 }
-
 
 function competitionConfig(fixture){
 
@@ -1227,7 +1172,12 @@ const TEAM_ALIASES = {
   lasklinz:"lask",
   lask:"lask",
   astonvillafc:"astonvilla",
-  astonvilla:"astonvilla"
+  astonvilla:"astonvilla",
+  sheffieldutd:"sheffieldunited",
+  sheffieldunited:"sheffieldunited",
+  fcporto:"porto",
+  porto:"porto",
+  aekathen:"aekathens"
 
 };
 
@@ -2662,148 +2612,66 @@ function noReason(
 async function buildFixtureHistory(
   fixture
 ){
-
-  const config =
-    competitionConfig(
-      fixture
-    );
-
-
+  const config=competitionConfig(fixture);
   const groups=[];
   const sources=[];
   const errors=[];
+  const leagueId=Number(fixture.league?.id);
+  const leagueName=plain(fixture.league?.name);
+  const isUefa=[2,3,848].includes(leagueId) || includesAny(leagueName,EUROPE_NAMES);
 
-
-  if(
-    config.fd
-  ){
-
+  if(config.fd){
     try{
-
-      const fd =
-        await loadFootballData(
-          config.fd
-        );
-
-
-      if(fd.length){
-
-        groups.push(
-          fd
-        );
-
-        sources.push(
-          `football-data.org (${fd.length})`
-        );
-
-      }
-
-    }catch(error){
-
-      errors.push(
-        "football-data.org: "
-        +
-        error.message
-      );
-
-    }
-
+      const fd=await loadFootballData(config.fd);
+      if(fd.length){groups.push(fd);sources.push(`football-data.org (${fd.length})`);}
+    }catch(error){errors.push("football-data.org: "+error.message);}
   }
 
-
-  if(
-    config.of
-  ){
-
+  if(config.of){
     try{
+      const of=await loadOpenFootball(config.of);
+      if(of.length){groups.push(of);sources.push(`OpenFootball ${config.name} (${of.length})`);}
+    }catch(error){errors.push("OpenFootball: "+error.message);}
+  }
 
-      const of =
-        await loadOpenFootball(
-          config.of
-        );
-
-
-      if(of.length){
-
-        groups.push(
-          of
-        );
-
-        sources.push(
-          `OpenFootball (${of.length})`
-        );
-
+  // UEFA fixtures need each club's DOMESTIC form, not only previous UEFA games.
+  // Load all supported domestic leagues; loadOpenFootball caches every dataset locally.
+  if(isUefa){
+    const settled=await Promise.allSettled(UEFA_HISTORY_OPENFOOTBALL.map(code=>loadOpenFootball(code)));
+    let added=0;
+    settled.forEach((result,i)=>{
+      if(result.status==="fulfilled" && result.value.length){
+        groups.push(result.value);
+        added+=result.value.length;
+      }else if(result.status==="rejected"){
+        errors.push(`OpenFootball ${UEFA_HISTORY_OPENFOOTBALL[i]}: ${result.reason?.message||result.reason}`);
       }
+    });
+    if(added) sources.push(`OpenFootball Avrupa lig havuzu (${added})`);
+  }
 
+  // Check actual usable team matches after the domestic pool has been merged.
+  const targetDate=String(fixture.fixture?.date||"").slice(0,10);
+  let merged=mergeMatches(...groups);
+  let homeCount=lastMatches(fixture.teams.home.name,fixture.teams.home.id,merged,targetDate).length;
+  let awayCount=lastMatches(fixture.teams.away.name,fixture.teams.away.id,merged,targetDate).length;
+
+  // API-Football is only a final fallback. Free-plan errors never erase the free-source history.
+  if(homeCount<2 || awayCount<2){
+    try{
+      const [homeHistory,awayHistory]=await Promise.all([
+        homeCount<2 ? loadTeamHistory(fixture.teams.home.id) : Promise.resolve([]),
+        awayCount<2 ? loadTeamHistory(fixture.teams.away.id) : Promise.resolve([])
+      ]);
+      if(homeHistory.length){groups.push(homeHistory);sources.push(`API-Football ${fixture.teams.home.name} (${homeHistory.length})`);}
+      if(awayHistory.length){groups.push(awayHistory);sources.push(`API-Football ${fixture.teams.away.name} (${awayHistory.length})`);}
     }catch(error){
-
-      errors.push(
-        "OpenFootball: "
-        +
-        error.message
-      );
-
+      errors.push("API-Football takım geçmişi: "+error.message);
     }
-
   }
 
-
-  /*
-    Önce ücretsiz/lig kaynaklarını kullan. Takım için 2 maçtan az kalırsa
-    yalnız o takım için API-Football geçmişine düş. Böylece günlük API kotası
-    onlarca gereksiz takım çağrısıyla tüketilmez.
-  */
-
-  try{
-    const localMerged = mergeMatches(...groups);
-    const targetDate = String(fixture.fixture?.date || "").slice(0,10);
-
-    const localHomeCount = lastMatches(
-      fixture.teams.home.name, fixture.teams.home.id, localMerged, targetDate
-    ).length;
-
-    const localAwayCount = lastMatches(
-      fixture.teams.away.name, fixture.teams.away.id, localMerged, targetDate
-    ).length;
-
-    const needHome = localHomeCount < 2;
-    const needAway = localAwayCount < 2;
-
-    const [homeHistory,awayHistory] = await Promise.all([
-      needHome ? loadTeamHistory(fixture.teams.home.id) : Promise.resolve([]),
-      needAway ? loadTeamHistory(fixture.teams.away.id) : Promise.resolve([])
-    ]);
-
-    if(homeHistory.length){
-      groups.push(homeHistory);
-      sources.push(`API-Football ${fixture.teams.home.name} (${homeHistory.length})`);
-    }
-
-    if(awayHistory.length){
-      groups.push(awayHistory);
-      sources.push(`API-Football ${fixture.teams.away.name} (${awayHistory.length})`);
-    }
-
-  }catch(error){
-    errors.push("API-Football takım geçmişi: " + error.message);
-  }
-
-
-  return{
-
-    matches:
-      mergeMatches(
-        ...groups
-      ),
-
-    sources,
-
-    errors
-
-  };
-
+  return{matches:mergeMatches(...groups),sources,errors};
 }
-
 
 function analyseFixture(
   fixture,
