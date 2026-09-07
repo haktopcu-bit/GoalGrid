@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>GoalGrid V1.10.0</title>
+<title>GoalGrid V1.10.1</title>
 
 <style>
 :root{
@@ -444,7 +444,7 @@ input[type="date"]{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="subtitle">Futbol Karar Motoru • V1.10.0</p>
+<p class="subtitle">Futbol Karar Motoru • V1.10.1</p>
 
 <section class="card">
 
@@ -472,7 +472,6 @@ input[type="date"]{
       <span class="source">API-Football • Takım geçmişi</span>
       <span class="source">football-data.org</span>
       <span class="source">OpenFootball</span>
-      <span class="source">Sofascore • Takım geçmişi fallback</span>
     </div>
 
     <div class="muted" style="margin-top:8px">
@@ -2578,21 +2577,6 @@ async function buildFixtureHistory(
   let merged=mergeMatches(...groups);
   let homeCount=lastMatches(fixture.teams.home.name,fixture.teams.home.id,merged,targetDate).length;
   let awayCount=lastMatches(fixture.teams.away.name,fixture.teams.away.id,merged,targetDate).length;
-
-  // Universal fallback for leagues/teams missing in the free historical datasets.
-  if(homeCount<2 || awayCount<2){
-    const sofa=await Promise.allSettled([
-      homeCount<2 ? loadSofaHistory(fixture.teams.home.name) : Promise.resolve([]),
-      awayCount<2 ? loadSofaHistory(fixture.teams.away.name) : Promise.resolve([])
-    ]);
-    if(sofa[0].status==="fulfilled" && sofa[0].value.length){groups.push(sofa[0].value);sources.push(`Sofascore ${fixture.teams.home.name} (${sofa[0].value.length})`);}
-    else if(sofa[0].status==="rejected") errors.push(`Sofascore ${fixture.teams.home.name}: ${sofa[0].reason?.message||sofa[0].reason}`);
-    if(sofa[1].status==="fulfilled" && sofa[1].value.length){groups.push(sofa[1].value);sources.push(`Sofascore ${fixture.teams.away.name} (${sofa[1].value.length})`);}
-    else if(sofa[1].status==="rejected") errors.push(`Sofascore ${fixture.teams.away.name}: ${sofa[1].reason?.message||sofa[1].reason}`);
-    merged=mergeMatches(...groups);
-    homeCount=lastMatches(fixture.teams.home.name,fixture.teams.home.id,merged,targetDate).length;
-    awayCount=lastMatches(fixture.teams.away.name,fixture.teams.away.id,merged,targetDate).length;
-  }
 
   // API-Football historical seasons (2024/2023) are the final fallback on the Free plan.
   if(homeCount<2 || awayCount<2){
