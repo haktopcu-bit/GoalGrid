@@ -1,25 +1,24 @@
 # GoalGrid V1.9.6 deployment patch
 from pathlib import Path
+import re
+
 p=Path('index.html')
 s=p.read_text(encoding='utf-8')
 
 s=s.replace('GoalGrid V1.9.5','GoalGrid V1.9.6').replace('Futbol Karar Motoru • V1.9.5','Futbol Karar Motoru • V1.9.6')
 
-# 1) Women competitions are out of GoalGrid scope.
-needle='''  const country =\n    plain(\n      fixture.league?.country\n    );'''
-replacement='''  const country =\n    plain(\n      fixture.league?.country\n    );\n\n  const womenWords = [\n    "women", "womens", "women's", "female", "femina", "femenina",\n    "feminina", "frauen", "dames", "vrouwen", "kadın", "kadin"\n  ];\n\n  if(includesAny(leagueName,womenWords)){\n    return false;\n  }'''
-assert needle in s, 'wantedFixture country block not found'
-s=s.replace(needle,replacement,1)
+# 1) Remove women competitions/teams. Insert immediately before domestic cup check,
+# where leagueName is already defined in wantedFixture().
+marker='''  if(includesAny(leagueName,domesticCupWords)){\n    return false;\n  }'''
+if marker in s and 'const womenWords = [' not in s:
+    women_block='''  const womenWords = [\n    "women", "womens", "female", "femina", "femenina",\n    "feminina", "frauen", "dames", "vrouwen", "kadın", "kadin"\n  ];\n\n  const homeName = plain(fixture.teams?.home?.name || "");\n  const awayName = plain(fixture.teams?.away?.name || "");\n\n  if(\n    includesAny(leagueName,womenWords) ||\n    /(^| )(w|women|femina|femenina|frauen)( |$)/.test(homeName) ||\n    /(^| )(w|women|femina|femenina|frauen)( |$)/.test(awayName)\n  ){\n    return false;\n  }\n\n'''
+    s=s.replace(marker,women_block+marker,1)
 
-needle='''  if(includesAny(leagueName,domesticCupWords)){\n    return false;\n  }'''
-replacement='''  if(includesAny(leagueName,domesticCupWords)){\n    return false;\n  }\n\n  const homeName = plain(fixture.teams?.home?.name || "");\n  const awayName = plain(fixture.teams?.away?.name || "");\n  if(\n    /(^| )(w|women|femina|femenina|frauen)( |$)/.test(homeName) ||\n    /(^| )(w|women|femina|femenina|frauen)( |$)/.test(awayName)\n  ){\n    return false;\n  }'''
-assert needle in s, 'domestic cup block not found'
-s=s.replace(needle,replacement,1)
-
+# 2) API-Football Free plan future dates: use football-data.org instead of trying 2026 season API-Football.
 start=s.find('async function loadFixturesForDate(date){')
 end=s.find('\n\n\nasync function scan(){', start)
-assert start!=-1 and end!=-1, 'loadFixturesForDate block not found'
-new_helper=r'''async function loadFixturesForDate(date){
+if start!=-1 and end!=-1:
+    new_helper=r'''async function loadFixturesForDate(date){
 
   try{
     return await apiFootball(
@@ -91,14 +90,15 @@ new_helper=r'''async function loadFixturesForDate(date){
     );
   }
 }'''
-s=s[:start]+new_helper+s[end:]
+    s=s[:start]+new_helper+s[end:]
 
-needle='''async function loadTeamHistory(teamId){\n\n  const key ='''
-replacement='''async function loadTeamHistory(teamId){\n\n  if(teamId===null || teamId===undefined || teamId===""){\n    return[];\n  }\n\n  const key ='''
-assert needle in s, 'loadTeamHistory start not found'
-s=s.replace(needle,replacement,1)
+# 3) Never call API-Football team history with null IDs from football-data fixtures.
+fn='async function loadTeamHistory(teamId){'
+pos=s.find(fn)
+if pos!=-1 and 'if(teamId===null || teamId===undefined || teamId==="")' not in s[pos:pos+250]:
+    insert_pos=pos+len(fn)
+    guard='''\n\n  if(teamId===null || teamId===undefined || teamId===""){\n    return[];\n  }'''
+    s=s[:insert_pos]+guard+s[insert_pos:]
 
 p.write_text(s,encoding='utf-8')
-print('GoalGrid V1.9.6 applied - women removed, future fixtures via football-data.org')
-
-# trigger
+print('GoalGrid V1.9.6 applied')
