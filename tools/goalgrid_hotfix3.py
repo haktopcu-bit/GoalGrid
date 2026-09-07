@@ -1,10 +1,10 @@
+# GoalGrid V1.9.5 deployment patch
 from pathlib import Path
 p=Path('index.html')
 s=p.read_text(encoding='utf-8')
 
 s=s.replace('GoalGrid V1.9.4','GoalGrid V1.9.5').replace('Futbol Karar Motoru • V1.9.4','Futbol Karar Motoru • V1.9.5')
 
-# Add a season-cache fallback for fixture dates blocked by API-Football Free plan.
 needle='''async function scan(){\n'''
 helper=r'''async function loadFixturesForDate(date){
 
@@ -23,18 +23,8 @@ helper=r'''async function loadFixturesForDate(date){
       throw error;
     }
 
-    /*
-      API-Football Free plan bazen seçilen günü doğrudan tarih filtresiyle
-      vermiyor. Bu durumda desteklediğimiz organizasyonların sezon fikstürünü
-      alıp tarihi telefonda filtreliyoruz. Sonuçlar 6 saat localStorage cache'inde
-      tutulduğu için aynı gün tekrar taramada yeniden 14 API çağrısı yapılmaz.
-    */
     const season = Number(date.slice(0,4));
-    const leagueIds = [
-      39,40,78,135,140,61,88,89,203,204,144,
-      2,3,848
-    ];
-
+    const leagueIds = [39,40,78,135,140,61,88,89,203,204,144,2,3,848];
     const all=[];
     const errors=[];
 
@@ -57,9 +47,7 @@ helper=r'''async function loadFixturesForDate(date){
           fixtures=await apiFootball(
             `/fixtures?league=${leagueId}&season=${season}&timezone=Europe/Istanbul`
           );
-          try{
-            localStorage.setItem(key,JSON.stringify({time:Date.now(),fixtures}));
-          }catch{}
+          try{localStorage.setItem(key,JSON.stringify({time:Date.now(),fixtures}));}catch{}
         }catch(e){
           errors.push(`${leagueId}: ${e.message}`);
           continue;
