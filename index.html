@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>GoalGrid V1.9.5</title>
+<title>GoalGrid V1.9.6</title>
 
 <style>
 :root{
@@ -444,7 +444,7 @@ input[type="date"]{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="subtitle">Futbol Karar Motoru • V1.9.5</p>
+<p class="subtitle">Futbol Karar Motoru • V1.9.6</p>
 
 <section class="card">
 
@@ -1381,6 +1381,10 @@ function normalizeApiFootballHistoryMatch(match){
 
 
 async function loadTeamHistory(teamId){
+
+  if(teamId===null || teamId===undefined || teamId===""){
+    return[];
+  }
 
   const key =
     "goalgrid_team_v193_"
@@ -3324,59 +3328,69 @@ async function loadFixturesForDate(date){
       `/fixtures?date=${date}&timezone=Europe/Istanbul`
     );
   }catch(error){
+    const msg=String(error?.message || error || "");
+    const blockedDate=msg.includes("do not have access to this date");
+    if(!blockedDate) throw error;
 
-    const msg = String(error?.message || error || "");
-    const blockedDate =
-      msg.includes("Free plans do not have access to this date") ||
-      msg.includes("do not have access to this date");
+    const competitionMap = {
+      CL:{id:2,country:"World",name:"UEFA Champions League"},
+      PL:{id:39,country:"England",name:"Premier League"},
+      ELC:{id:40,country:"England",name:"Championship"},
+      BL1:{id:78,country:"Germany",name:"Bundesliga"},
+      SA:{id:135,country:"Italy",name:"Serie A"},
+      PD:{id:140,country:"Spain",name:"La Liga"},
+      FL1:{id:61,country:"France",name:"Ligue 1"},
+      DED:{id:88,country:"Netherlands",name:"Eredivisie"},
+      PPL:{id:94,country:"Portugal",name:"Primeira Liga"}
+    };
 
-    if(!blockedDate){
-      throw error;
-    }
-
-    const season = Number(date.slice(0,4));
-    const leagueIds = [39,40,78,135,140,61,88,89,203,204,144,2,3,848];
     const all=[];
     const errors=[];
 
-    for(const leagueId of leagueIds){
-      const key=`goalgrid_fixture_season_v195_${leagueId}_${season}`;
-      let fixtures=null;
-
+    for(const [code,meta] of Object.entries(competitionMap)){
       try{
-        const raw=localStorage.getItem(key);
-        if(raw){
-          const parsed=JSON.parse(raw);
-          if(Date.now()-parsed.time < 6*60*60*1000){
-            fixtures=parsed.fixtures;
-          }
-        }
-      }catch{}
-
-      if(!fixtures){
-        try{
-          fixtures=await apiFootball(
-            `/fixtures?league=${leagueId}&season=${season}&timezone=Europe/Istanbul`
-          );
-          try{localStorage.setItem(key,JSON.stringify({time:Date.now(),fixtures}));}catch{}
-        }catch(e){
-          errors.push(`${leagueId}: ${e.message}`);
+        const response=await fetch(`/football-data?competition=${encodeURIComponent(code)}`,{cache:"no-store"});
+        const json=await response.json();
+        if(!response.ok || !json.ok){
+          errors.push(`${code}: ${json.hata || response.status}`);
           continue;
         }
+
+        for(const m of (json.maclar || [])){
+          const d=new Date(m.tarih);
+          if(Number.isNaN(d.getTime())) continue;
+          const parts=new Intl.DateTimeFormat("en-CA",{
+            timeZone:"Europe/Istanbul",year:"numeric",month:"2-digit",day:"2-digit"
+          }).formatToParts(d);
+          const o={}; parts.forEach(x=>o[x.type]=x.value);
+          const localDate=`${o.year}-${o.month}-${o.day}`;
+          if(localDate!==date) continue;
+
+          all.push({
+            fixture:{
+              id:m.id || `fd-${code}-${m.evSahibi?.ad}-${m.deplasman?.ad}-${date}`,
+              date:m.tarih,
+              timestamp:Math.floor(d.getTime()/1000),
+              status:{short:m.durum || "NS"}
+            },
+            league:{id:meta.id,name:m.lig?.ad || meta.name,country:meta.country},
+            teams:{
+              home:{id:null,name:m.evSahibi?.ad || m.evSahibi?.kisaAd || ""},
+              away:{id:null,name:m.deplasman?.ad || m.deplasman?.kisaAd || ""}
+            },
+            _fixtureSource:"football-data.org"
+          });
+        }
+      }catch(e){
+        errors.push(`${code}: ${e.message}`);
       }
-
-      all.push(...fixtures);
     }
 
-    const filtered = all.filter(x=>
-      String(x.fixture?.date || "").slice(0,10)===date
+    if(all.length) return all;
+    throw new Error(
+      "Seçilen tarih API-Football Free plan dışında ve football-data.org üzerinde de desteklenen erkek liglerinde maç bulunamadı." +
+      (errors.length ? " • "+errors.join(" • ") : "")
     );
-
-    if(!filtered.length && errors.length===leagueIds.length){
-      throw new Error(errors.join(" • "));
-    }
-
-    return filtered;
   }
 }
 
