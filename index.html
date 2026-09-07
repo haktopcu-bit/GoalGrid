@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>GoalGrid V1.8.1</title>
+<title>GoalGrid V1.9.0</title>
 
 <style>
 :root{
@@ -98,7 +98,7 @@ button{
 
 .stats{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(5,1fr);
   gap:7px;
 }
 
@@ -429,6 +429,13 @@ input[type="date"]{
     grid-template-columns:repeat(2,1fr);
   }
 }
+
+.filterStat{cursor:pointer;user-select:none;transition:.15s}
+.filterStat.active{outline:2px solid var(--green);border-color:transparent}
+.leagueFilters{margin-top:4px;margin-bottom:12px}
+.leagueFilters .tab{font-size:11px;padding:8px 10px}
+@media(max-width:520px){.gradeFilters{gap:5px}.gradeFilters .card{padding:10px 4px}.gradeFilters .stat b{font-size:18px}.gradeFilters .stat small{font-size:9px}}
+
 </style>
 </head>
 
@@ -437,7 +444,7 @@ input[type="date"]{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="subtitle">Futbol Karar Motoru • V1.8.1</p>
+<p class="subtitle">Futbol Karar Motoru • V1.9.0</p>
 
 <section class="card">
 
@@ -513,29 +520,15 @@ input[type="date"]{
 </section>
 
 
-<section class="stats">
-
-  <div class="card stat">
-    <b id="matchCount">0</b>
-    <small>MAÇ</small>
-  </div>
-
-  <div class="card stat">
-    <b id="strongCount">0</b>
-    <small>A / A+</small>
-  </div>
-
-  <div class="card stat">
-    <b id="noCount">0</b>
-    <small>OYNAMA</small>
-  </div>
-
-  <div class="card stat">
-    <b id="apiCount">0</b>
-    <small>API</small>
-  </div>
-
+<section class="stats gradeFilters">
+  <div class="card stat filterStat active" data-grade="ALL"><b id="matchCount">0</b><small>MAÇ</small></div>
+  <div class="card stat filterStat" data-grade="A+"><b id="aplusCount">0</b><small>A+</small></div>
+  <div class="card stat filterStat" data-grade="A"><b id="aCount">0</b><small>A</small></div>
+  <div class="card stat filterStat" data-grade="B"><b id="bCount">0</b><small>B</small></div>
+  <div class="card stat filterStat" data-grade="OYNAMA"><b id="noCount">0</b><small>OYNAMA</small></div>
 </section>
+
+<div id="leagueFilters" class="tabs leagueFilters hidden"></div>
 
 
 <div class="tabs">
@@ -791,7 +784,9 @@ let state = {
   analyses:[],
   tab:"strong",
   apiCalls:0,
-  coupon:[]
+  coupon:[],
+  gradeFilter:"ALL",
+  leagueFilter:"ALL"
 };
 
 
@@ -869,8 +864,8 @@ async function apiFootball(path){
 
   state.apiCalls++;
 
-  $("#apiCount").textContent =
-    state.apiCalls;
+  const apiCounter = $("#apiCount");
+  if(apiCounter) apiCounter.textContent = state.apiCalls;
 
   const response =
     await fetch(
@@ -1078,13 +1073,14 @@ function wantedFixture(fixture){
   }
 
 
+  /* Ulusal kupa maçları GoalGrid bültenine alınmaz. */
   if(
     includesAny(
       leagueName,
       rule.cups
     )
   ){
-    return true;
+    return false;
   }
 
 
@@ -1379,7 +1375,13 @@ function normalizeApiFootballHistoryMatch(match){
     score,
 
     source:
-      "API-Football"
+      "API-Football",
+
+    leagueName:
+      match.league?.name || "",
+
+    leagueCountry:
+      match.league?.country || ""
 
   };
 
@@ -1389,7 +1391,7 @@ function normalizeApiFootballHistoryMatch(match){
 async function loadTeamHistory(teamId){
 
   const key =
-    "goalgrid_team_v181_"
+    "goalgrid_team_v190_"
     +
     teamId;
 
@@ -1431,12 +1433,31 @@ async function loadTeamHistory(teamId){
 
   const fixtures =
     await apiFootball(
-      `/fixtures?team=${teamId}&last=25`
+      `/fixtures?team=${teamId}&last=40&status=FT&timezone=Europe/Istanbul`
     );
 
 
   const matches =
     fixtures
+      .filter(match => {
+        const leagueName = plain(match.league?.name);
+        const country = plain(match.league?.country);
+
+        if(includesAny(leagueName, EUROPE_NAMES)){
+          return true;
+        }
+
+        if(leagueName.includes("friendly")){
+          return false;
+        }
+
+        const rule = COUNTRY_RULES[country];
+        if(rule && includesAny(leagueName, rule.cups)){
+          return false;
+        }
+
+        return true;
+      })
       .map(
         normalizeApiFootballHistoryMatch
       )
@@ -3410,10 +3431,12 @@ async function scan(){
 
 
   state.apiCalls=0;
+  state.gradeFilter="ALL";
+  state.leagueFilter="ALL";
 
 
-  $("#apiCount").textContent=
-    "0";
+  const apiCounter = $("#apiCount");
+  if(apiCounter) apiCounter.textContent="0";
 
 
   const date =
@@ -5403,26 +5426,45 @@ function couponHistoryRender(){
 }
 
 
+function setGradeFilter(value){
+  state.gradeFilter=value;
+  state.tab="all";
+  document.querySelectorAll(".tab[data-tab]").forEach(x=>x.classList.toggle("active",x.dataset.tab==="all"));
+  render();
+}
+
+function setLeagueFilter(value){
+  state.leagueFilter=value;
+  state.tab="all";
+  document.querySelectorAll(".tab[data-tab]").forEach(x=>x.classList.toggle("active",x.dataset.tab==="all"));
+  render();
+}
+
+function renderLeagueFilters(){
+  const host=$("#leagueFilters");
+  if(!host) return;
+  const base=state.analyses.filter(x=>state.gradeFilter==="ALL" || x.grade===state.gradeFilter);
+  const counts=new Map();
+  base.forEach(x=>{const n=x.fixture?.league?.name||"Diğer";counts.set(n,(counts.get(n)||0)+1)});
+  if(!base.length){host.classList.add("hidden");host.innerHTML="";return}
+  if(state.leagueFilter!=="ALL" && !counts.has(state.leagueFilter)) state.leagueFilter="ALL";
+  host.classList.remove("hidden");
+  const buttons=[`<button class="tab ${state.leagueFilter==="ALL"?"active":""}" data-league-filter="ALL">Tümü (${base.length})</button>`];
+  [...counts.entries()].sort((a,b)=>a[0].localeCompare(b[0],"tr")).forEach(([name,count])=>buttons.push(`<button class="tab ${state.leagueFilter===name?"active":""}" data-league-filter="${name.replace(/&/g,"&amp;").replace(/"/g,"&quot;")}">${name} (${count})</button>`));
+  host.innerHTML=buttons.join("");
+  host.querySelectorAll("[data-league-filter]").forEach(btn=>btn.onclick=()=>setLeagueFilter(btn.dataset.leagueFilter));
+}
+
 function render(){
 
-  $("#matchCount").textContent=
-    state.analyses.length;
+  $("#matchCount").textContent=state.analyses.length;
+  $("#aplusCount").textContent=state.analyses.filter(x=>x.grade==="A+").length;
+  $("#aCount").textContent=state.analyses.filter(x=>x.grade==="A").length;
+  $("#bCount").textContent=state.analyses.filter(x=>x.grade==="B").length;
+  $("#noCount").textContent=state.analyses.filter(x=>x.grade==="OYNAMA").length;
 
-
-  $("#strongCount").textContent=
-    state.analyses.filter(
-      x=>
-        x.grade==="A"
-        ||
-        x.grade==="A+"
-    ).length;
-
-
-  $("#noCount").textContent=
-    state.analyses.filter(
-      x=>
-        x.grade==="OYNAMA"
-    ).length;
+  document.querySelectorAll(".filterStat").forEach(x=>x.classList.toggle("active",x.dataset.grade===state.gradeFilter));
+  renderLeagueFilters();
 
 
   if(
@@ -5436,23 +5478,17 @@ function render(){
   }
 
 
-  let list=[
-    ...state.analyses
-  ];
+  let list=[...state.analyses];
+
+  if(state.gradeFilter!=="ALL") list=list.filter(x=>x.grade===state.gradeFilter);
+  if(state.leagueFilter!=="ALL") list=list.filter(x=>(x.fixture?.league?.name||"")===state.leagueFilter);
 
 
   if(
-    state.tab==="strong"
+    state.tab==="strong" &&
+    state.gradeFilter==="ALL"
   ){
-
-    list=
-      list.filter(
-        x=>
-          x.grade==="A"
-          ||
-          x.grade==="A+"
-      );
-
+    list=list.filter(x=>x.grade==="A" || x.grade==="A+");
   }
 
 
@@ -5486,6 +5522,11 @@ function render(){
     .join("");
 
 }
+
+
+document.querySelectorAll(".filterStat").forEach(button=>{
+  button.onclick=()=>setGradeFilter(button.dataset.grade);
+});
 
 
 document
