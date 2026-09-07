@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'tools/goalgrid_hotfix.py'
+      - 'tools/goalgrid_hotfix2.py'
   workflow_dispatch:
 
 permissions:
@@ -17,8 +18,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Patch GoalGrid without replacing the design
-        run: python tools/goalgrid_hotfix.py
+      - name: Apply latest GoalGrid hotfix
+        run: |
+          if [ -f tools/goalgrid_hotfix2.py ]; then
+            python tools/goalgrid_hotfix2.py
+          else
+            python tools/goalgrid_hotfix.py
+          fi
       - name: Commit patched index
         run: |
           git config user.name "goalgrid-bot"
@@ -27,6 +33,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            git commit -m "Fix GoalGrid filters, cup exclusion and team history"
+            git commit -m "Force UEFA and Dutch competitions into GoalGrid"
             git push
           fi
