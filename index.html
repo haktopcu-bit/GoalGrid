@@ -13,66 +13,76 @@
   name="apple-mobile-web-app-capable"
   content="yes">
 
-<title>GoalGrid V1.3</title>
+<title>GoalGrid V1.4</title>
 
 <style>
 :root{
-  --bg:#07101d;
-  --card:#101b2b;
-  --card2:#142238;
-  --text:#eef4ff;
-  --muted:#8fa1b9;
-  --green:#6ee7b7;
-  --blue:#93c5fd;
-  --line:#24324a;
-  --red:#fb7185;
-  --yellow:#fcd34d;
+  --arka:#07101d;
+  --kart:#101b2b;
+  --kart2:#142238;
+  --yazi:#eef4ff;
+  --soluk:#8fa1b9;
+  --yesil:#6ee7b7;
+  --mavi:#93c5fd;
+  --cizgi:#24324a;
+  --kirmizi:#fb7185;
+  --sari:#fcd34d;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
   background:linear-gradient(180deg,#08111f,#060b13);
-  color:var(--text);
+  color:var(--yazi);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   min-height:100vh;
 }
 
 main{
-  max-width:840px;
+  max-width:850px;
   margin:auto;
-  padding:calc(22px + env(safe-area-inset-top)) 13px 180px;
+  padding:
+    calc(22px + env(safe-area-inset-top))
+    13px
+    210px;
 }
 
 h1{
-  font-size:31px;
+  font-size:32px;
   margin:0;
 }
 
-.altbaslik{
-  color:var(--muted);
-  margin:4px 0 16px;
+.altBaslik{
+  color:var(--soluk);
+  margin:5px 0 17px;
 }
 
 .kart{
-  background:linear-gradient(180deg,var(--card2),var(--card));
-  border:1px solid var(--line);
+  background:
+    linear-gradient(
+      180deg,
+      var(--kart2),
+      var(--kart)
+    );
+  border:1px solid var(--cizgi);
   border-radius:18px;
   padding:15px;
-  margin-bottom:10px;
+  margin-bottom:11px;
 }
 
 button{
   border:0;
   border-radius:12px;
   padding:11px 13px;
-  font-weight:800;
+  font-weight:850;
   font-size:14px;
 }
 
 .birincil{
-  background:var(--green);
+  background:var(--yesil);
   color:#052218;
 }
 
@@ -81,9 +91,9 @@ button{
   color:#dcecff;
 }
 
-.tehlike{
+.silButonu{
   background:#40222d;
-  color:#ffb8c5;
+  color:#ffb7c4;
 }
 
 .ustSatir{
@@ -95,25 +105,38 @@ button{
 
 .lig{
   font-size:11px;
-  color:var(--muted);
+  color:var(--soluk);
 }
 
 .takimlar{
-  font-size:17px;
+  font-size:18px;
   font-weight:850;
   margin-top:3px;
 }
 
 .saat{
-  font-size:12px;
-  color:var(--blue);
-  font-weight:800;
+  color:var(--mavi);
+  font-weight:850;
+  font-size:13px;
+  white-space:nowrap;
 }
 
 .durum{
+  color:var(--soluk);
   font-size:12px;
-  color:var(--muted);
-  line-height:1.45;
+  line-height:1.5;
+}
+
+.iyi{
+  color:#8cf0c8;
+}
+
+.uyari{
+  color:#ffd78b;
+}
+
+.kotu{
+  color:#ff9cab;
 }
 
 .istatistikler{
@@ -128,28 +151,28 @@ button{
 
 .istatistik b{
   display:block;
-  font-size:21px;
+  font-size:22px;
 }
 
 .istatistik small{
-  color:var(--muted);
+  color:var(--soluk);
   font-size:10px;
 }
 
 .sekmeler{
   display:flex;
-  gap:6px;
+  gap:7px;
   overflow:auto;
-  margin:11px 0;
+  margin:12px 0;
 }
 
 .sekme{
   background:#0d1726;
-  color:var(--muted);
-  border:1px solid var(--line);
+  color:var(--soluk);
+  border:1px solid var(--cizgi);
   border-radius:999px;
-  padding:9px 11px;
   white-space:nowrap;
+  padding:9px 12px;
 }
 
 .sekme.aktif{
@@ -157,50 +180,50 @@ button{
   color:white;
 }
 
-.tahmin{
+.anaTahmin{
   display:grid;
   grid-template-columns:1fr auto;
   gap:10px;
-  margin-top:11px;
-  padding-top:11px;
-  border-top:1px solid var(--line);
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid var(--cizgi);
 }
 
-.pazar{
-  font-size:16px;
+.pazarAdi{
+  font-size:17px;
   font-weight:900;
 }
 
-.yuzde{
-  font-size:25px;
+.buyukYuzde{
+  font-size:27px;
   font-weight:900;
 }
 
 .sinif{
   display:inline-block;
   margin-left:6px;
-  padding:4px 8px;
   border-radius:999px;
+  padding:4px 8px;
   font-size:10px;
   font-weight:900;
 }
 
-.aplus{
+.sinifAarti{
   background:#104934;
   color:#9cf4d0;
 }
 
-.a{
+.sinifA{
   background:#193d60;
   color:#bbddff;
 }
 
-.b{
+.sinifB{
   background:#4a3817;
   color:#ffe79c;
 }
 
-.oynama{
+.sinifOynama{
   background:#41242f;
   color:#ffb9c6;
 }
@@ -208,127 +231,132 @@ button{
 .metrikler{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:6px;
+  gap:7px;
   margin-top:10px;
 }
 
 .metrik{
   background:#0b1523;
   border:1px solid #213149;
-  border-radius:10px;
-  padding:8px;
+  border-radius:11px;
+  padding:9px;
 }
 
 .metrik small{
   display:block;
-  color:var(--muted);
+  color:var(--soluk);
   font-size:9px;
+  margin-bottom:3px;
 }
 
 .metrik b{
-  font-size:13px;
+  font-size:14px;
 }
 
 .bolum{
-  margin-top:11px;
-  padding-top:10px;
-  border-top:1px solid var(--line);
+  margin-top:12px;
+  padding-top:11px;
+  border-top:1px solid var(--cizgi);
 }
 
 .bolumBaslik{
   font-size:11px;
   font-weight:900;
   color:#bed0e6;
-  margin-bottom:6px;
+  margin-bottom:7px;
 }
 
 .aciklama{
   font-size:12px;
-  line-height:1.55;
+  line-height:1.6;
   color:#bdc9da;
 }
-
-.iyi{color:#8cf0c8}
-.uyari{color:#ffd78b}
-.kotu{color:#ff9cab}
 
 .cubuk{
   height:6px;
   background:#07101d;
-  border-radius:10px;
-  overflow:hidden;
-  margin-top:5px;
-}
-
-.dolgu{
-  height:100%;
-  background:#6ee7b7;
-}
-
-.bos{
-  text-align:center;
-  padding:30px;
-  color:var(--muted);
-}
-
-.veriEtiketi{
-  display:inline-block;
-  padding:4px 7px;
   border-radius:999px;
+  overflow:hidden;
+  margin-top:6px;
+}
+
+.cubukDolgu{
+  height:100%;
+  background:var(--yesil);
+}
+
+.kaynak{
+  display:inline-block;
+  margin-top:9px;
   background:#0b2030;
   color:#9ac7e9;
+  border-radius:999px;
+  padding:5px 8px;
   font-size:9px;
-  margin-top:8px;
 }
 
-.oranGrid{
+.oranAlanlari{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:8px;
   margin-top:8px;
 }
 
-.oranKutu{
-  background:#0b1523;
+.oranKarti{
+  background:#091521;
   border:1px solid #26364d;
-  border-radius:11px;
-  padding:9px;
+  border-radius:12px;
+  padding:10px;
 }
 
-.oranKutu label{
+.oranKarti label{
   display:block;
+  color:var(--soluk);
   font-size:10px;
-  color:var(--muted);
-  margin-bottom:5px;
+  margin-bottom:6px;
 }
 
 select,
-input[type="number"],
-input[type="text"]{
+input[type="number"]{
   width:100%;
   padding:10px;
-  border-radius:10px;
-  border:1px solid #31425d;
   background:#07101d;
+  border:1px solid #31425d;
+  border-radius:10px;
   color:white;
+  font-size:16px;
 }
 
-.oranSatir{
-  display:flex;
-  gap:7px;
+.oranVeKupon{
+  display:grid;
+  grid-template-columns:1fr auto;
   align-items:center;
+  gap:8px;
   margin-top:7px;
 }
 
-.oranSatir input[type="checkbox"]{
-  width:20px;
-  height:20px;
+.oranVeKupon input[type="checkbox"]{
+  width:22px;
+  height:22px;
 }
 
-.oranSonuc{
-  margin-top:7px;
+.oranSonucu{
+  margin-top:8px;
   font-size:11px;
-  line-height:1.5;
+  line-height:1.55;
+  color:#bdc9da;
+}
+
+.oranGecmisi{
+  margin-top:8px;
+  padding-top:7px;
+  border-top:1px dashed #26364d;
+  font-size:10px;
+  color:var(--soluk);
+}
+
+.pazarSecici{
+  margin-top:7px;
 }
 
 .kuponPanel{
@@ -336,15 +364,18 @@ input[type="text"]{
   left:0;
   right:0;
   bottom:0;
-  z-index:50;
+  z-index:100;
   background:rgba(7,16,29,.97);
+  backdrop-filter:blur(18px);
   border-top:1px solid #30415a;
-  backdrop-filter:blur(16px);
-  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  padding:
+    10px
+    12px
+    calc(10px + env(safe-area-inset-bottom));
 }
 
-.kuponPanelIc{
-  max-width:840px;
+.kuponIc{
+  max-width:850px;
   margin:auto;
 }
 
@@ -352,44 +383,47 @@ input[type="text"]{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:6px;
+  margin-top:8px;
 }
 
 .kuponOzet .metrik{
   text-align:center;
 }
 
-.kuponDetay{
-  max-height:190px;
+.kuponAyrinti{
+  max-height:240px;
   overflow:auto;
   margin-top:8px;
 }
 
-.kuponAyak{
+.kuponAyagi{
   border-top:1px solid #223149;
-  padding:7px 0;
+  padding:8px 0;
   font-size:11px;
 }
 
-.kuponButonlar{
+.kuponButonlari{
   display:flex;
   gap:7px;
-  margin-top:8px;
+  margin-top:9px;
 }
 
-.kuponButonlar button{
+.kuponButonlari button{
   flex:1;
+}
+
+.bosMesaj{
+  text-align:center;
+  padding:35px 10px;
+  color:var(--soluk);
 }
 
 .gizli{
   display:none;
 }
 
-@media(max-width:500px){
-  .istatistikler{
-    grid-template-columns:repeat(4,1fr);
-  }
-
-  .oranGrid{
+@media(max-width:520px){
+  .oranAlanlari{
     grid-template-columns:1fr;
   }
 
@@ -406,8 +440,8 @@ input[type="text"]{
 
 <h1>⚽ GoalGrid</h1>
 
-<p class="altbaslik">
-Futbol Karar Motoru • V1.3
+<p class="altBaslik">
+Futbol Karar Motoru • V1.4
 </p>
 
 
@@ -417,10 +451,12 @@ Futbol Karar Motoru • V1.3
 
     <div>
 
-      <b>Veri Sistemi</b>
+      <b>
+        Veri Sistemi
+      </b>
 
       <div class="durum">
-        API-Football fikstür + Football-Data geçmiş verisi
+        Güncel fikstür + iki sezonluk geçmiş maç motoru
       </div>
 
     </div>
@@ -446,14 +482,14 @@ Futbol Karar Motoru • V1.3
 
       <div
         id="bugun"
-        style="font-size:18px;font-weight:850">
+        style="font-size:19px;font-weight:900">
       </div>
 
     </div>
 
     <button
       class="birincil"
-      onclick="tara(false)">
+      onclick="tara(true)">
 
       Tara ve Analiz Et
 
@@ -464,7 +500,7 @@ Futbol Karar Motoru • V1.3
   <div
     id="taramaDurumu"
     class="durum"
-    style="margin-top:9px">
+    style="margin-top:10px">
 
     Hazır.
 
@@ -502,7 +538,7 @@ Futbol Karar Motoru • V1.3
 
   <button
     class="sekme aktif"
-    data-sekme="gucluler">
+    data-sekme="guclu">
 
     En Güçlüler
 
@@ -520,7 +556,7 @@ Futbol Karar Motoru • V1.3
     class="sekme"
     data-sekme="kuponlar">
 
-    Kayıtlı Kuponlar
+    Kupon Geçmişi
 
   </button>
 
@@ -536,7 +572,7 @@ Futbol Karar Motoru • V1.3
   id="kuponPanel"
   class="kuponPanel gizli">
 
-  <div class="kuponPanelIc">
+  <div class="kuponIc">
 
     <div class="ustSatir">
 
@@ -555,7 +591,7 @@ Futbol Karar Motoru • V1.3
 
       <button
         class="ikincil"
-        onclick="kuponuAcKapat()">
+        onclick="kuponAyrintiAcKapat()">
 
         Ayrıntı
 
@@ -625,33 +661,32 @@ Futbol Karar Motoru • V1.3
       class="gizli">
 
       <div
-        id="kuponDetay"
-        class="kuponDetay">
+        id="kuponAyaklari"
+        class="kuponAyrinti">
       </div>
 
 
-      <div class="oranGrid">
+      <div class="oranAlanlari">
 
-        <div class="oranKutu">
+        <div class="oranKarti">
 
           <label>
-            Kasa
+            Mevcut Kasa
           </label>
 
           <input
             id="kasa"
             type="number"
             inputmode="decimal"
-            placeholder="1000"
-            oninput="kuponuGuncelle()">
+            placeholder="1000">
 
         </div>
 
 
-        <div class="oranKutu">
+        <div class="oranKarti">
 
           <label>
-            Yatırılan Tutar
+            Yatırılacak Tutar
           </label>
 
           <input
@@ -666,34 +701,24 @@ Futbol Karar Motoru • V1.3
       </div>
 
 
-      <div
-        class="kart"
-        style="margin-top:8px">
+      <div class="kart" style="margin-top:8px">
 
-        <div class="ustSatir">
+        <small class="durum">
+          Potansiyel Dönüş
+        </small>
 
-          <div>
+        <div
+          id="potansiyelDonus"
+          style="font-size:23px;font-weight:900">
 
-            <small class="durum">
-              Potansiyel Dönüş
-            </small>
-
-            <div
-              id="potansiyelDonus"
-              style="font-size:22px;font-weight:900">
-
-              0 TL
-
-            </div>
-
-          </div>
+          0 TL
 
         </div>
 
       </div>
 
 
-      <div class="kuponButonlar">
+      <div class="kuponButonlari">
 
         <button
           class="birincil"
@@ -704,10 +729,10 @@ Futbol Karar Motoru • V1.3
         </button>
 
         <button
-          class="tehlike"
+          class="silButonu"
           onclick="kuponuTemizle()">
 
-          Kuponu Temizle
+          Temizle
 
         </button>
 
@@ -726,76 +751,76 @@ const API =
   "https://v3.football.api-sports.io";
 
 
-const LIGLER = {
+const DESTEKLENEN_LIGLER = {
 
   39:{
     ad:"Premier League",
-    csv:"E0"
+    veri:"premierleague"
   },
 
   40:{
     ad:"Championship",
-    csv:"E1"
+    veri:"championship"
   },
 
   78:{
     ad:"Bundesliga",
-    csv:"D1"
+    veri:"bundesliga"
   },
 
   135:{
     ad:"Serie A",
-    csv:"I1"
+    veri:"seriea"
   },
 
   140:{
     ad:"La Liga",
-    csv:"SP1"
+    veri:"laliga"
   },
 
   61:{
     ad:"Ligue 1",
-    csv:"F1"
+    veri:"ligue1"
   },
 
   88:{
     ad:"Eredivisie",
-    csv:"N1"
+    veri:"eredivisie"
   },
 
   89:{
     ad:"Eerste Divisie",
-    csv:null
+    veri:null
   },
 
   203:{
     ad:"Süper Lig",
-    csv:"T1"
+    veri:null
   },
 
   204:{
     ad:"Türkiye 1. Lig",
-    csv:null
+    veri:null
   },
 
   144:{
-    ad:"Jupiler Pro League",
-    csv:"B1"
+    ad:"Belçika Ligi",
+    veri:null
   },
 
   2:{
     ad:"Şampiyonlar Ligi",
-    csv:null
+    veri:null
   },
 
   3:{
     ad:"Avrupa Ligi",
-    csv:null
+    veri:null
   },
 
   848:{
     ad:"Konferans Ligi",
-    csv:null
+    veri:null
   }
 
 };
@@ -804,7 +829,7 @@ const LIGLER = {
 let durum = {
 
   analizler:[],
-  sekme:"gucluler",
+  sekme:"guclu",
   apiSayisi:0,
   kupon:[]
 
@@ -870,7 +895,7 @@ async function api(path){
 }
 
 
-function turkiyeTarihi(){
+function bugununTarihi(){
 
   return new Intl.DateTimeFormat(
     "en-CA",
@@ -887,198 +912,35 @@ function turkiyeTarihi(){
 }
 
 
-function csvCozumle(metin){
-
-  const satirlar=[];
-
-  let satir=[];
-  let hucre="";
-  let tirnak=false;
-
-
-  for(
-    let i=0;
-    i<metin.length;
-    i++
-  ){
-
-    const karakter =
-      metin[i];
-
-
-    if(
-      karakter === '"'
-    ){
-
-      if(
-        tirnak &&
-        metin[i+1] === '"'
-      ){
-
-        hucre += '"';
-        i++;
-
-      }else{
-
-        tirnak =
-          !tirnak;
-
-      }
-
-    }else if(
-      karakter === "," &&
-      !tirnak
-    ){
-
-      satir.push(
-        hucre
-      );
-
-      hucre="";
-
-    }else if(
-      (
-        karakter === "\n"
-        ||
-        karakter === "\r"
-      )
-      &&
-      !tirnak
-    ){
-
-      if(
-        karakter === "\r"
-        &&
-        metin[i+1] === "\n"
-      ){
-
-        i++;
-
-      }
-
-
-      satir.push(
-        hucre
-      );
-
-
-      if(
-        satir.some(
-          x => x !== ""
-        )
-      ){
-
-        satirlar.push(
-          satir
-        );
-
-      }
-
-
-      satir=[];
-      hucre="";
-
-    }else{
-
-      hucre +=
-        karakter;
-
-    }
-
-  }
-
-
-  if(
-    hucre ||
-    satir.length
-  ){
-
-    satir.push(
-      hucre
-    );
-
-    satirlar.push(
-      satir
-    );
-
-  }
-
-
-  if(
-    satirlar.length < 2
-  ){
-
-    return [];
-
-  }
-
-
-  const basliklar =
-    satirlar[0].map(
-      x => x.trim()
-    );
-
-
-  return satirlar
-    .slice(1)
-    .map(
-      satir => {
-
-        const nesne={};
-
-
-        basliklar.forEach(
-          (baslik,index) => {
-
-            nesne[baslik] =
-              (
-                satir[index]
-                ?? ""
-              ).trim();
-
-          }
-        );
-
-
-        return nesne;
-
-      }
-    );
-
-}
-
-
-async function csvYukle(kod){
+async function ligVerisiAl(lig){
 
   const onbellekAnahtari =
-    "goalgrid_csv_v13_"
-    + kod;
+    "gg_openfootball_"
+    + lig;
 
 
-  const kayit =
+  const eski =
     localStorage.getItem(
       onbellekAnahtari
     );
 
 
-  if(kayit){
+  if(eski){
 
     try{
 
-      const veri =
-        JSON.parse(
-          kayit
-        );
+      const kayit =
+        JSON.parse(eski);
 
 
       if(
         Date.now() -
-        veri.zaman
+        kayit.zaman
         <
         30 * 60 * 1000
       ){
 
-        return veri.satirlar;
+        return kayit.veri;
 
       }
 
@@ -1089,29 +951,39 @@ async function csvYukle(kod){
 
   const cevap =
     await fetch(
-      `/csv?code=${encodeURIComponent(kod)}`
+      `/data?league=${encodeURIComponent(lig)}`
     );
 
 
-  if(
-    !cevap.ok
-  ){
+  if(!cevap.ok){
 
     throw new Error(
-      `CSV ${kod} alınamadı`
+      `Lig verisi alınamadı (${cevap.status})`
     );
 
   }
 
 
-  const metin =
-    await cevap.text();
+  const json =
+    await cevap.json();
 
 
-  const satirlar =
-    csvCozumle(
-      metin
+  if(
+    !json.ok
+  ){
+
+    throw new Error(
+      json.hata ||
+      "Lig verisi alınamadı."
     );
+
+  }
+
+
+  const maclar =
+    Array.isArray(json.maclar)
+    ? json.maclar
+    : [];
 
 
   localStorage.setItem(
@@ -1120,12 +992,13 @@ async function csvYukle(kod){
       zaman:
         Date.now(),
 
-      satirlar
+      veri:
+        maclar
     })
   );
 
 
-  return satirlar;
+  return maclar;
 
 }
 
@@ -1151,55 +1024,120 @@ function norm(deger){
 
 const TAKIM_ESLESTIRME = {
 
-  manchesterunited:
-    "manunited",
+  cagliari:
+    "cagliaricalcio",
 
-  manchestercity:
-    "mancity",
+  lecce:
+    "uslecce",
 
-  tottenhamhotspur:
-    "tottenham",
+  lazio:
+    "sslazio",
 
-  wolverhamptonwanderers:
-    "wolves",
+  udinese:
+    "udinesecalcio",
 
-  nottinghamforest:
-    "nottmforest",
+  inter:
+    "fcinternazionalemilano",
 
   internazionale:
-    "inter",
+    "fcinternazionalemilano",
 
-  parissaintgermain:
-    "psg",
+  napoli:
+    "sscnapoli",
+
+  roma:
+    "asroma",
+
+  atalanta:
+    "atalantabc",
+
+  milan:
+    "acmilan",
+
+  juventus:
+    "juventusfc",
+
+  fiorentina:
+    "acffiorentina",
+
+  bologna:
+    "bolognafc1909",
+
+  torino:
+    "torinofc",
+
+  parma:
+    "parmacalcio1913",
+
+  genoa:
+    "genoacfc",
+
+  como:
+    "como1907",
+
+  sassuolo:
+    "ussassuolocalcio",
+
+  getafe:
+    "getafecf",
+
+  celtavigo:
+    "rcceltadevigo",
+
+  realsociedad:
+    "realsociedad",
+
+  barcelona:
+    "fcbarcelona",
+
+  realmadrid:
+    "realmadridcf",
+
+  atleticoMadrid:
+    "atleticodemadrid",
 
   atleticomadrid:
-    "athmadrid",
+    "atleticodemadrid",
 
-  caykurrizespor:
-    "rizespor",
+  manchesterunited:
+    "manchesterunitedfc",
 
-  gaziantepfk:
-    "gaziantep",
+  manchestercity:
+    "manchestercityfc",
 
-  istanbulbasaksehir:
-    "basaksehir",
+  liverpool:
+    "liverpoolfc",
 
-  esenlererokspor:
-    "erokspor"
+  arsenal:
+    "arsenalfc",
+
+  chelsea:
+    "chelseafc",
+
+  tottenham:
+    "tottenhamhotspurfc",
+
+  bayernmunich:
+    "fcbayernmunchen",
+
+  bayernmunchen:
+    "fcbayernmunchen"
 
 };
 
 
 function takimAnahtari(ad){
 
-  const n =
+  const temiz =
     norm(ad);
 
 
   return(
-    TAKIM_ESLESTIRME[n]
+    TAKIM_ESLESTIRME[
+      temiz
+    ]
     ||
-    n
+    temiz
   );
 
 }
@@ -1243,13 +1181,13 @@ function ayniTakim(
 
   return(
     (
-      a.length >= 5
+      a.length >= 6
       &&
       b.includes(a)
     )
     ||
     (
-      b.length >= 5
+      b.length >= 6
       &&
       a.includes(b)
     )
@@ -1258,37 +1196,41 @@ function ayniTakim(
 }
 
 
-function sayi(deger){
-
-  const n =
-    parseFloat(
-      deger
-    );
-
+function tamamlanmisMac(mac){
 
   return(
-    Number.isFinite(n)
-    ? n
-    : null
+    mac
+    &&
+    mac.score
+    &&
+    Array.isArray(
+      mac.score.ft
+    )
+    &&
+    mac.score.ft.length >= 2
+    &&
+    Number.isFinite(
+      Number(
+        mac.score.ft[0]
+      )
+    )
+    &&
+    Number.isFinite(
+      Number(
+        mac.score.ft[1]
+      )
+    )
   );
 
 }
 
 
-function tamamlanmis(satir){
+function macTarihi(mac){
 
   return(
-    satir.HomeTeam
-    &&
-    satir.AwayTeam
-    &&
-    sayi(
-      satir.FTHG
-    ) !== null
-    &&
-    sayi(
-      satir.FTAG
-    ) !== null
+    mac?.date
+    ||
+    "0000-00-00"
   );
 
 }
@@ -1296,31 +1238,35 @@ function tamamlanmis(satir){
 
 function sonMaclar(
   takim,
-  satirlar,
+  tumMaclar,
+  hedefTarih,
   saha=null
 ){
 
   let liste =
-    satirlar.filter(
-      satir =>
+    tumMaclar.filter(
+      mac =>
 
-        tamamlanmis(
-          satir
-        )
+        tamamlanmisMac(mac)
+
+        &&
+
+        macTarihi(mac) <
+        hedefTarih
 
         &&
 
         (
           ayniTakim(
             takim,
-            satir.HomeTeam
+            mac.team1
           )
 
           ||
 
           ayniTakim(
             takim,
-            satir.AwayTeam
+            mac.team2
           )
         )
 
@@ -1333,10 +1279,10 @@ function sonMaclar(
 
     liste =
       liste.filter(
-        satir =>
+        mac =>
           ayniTakim(
             takim,
-            satir.HomeTeam
+            mac.team1
           )
       );
 
@@ -1349,10 +1295,10 @@ function sonMaclar(
 
     liste =
       liste.filter(
-        satir =>
+        mac =>
           ayniTakim(
             takim,
-            satir.AwayTeam
+            mac.team2
           )
       );
 
@@ -1360,8 +1306,17 @@ function sonMaclar(
 
 
   return liste
-    .slice(-10)
-    .reverse();
+    .sort(
+      (a,b) =>
+        macTarihi(b)
+        .localeCompare(
+          macTarihi(a)
+        )
+    )
+    .slice(
+      0,
+      10
+    );
 
 }
 
@@ -1383,11 +1338,12 @@ function formHesapla(
       kgVar:0,
       ust15:0,
       ust25:0,
-      sut:null,
-      isabetliSut:null,
-      korner:null,
-      kart:null,
-      oynaklik:0
+      golOrt:0,
+      oynaklik:0,
+      galibiyet:0,
+      beraberlik:0,
+      maglubiyet:0,
+      golYememe:0
     };
 
   }
@@ -1401,50 +1357,38 @@ function formHesapla(
   let kgVar=0;
   let ust15=0;
   let ust25=0;
-
-  let sut=0;
-  let sutAdet=0;
-
-  let isabetliSut=0;
-  let isabetliSutAdet=0;
-
-  let korner=0;
-  let kornerAdet=0;
-
-  let kart=0;
-  let kartAdet=0;
+  let galibiyet=0;
+  let beraberlik=0;
+  let maglubiyet=0;
+  let golYememe=0;
 
   const toplamGoller=[];
 
 
   maclar.forEach(
-    (satir,index) => {
+    (mac,index) => {
 
-      const evSahibi =
+      const ev =
         ayniTakim(
           takim,
-          satir.HomeTeam
+          mac.team1
         );
 
 
+      const skor =
+        mac.score.ft;
+
+
       const atti =
-        evSahibi
-        ? sayi(
-            satir.FTHG
-          )
-        : sayi(
-            satir.FTAG
-          );
+        ev
+        ? Number(skor[0])
+        : Number(skor[1]);
 
 
       const yedi =
-        evSahibi
-        ? sayi(
-            satir.FTAG
-          )
-        : sayi(
-            satir.FTHG
-          );
+        ev
+        ? Number(skor[1])
+        : Number(skor[0]);
 
 
       const agirlik =
@@ -1455,11 +1399,13 @@ function formHesapla(
 
 
       attigi +=
-        atti * agirlik;
+        atti *
+        agirlik;
 
 
       yedigi +=
-        yedi * agirlik;
+        yedi *
+        agirlik;
 
 
       if(
@@ -1467,14 +1413,24 @@ function formHesapla(
       ){
 
         puan +=
-          3 * agirlik;
+          3 *
+          agirlik;
+
+        galibiyet++;
 
       }else if(
         atti === yedi
       ){
 
         puan +=
-          1 * agirlik;
+          1 *
+          agirlik;
+
+        beraberlik++;
+
+      }else{
+
+        maglubiyet++;
 
       }
 
@@ -1512,112 +1468,25 @@ function formHesapla(
       }
 
 
+      if(
+        yedi === 0
+      ){
+
+        golYememe++;
+
+      }
+
+
       toplamGoller.push(
         atti +
         yedi
       );
 
-
-      const s =
-        evSahibi
-        ? sayi(
-            satir.HS
-          )
-        : sayi(
-            satir.AS
-          );
-
-
-      if(
-        s !== null
-      ){
-
-        sut += s;
-        sutAdet++;
-
-      }
-
-
-      const is =
-        evSahibi
-        ? sayi(
-            satir.HST
-          )
-        : sayi(
-            satir.AST
-          );
-
-
-      if(
-        is !== null
-      ){
-
-        isabetliSut += is;
-        isabetliSutAdet++;
-
-      }
-
-
-      const k =
-        evSahibi
-        ? sayi(
-            satir.HC
-          )
-        : sayi(
-            satir.AC
-          );
-
-
-      if(
-        k !== null
-      ){
-
-        korner += k;
-        kornerAdet++;
-
-      }
-
-
-      const sari =
-        evSahibi
-        ? sayi(
-            satir.HY
-          )
-        : sayi(
-            satir.AY
-          );
-
-
-      const kirmizi =
-        evSahibi
-        ? sayi(
-            satir.HR
-          )
-        : sayi(
-            satir.AR
-          );
-
-
-      if(
-        sari !== null
-        ||
-        kirmizi !== null
-      ){
-
-        kart +=
-          (sari || 0)
-          +
-          (kirmizi || 0) * 2;
-
-        kartAdet++;
-
-      }
-
     }
   );
 
 
-  const ortalamaGol =
+  const golOrt =
     toplamGoller.reduce(
       (a,b)=>a+b,
       0
@@ -1633,7 +1502,7 @@ function formHesapla(
         +
         Math.pow(
           deger -
-          ortalamaGol,
+          golOrt,
           2
         ),
       0
@@ -1671,32 +1540,20 @@ function formHesapla(
       ust25 /
       maclar.length,
 
-    sut:
-      sutAdet
-      ? sut /
-        sutAdet
-      : null,
-
-    isabetliSut:
-      isabetliSutAdet
-      ? isabetliSut /
-        isabetliSutAdet
-      : null,
-
-    korner:
-      kornerAdet
-      ? korner /
-        kornerAdet
-      : null,
-
-    kart:
-      kartAdet
-      ? kart /
-        kartAdet
-      : null,
+    golOrt,
 
     oynaklik:
-      varyans
+      varyans,
+
+    galibiyet,
+
+    beraberlik,
+
+    maglubiyet,
+
+    golYememe:
+      golYememe /
+      maclar.length
 
   };
 
@@ -1738,7 +1595,7 @@ function poisson(
 }
 
 
-function pazarOlasiliklari(
+function pazarModeli(
   evBeklenen,
   depBeklenen
 ){
@@ -1754,87 +1611,88 @@ function pazarOlasiliklari(
 
 
   for(
-    let evGol=0;
-    evGol<=8;
-    evGol++
+    let eg=0;
+    eg<=8;
+    eg++
   ){
 
     for(
-      let depGol=0;
-      depGol<=8;
-      depGol++
+      let dg=0;
+      dg<=8;
+      dg++
     ){
 
-      const p =
+      const olasilik =
         poisson(
-          evGol,
+          eg,
           evBeklenen
         )
         *
         poisson(
-          depGol,
+          dg,
           depBeklenen
         );
 
 
       if(
-        evGol >
-        depGol
+        eg > dg
       ){
 
-        ev += p;
+        ev += olasilik;
 
       }else if(
-        evGol ===
-        depGol
+        eg === dg
       ){
 
-        beraberlik += p;
+        beraberlik +=
+          olasilik;
 
       }else{
 
-        dep += p;
+        dep +=
+          olasilik;
 
       }
 
 
       if(
-        evGol > 0
+        eg > 0
         &&
-        depGol > 0
+        dg > 0
       ){
 
-        kgVar += p;
+        kgVar +=
+          olasilik;
 
       }
 
 
       if(
-        evGol +
-        depGol >= 2
+        eg + dg >= 2
       ){
 
-        ust15 += p;
+        ust15 +=
+          olasilik;
 
       }
 
 
       if(
-        evGol +
-        depGol >= 3
+        eg + dg >= 3
       ){
 
-        ust25 += p;
+        ust25 +=
+          olasilik;
 
       }
 
 
       if(
-        evGol +
-        depGol >= 4
+        eg + dg >= 4
       ){
 
-        ust35 += p;
+        ust35 +=
+          olasilik;
 
       }
 
@@ -1858,15 +1716,15 @@ function pazarOlasiliklari(
 
 function karistir(
   model,
-  tarihsel,
-  modelAgirligi=.72
+  gecmis,
+  modelAgirligi=.70
 ){
 
   return(
     model *
     modelAgirligi
     +
-    tarihsel *
+    gecmis *
     (
       1-modelAgirligi
     )
@@ -1877,8 +1735,7 @@ function karistir(
 
 function veriKalitesi(
   evAdet,
-  depAdet,
-  gelismisVeri
+  depAdet
 ){
 
   const adet =
@@ -1888,60 +1745,40 @@ function veriKalitesi(
     );
 
 
-  let puan=10;
-
-
   if(
     adet >= 10
-  ){
-
-    puan=95;
-
-  }else if(
-    adet >= 8
-  ){
-
-    puan=88;
-
-  }else if(
-    adet >= 6
-  ){
-
-    puan=78;
-
-  }else if(
-    adet >= 4
-  ){
-
-    puan=63;
-
-  }else if(
-    adet >= 2
-  ){
-
-    puan=42;
-
-  }
-
+  ) return 100;
 
   if(
-    gelismisVeri
-  ){
+    adet >= 8
+  ) return 90;
 
-    puan += 5;
+  if(
+    adet >= 6
+  ) return 80;
 
-  }
+  if(
+    adet >= 5
+  ) return 72;
 
+  if(
+    adet >= 4
+  ) return 62;
 
-  return Math.min(
-    100,
-    puan
-  );
+  if(
+    adet >= 3
+  ) return 50;
+
+  if(
+    adet >= 2
+  ) return 38;
+
+  return 10;
 
 }
 
 
-function siniflandir(
+function sinifVer(
   puan,
   veriPuani
 ){
@@ -1952,7 +1789,7 @@ function siniflandir(
 
     return[
       "OYNAMA",
-      "oynama"
+      "sinifOynama"
     ];
 
   }
@@ -1964,7 +1801,7 @@ function siniflandir(
 
     return[
       "A+",
-      "aplus"
+      "sinifAarti"
     ];
 
   }
@@ -1976,7 +1813,7 @@ function siniflandir(
 
     return[
       "A",
-      "a"
+      "sinifA"
     ];
 
   }
@@ -1988,7 +1825,7 @@ function siniflandir(
 
     return[
       "B",
-      "b"
+      "sinifB"
     ];
 
   }
@@ -1996,44 +1833,54 @@ function siniflandir(
 
   return[
     "OYNAMA",
-    "oynama"
+    "sinifOynama"
   ];
 
 }
 
 
 function analizEt(
-  mac,
-  satirlar,
-  kaynak
+  fikstur,
+  macHavuzu
 ){
 
   const ev =
-    mac.teams.home.name;
+    fikstur.teams.home.name;
 
 
   const dep =
-    mac.teams.away.name;
+    fikstur.teams.away.name;
+
+
+  const tarih =
+    fikstur.fixture.date
+    .slice(
+      0,
+      10
+    );
 
 
   const evSon =
     sonMaclar(
       ev,
-      satirlar
+      macHavuzu,
+      tarih
     );
 
 
   const depSon =
     sonMaclar(
       dep,
-      satirlar
+      macHavuzu,
+      tarih
     );
 
 
   const evIc =
     sonMaclar(
       ev,
-      satirlar,
+      macHavuzu,
+      tarih,
       "ic"
     );
 
@@ -2041,7 +1888,8 @@ function analizEt(
   const depDis =
     sonMaclar(
       dep,
-      satirlar,
+      macHavuzu,
+      tarih,
       "dis"
     );
 
@@ -2074,19 +1922,10 @@ function analizEt(
     );
 
 
-  const gelismisVeri =
-    (
-      evForm.sut !== null
-      ||
-      depForm.sut !== null
-    );
-
-
   const veriPuani =
     veriKalitesi(
       evForm.adet,
-      depForm.adet,
-      gelismisVeri
+      depForm.adet
     );
 
 
@@ -2098,13 +1937,13 @@ function analizEt(
 
     return{
 
-      mac,
+      fikstur,
 
       sinif:
         "OYNAMA",
 
       sinifCss:
-        "oynama",
+        "sinifOynama",
 
       anaPazar:
         "VERİ YETERSİZ",
@@ -2117,106 +1956,88 @@ function analizEt(
 
       veriPuani,
 
-      oynama:
-        false,
-
-      kaynak,
-
       neden:
-        "Takımlardan biri için yeterli geçmiş maç bulunamadı."
+        "Takımlardan biri için yeterli geçmiş maç bulunamadı.",
+
+      kaynak:
+        "OpenFootball",
+
+      evForm:null,
+      depForm:null
 
     };
 
   }
 
 
-  const evAttigi =
+  const evAtak =
     evIcForm.adet >= 3
     ? karistir(
         evIcForm.attigi,
         evForm.attigi,
-        .65
+        .62
       )
     : evForm.attigi;
 
 
-  const evYedigi =
+  const evSavunma =
     evIcForm.adet >= 3
     ? karistir(
         evIcForm.yedigi,
         evForm.yedigi,
-        .65
+        .62
       )
     : evForm.yedigi;
 
 
-  const depAttigi =
+  const depAtak =
     depDisForm.adet >= 3
     ? karistir(
         depDisForm.attigi,
         depForm.attigi,
-        .65
+        .62
       )
     : depForm.attigi;
 
 
-  const depYedigi =
+  const depSavunma =
     depDisForm.adet >= 3
     ? karistir(
         depDisForm.yedigi,
         depForm.yedigi,
-        .65
+        .62
       )
     : depForm.yedigi;
 
 
   let evBeklenen =
-    .46 *
-    evAttigi
+    .48 *
+    evAtak
+
     +
+
     .34 *
-    depYedigi
+    depSavunma
+
     +
-    .20 *
-    1.42;
+
+    .18 *
+    1.38;
 
 
   let depBeklenen =
-    .46 *
-    depAttigi
+    .48 *
+    depAtak
+
     +
+
     .34 *
-    evYedigi
+    evSavunma
+
     +
-    .20 *
-    1.18;
 
-
-  if(
-    evForm.isabetliSut !== null
-    &&
-    depForm.isabetliSut !== null
-  ){
-
-    const sutFarki =
-      (
-        evForm.isabetliSut
-        -
-        depForm.isabetliSut
-      )
-      *
-      .025;
-
-
-    evBeklenen +=
-      sutFarki;
-
-
-    depBeklenen -=
-      sutFarki *
-      .40;
-
-  }
+    .18 *
+    1.15;
 
 
   evBeklenen =
@@ -2240,7 +2061,7 @@ function analizEt(
 
 
   const poissonSonuc =
-    pazarOlasiliklari(
+    pazarModeli(
       evBeklenen,
       depBeklenen
     );
@@ -2311,6 +2132,9 @@ function analizEt(
     "Ev Sahibi":
       poissonSonuc.ev,
 
+    "Beraberlik":
+      poissonSonuc.beraberlik,
+
     "Deplasman":
       poissonSonuc.dep,
 
@@ -2320,7 +2144,7 @@ function analizEt(
   };
 
 
-  const sirali =
+  const siralama =
     Object.entries(
       pazarlar
     )
@@ -2338,11 +2162,11 @@ function analizEt(
 
 
   const ana =
-    sirali[0];
+    siralama[0];
 
 
   const alternatif =
-    sirali[1];
+    siralama[1];
 
 
   const uyum =
@@ -2357,7 +2181,7 @@ function analizEt(
         tarihsel.ust25
       )
       *
-      135
+      120
 
       +
 
@@ -2385,60 +2209,62 @@ function analizEt(
         2
       )
       *
-      23
+      22
     );
 
 
-  let toplamPuan =
-    ana.olasilik
-    *
+  const istikrar =
+    Math.max(
+      0,
+      100 -
+      oynaklik
+    );
+
+
+  let puan =
+    ana.olasilik *
     100;
 
 
-  toplamPuan +=
-    veriPuani
-    *
-    .06;
+  puan +=
+    veriPuani *
+    .055;
 
 
-  toplamPuan +=
-    uyum
-    *
-    .045;
+  puan +=
+    uyum *
+    .04;
 
 
-  toplamPuan -=
-    oynaklik
-    *
-    .035;
+  puan +=
+    istikrar *
+    .02;
 
 
   if(
-    evForm.adet < 4
-    ||
-    depForm.adet < 4
+    veriPuani < 60
   ){
 
-    toplamPuan -= 6;
+    puan -= 7;
 
   }
 
 
-  toplamPuan =
+  puan =
     Math.round(
       Math.max(
         0,
         Math.min(
           96,
-          toplamPuan
+          puan
         )
       )
     );
 
 
   const sinif =
-    siniflandir(
-      toplamPuan,
+    sinifVer(
+      puan,
       veriPuani
     );
 
@@ -2451,7 +2277,7 @@ function analizEt(
   ){
 
     riskler.push(
-      "Veri örneklemi sınırlı"
+      "Geçmiş maç örneklemi sınırlı"
     );
 
   }
@@ -2462,20 +2288,22 @@ function analizEt(
   ){
 
     riskler.push(
-      "Skor oynaklığı yüksek"
+      "Maç skorları yüksek oynaklık gösteriyor"
     );
 
   }
 
 
   if(
-    evForm.adet < 5
-    ||
-    depForm.adet < 5
+    evForm.golYememe <
+    .20
+    &&
+    depForm.golYememe <
+    .20
   ){
 
     riskler.push(
-      "Sezon başı belirsizliği"
+      "İki takımın da savunma güvenilirliği düşük"
     );
 
   }
@@ -2483,7 +2311,7 @@ function analizEt(
 
   return{
 
-    mac,
+    fikstur,
 
     evBeklenen,
     depBeklenen,
@@ -2493,8 +2321,24 @@ function analizEt(
     evForm,
     depForm,
 
-    puan:
-      toplamPuan,
+    veriPuani,
+
+    uyum:
+      Math.round(
+        uyum
+      ),
+
+    oynaklik:
+      Math.round(
+        oynaklik
+      ),
+
+    istikrar:
+      Math.round(
+        istikrar
+      ),
+
+    puan,
 
     sinif:
       sinif[0],
@@ -2510,50 +2354,32 @@ function analizEt(
 
     alternatif,
 
-    veriPuani:
-      Math.round(
-        veriPuani
-      ),
-
-    uyum:
-      Math.round(
-        uyum
-      ),
-
-    oynaklik:
-      Math.round(
-        oynaklik
-      ),
-
     riskler,
 
-    kaynak,
-
-    oynama:
-      sinif[0] !==
-      "OYNAMA"
+    kaynak:
+      "OpenFootball • 2025/26 + 2026/27"
 
   };
 
 }
 
 
-function desteklenmeyen(
-  mac
+function veriYokAnalizi(
+  fikstur
 ){
 
   return{
 
-    mac,
+    fikstur,
 
     sinif:
       "OYNAMA",
 
     sinifCss:
-      "oynama",
+      "sinifOynama",
 
     anaPazar:
-      "GEÇMİŞ VERİ YOK",
+      "GEÇMİŞ VERİ KAYNAĞI YOK",
 
     anaOlasilik:
       0,
@@ -2564,14 +2390,14 @@ function desteklenmeyen(
     veriPuani:
       0,
 
-    kaynak:
-      "Sadece fikstür verisi",
-
     neden:
-      "Bu lig için ücretsiz güncel geçmiş veri kaynağı henüz sisteme bağlanmadı.",
+      "Bu lig için ücretsiz geçmiş maç kaynağı henüz GoalGrid'e bağlanmadı.",
 
-    oynama:
-      false
+    kaynak:
+      "Yalnızca güncel fikstür",
+
+    evForm:null,
+    depForm:null
 
   };
 
@@ -2587,7 +2413,7 @@ async function tara(
   ){
 
     alert(
-      "API anahtarı bulunamadı."
+      "API anahtarı bu telefonda kayıtlı değil."
     );
 
     return;
@@ -2602,141 +2428,138 @@ async function tara(
 
 
   const tarih =
-    turkiyeTarihi();
+    bugununTarihi();
 
 
-  const onbellek =
-    "goalgrid_v13_"
+  const analizOnbellek =
+    "goalgrid_v14_"
     +
     tarih;
 
 
-  const kayit =
-    localStorage.getItem(
-      onbellek
-    );
-
-
   if(
-    kayit
-    &&
     !zorla
   ){
 
-    try{
-
-      const veri =
-        JSON.parse(
-          kayit
-        );
+    const eski =
+      localStorage.getItem(
+        analizOnbellek
+      );
 
 
-      if(
-        Date.now()
-        -
-        veri.zaman
-        <
-        2 * 60 * 60 * 1000
-      ){
+    if(eski){
 
-        durum.analizler =
-          veri.analizler || [];
+      try{
+
+        const kayit =
+          JSON.parse(
+            eski
+          );
 
 
-        ekraniCiz();
+        if(
+          Date.now() -
+          kayit.zaman
+          <
+          90 *
+          60 *
+          1000
+        ){
+
+          durum.analizler =
+            kayit.analizler
+            ||
+            [];
 
 
-        $("#taramaDurumu").textContent =
-          "✓ Analiz telefon hafızasından açıldı. API kotası kullanılmadı.";
+          ekraniCiz();
 
 
-        return;
+          $("#taramaDurumu").textContent =
+            "✓ Son analiz telefon hafızasından açıldı.";
 
-      }
 
-    }catch{}
+          return;
+
+        }
+
+      }catch{}
+
+    }
 
   }
 
 
   $("#taramaDurumu").textContent =
-    "Bugünün maçları alınıyor…";
+    "Bugünün fikstürü alınıyor…";
 
 
   try{
 
-    const fikstur =
+    const tumFikstur =
       await api(
         `/fixtures?date=${tarih}&timezone=Europe/Istanbul`
       );
 
 
-    const maclar =
-      fikstur.filter(
+    const fiksturler =
+      tumFikstur.filter(
         mac =>
           Boolean(
-            LIGLER[
+            DESTEKLENEN_LIGLER[
               mac.league.id
             ]
           )
       );
 
 
-    if(
-      !maclar.length
-    ){
-
-      durum.analizler=[];
-
-      ekraniCiz();
-
-
-      $("#taramaDurumu").textContent =
-        "Bugün seçili liglerde maç bulunamadı.";
-
-
-      return;
-
-    }
-
-
-    const csvKodlari =
+    const gerekliVeriler =
       [
         ...new Set(
-          maclar
-            .map(
-              mac =>
-                LIGLER[
-                  mac.league.id
-                ].csv
-            )
-            .filter(Boolean)
+          fiksturler
+          .map(
+            mac =>
+              DESTEKLENEN_LIGLER[
+                mac.league.id
+              ].veri
+          )
+          .filter(Boolean)
         )
       ];
 
 
     $("#taramaDurumu").textContent =
-      `${maclar.length} maç bulundu. Geçmiş veriler alınıyor…`;
+      `${fiksturler.length} maç bulundu. ${gerekliVeriler.length} lig için iki sezonluk geçmiş veri alınıyor…`;
 
 
     const havuzlar={};
 
 
     for(
-      const kod
-      of csvKodlari
+      const veriKodu
+      of gerekliVeriler
     ){
 
       try{
 
-        havuzlar[kod] =
-          await csvYukle(
-            kod
+        havuzlar[
+          veriKodu
+        ] =
+          await ligVerisiAl(
+            veriKodu
           );
 
       }catch(hata){
 
-        havuzlar[kod]=[];
+        console.error(
+          veriKodu,
+          hata
+        );
+
+
+        havuzlar[
+          veriKodu
+        ]=[];
 
       }
 
@@ -2744,71 +2567,72 @@ async function tara(
 
 
     durum.analizler =
-      maclar
-        .map(
-          mac => {
+      fiksturler
+      .map(
+        fikstur => {
 
-            const ayar =
-              LIGLER[
-                mac.league.id
-              ];
-
-
-            if(
-              !ayar.csv
-            ){
-
-              return desteklenmeyen(
-                mac
-              );
-
-            }
+          const ayar =
+            DESTEKLENEN_LIGLER[
+              fikstur.league.id
+            ];
 
 
-            const satirlar =
-              havuzlar[
-                ayar.csv
-              ] || [];
+          if(
+            !ayar.veri
+          ){
 
-
-            if(
-              !satirlar.length
-            ){
-
-              return{
-
-                ...desteklenmeyen(
-                  mac
-                ),
-
-                anaPazar:
-                  "VERİ KAYNAĞINA ERİŞİLEMEDİ",
-
-                neden:
-                  `${ayar.ad} geçmiş verisi alınamadı.`
-
-              };
-
-            }
-
-
-            return analizEt(
-              mac,
-              satirlar,
-              `Football-Data ${ayar.csv}`
+            return veriYokAnalizi(
+              fikstur
             );
 
           }
-        )
-        .sort(
-          (a,b) =>
-            b.puan -
-            a.puan
-        );
+
+
+          const macHavuzu =
+            havuzlar[
+              ayar.veri
+            ]
+            ||
+            [];
+
+
+          if(
+            !macHavuzu.length
+          ){
+
+            return{
+
+              ...veriYokAnalizi(
+                fikstur
+              ),
+
+              anaPazar:
+                "VERİ KAYNAĞINA ERİŞİLEMEDİ",
+
+              neden:
+                `${ayar.ad} geçmiş verisi alınamadı.`
+
+            };
+
+          }
+
+
+          return analizEt(
+            fikstur,
+            macHavuzu
+          );
+
+        }
+      )
+      .sort(
+        (a,b) =>
+          b.puan -
+          a.puan
+      );
 
 
     localStorage.setItem(
-      onbellek,
+      analizOnbellek,
       JSON.stringify({
         zaman:
           Date.now(),
@@ -2823,7 +2647,7 @@ async function tara(
 
 
     $("#taramaDurumu").textContent =
-      `✓ ${maclar.length} maç işlendi • ${durum.apiSayisi} API çağrısı.`;
+      `✓ ${fiksturler.length} maç analiz edildi • ${durum.apiSayisi} API çağrısı kullanıldı.`;
 
 
   }catch(hata){
@@ -2838,13 +2662,22 @@ async function tara(
 }
 
 
-function oranKayitlariniOku(){
+function kodla(deger){
+
+  return norm(
+    deger
+  );
+
+}
+
+
+function oranGecmisiOku(){
 
   try{
 
     return JSON.parse(
       localStorage.getItem(
-        "goalgrid_oran_gecmisi"
+        "goalgrid_oran_gecmisi_v14"
       )
     ) || [];
 
@@ -2857,10 +2690,12 @@ function oranKayitlariniOku(){
 }
 
 
-function oranKaydiEkle(kayit){
+function oranGecmisiKaydet(
+  kayit
+){
 
   const liste =
-    oranKayitlariniOku();
+    oranGecmisiOku();
 
 
   liste.push(
@@ -2868,8 +2703,22 @@ function oranKaydiEkle(kayit){
   );
 
 
+  if(
+    liste.length >
+    5000
+  ){
+
+    liste.splice(
+      0,
+      liste.length -
+      5000
+    );
+
+  }
+
+
   localStorage.setItem(
-    "goalgrid_oran_gecmisi",
+    "goalgrid_oran_gecmisi_v14",
     JSON.stringify(
       liste
     )
@@ -2878,18 +2727,85 @@ function oranKaydiEkle(kayit){
 }
 
 
-function pazarOlasiligi(
-  analiz,
-  pazar
+function sonOranlar(
+  macId,
+  pazar,
+  tur
 ){
 
-  return(
-    analiz.pazarlar?.[
-      pazar
-    ]
-    ??
-    0
-  );
+  return oranGecmisiOku()
+    .filter(
+      kayit =>
+        kayit.macId ===
+        macId
+
+        &&
+
+        kayit.pazar ===
+        pazar
+
+        &&
+
+        kayit.tur ===
+        tur
+    )
+    .slice(-4)
+    .reverse();
+
+}
+
+
+function oranGecmisiYazisi(
+  macId,
+  pazar,
+  tur
+){
+
+  const kayitlar =
+    sonOranlar(
+      macId,
+      pazar,
+      tur
+    );
+
+
+  if(
+    !kayitlar.length
+  ){
+
+    return(
+      "Bu pazar için daha önce oran girmedin."
+    );
+
+  }
+
+
+  return kayitlar
+    .map(
+      kayit => {
+
+        const saat =
+          new Date(
+            kayit.zaman
+          )
+          .toLocaleTimeString(
+            "tr-TR",
+            {
+              hour:"2-digit",
+              minute:"2-digit"
+            }
+          );
+
+
+        return(
+          `${saat} • ${kayit.site} ${kayit.oran.toFixed(2)}`
+        );
+
+      }
+    )
+    .join(
+      "<br>"
+    );
 
 }
 
@@ -2906,27 +2822,21 @@ function oranDegerlendir(
     ];
 
 
-  const siteElement =
-    $(
-      `#site_${tur}_${analizIndex}_${kodla(pazar)}`
+  const kod =
+    kodla(
+      pazar
     );
 
 
-  const oranElement =
+  const oranKutusu =
     $(
-      `#oran_${tur}_${analizIndex}_${kodla(pazar)}`
-    );
-
-
-  const sonucElement =
-    $(
-      `#oranSonuc_${tur}_${analizIndex}_${kodla(pazar)}`
+      `#oran_${tur}_${analizIndex}_${kod}`
     );
 
 
   const oran =
-    parseFloat(
-      oranElement.value
+    Number(
+      oranKutusu.value
     );
 
 
@@ -2936,8 +2846,9 @@ function oranDegerlendir(
     oran <= 1
   ){
 
-    sonucElement.innerHTML =
-      "Geçerli bir oran gir.";
+    alert(
+      "Geçerli bir oran gir."
+    );
 
     return;
 
@@ -2947,37 +2858,42 @@ function oranDegerlendir(
   const site =
     tur === "yurtdisi"
     ? "Jojobet"
-    : siteElement.value;
+    : $(
+        `#site_${tur}_${analizIndex}_${kod}`
+      ).value;
 
 
   const modelOlasilik =
-    pazarOlasiligi(
-      analiz,
+    analiz.pazarlar[
       pazar
-    );
+    ]
+    ||
+    0;
 
 
   const piyasaOlasilik =
-    1 / oran;
+    1 /
+    oran;
 
 
   const adilOran =
-    modelOlasilik > 0
-    ? 1 / modelOlasilik
+    modelOlasilik >
+    0
+    ? 1 /
+      modelOlasilik
     : null;
 
 
-  const farkPuan =
+  const olasilikFarki =
     (
-      modelOlasilik
-      -
+      modelOlasilik -
       piyasaOlasilik
     )
     *
     100;
 
 
-  const degerYuzdesi =
+  const deger =
     (
       oran *
       modelOlasilik
@@ -2988,61 +2904,58 @@ function oranDegerlendir(
     100;
 
 
-  let sinif =
-    "Değer yok";
+  let yorum =
+    "Değer görünmüyor";
 
 
   if(
-    degerYuzdesi >= 10
+    deger >= 12
   ){
 
-    sinif =
+    yorum =
+      "Çok güçlü değer";
+
+  }else if(
+    deger >= 7
+  ){
+
+    yorum =
       "Güçlü değer";
 
   }else if(
-    degerYuzdesi >= 5
+    deger >= 3
   ){
 
-    sinif =
-      "Değerli";
+    yorum =
+      "Olumlu değer";
 
   }else if(
-    degerYuzdesi >= 1
+    deger >= 0
   ){
 
-    sinif =
+    yorum =
       "Sınırlı değer";
 
   }
 
 
-  sonucElement.innerHTML =
-    `
-    Model: %${Math.round(modelOlasilik*100)}
-    • Piyasa: %${Math.round(piyasaOlasilik*100)}
-    • Adil oran: ${adilOran?adilOran.toFixed(2):"—"}
-    • Olasılık farkı: ${farkPuan>=0?"+":""}${farkPuan.toFixed(1)} puan
-    • Değer: ${degerYuzdesi>=0?"+":""}${degerYuzdesi.toFixed(1)}%
-    • <b>${sinif}</b>
-    `;
-
-
-  oranKaydiEkle({
+  const kayit = {
 
     zaman:
-      new Date().toISOString(),
+      new Date()
+      .toISOString(),
 
     macId:
-      analiz.mac.fixture.id,
+      analiz.fikstur.fixture.id,
 
     lig:
-      analiz.mac.league.name,
+      analiz.fikstur.league.name,
 
     ev:
-      analiz.mac.teams.home.name,
+      analiz.fikstur.teams.home.name,
 
     dep:
-      analiz.mac.teams.away.name,
+      analiz.fikstur.teams.away.name,
 
     pazar,
 
@@ -3054,25 +2967,46 @@ function oranDegerlendir(
 
     modelOlasilik,
 
+    piyasaOlasilik,
+
     adilOran,
 
-    farkPuan,
+    olasilikFarki,
 
-    degerYuzdesi,
+    deger,
 
     goalGridPuani:
       analiz.puan
 
-  });
-
-}
+  };
 
 
-function kodla(metin){
-
-  return norm(
-    metin
+  oranGecmisiKaydet(
+    kayit
   );
+
+
+  $(
+    `#oranSonucu_${tur}_${analizIndex}_${kod}`
+  ).innerHTML =
+    `
+    Model olasılığı: <b>%${(modelOlasilik*100).toFixed(1)}</b><br>
+    Piyasa olasılığı: %${(piyasaOlasilik*100).toFixed(1)}<br>
+    Adil oran: <b>${adilOran?adilOran.toFixed(2):"—"}</b><br>
+    Olasılık farkı: ${olasilikFarki>=0?"+":""}${olasilikFarki.toFixed(1)} puan<br>
+    Oransal değer: ${deger>=0?"+":""}${deger.toFixed(1)}%<br>
+    <b>${yorum}</b>
+    `;
+
+
+  $(
+    `#gecmis_${tur}_${analizIndex}_${kod}`
+  ).innerHTML =
+    oranGecmisiYazisi(
+      analiz.fikstur.fixture.id,
+      pazar,
+      tur
+    );
 
 }
 
@@ -3083,27 +3017,29 @@ function kuponSecimiDegisti(
   tur
 ){
 
-  const kutu =
-    $(
-      `#kupon_${tur}_${analizIndex}_${kodla(pazar)}`
-    );
-
-
   const analiz =
     durum.analizler[
       analizIndex
     ];
 
 
-  const oranElement =
+  const kod =
+    kodla(
+      pazar
+    );
+
+
+  const kutu =
     $(
-      `#oran_${tur}_${analizIndex}_${kodla(pazar)}`
+      `#kupon_${tur}_${analizIndex}_${kod}`
     );
 
 
   const oran =
-    parseFloat(
-      oranElement.value
+    Number(
+      $(
+        `#oran_${tur}_${analizIndex}_${kod}`
+      ).value
     );
 
 
@@ -3118,10 +3054,11 @@ function kuponSecimiDegisti(
   ){
 
     alert(
-      "Önce oranı gir."
+      "Kupona eklemeden önce oranı gir."
     );
 
-    kutu.checked=false;
+    kutu.checked =
+      false;
 
     return;
 
@@ -3132,60 +3069,58 @@ function kuponSecimiDegisti(
     tur === "yurtdisi"
     ? "Jojobet"
     : $(
-        `#site_${tur}_${analizIndex}_${kodla(pazar)}`
+        `#site_${tur}_${analizIndex}_${kod}`
       ).value;
-
-
-  const mevcutAyniMac =
-    durum.kupon.find(
-      secim =>
-        secim.macId ===
-        analiz.mac.fixture.id
-    );
 
 
   if(
     kutu.checked
-    &&
-    mevcutAyniMac
   ){
 
-    const devam =
-      confirm(
-        "Bu maçtan kupona zaten bir seçim ekledin. Aynı maçtan ikinci seçim korelasyon yaratabilir. Yine de eklemek istiyor musun?"
+    const ayniMac =
+      durum.kupon.some(
+        secim =>
+          secim.macId ===
+          analiz.fikstur.fixture.id
       );
 
 
     if(
-      !devam
+      ayniMac
     ){
 
-      kutu.checked=false;
+      const onay =
+        confirm(
+          "Bu maçtan kuponda zaten bir seçim var. Aynı maçtan birden fazla seçim eklemek riskleri birbirine bağlayabilir. Yine de eklemek istiyor musun?"
+        );
 
-      return;
+
+      if(
+        !onay
+      ){
+
+        kutu.checked =
+          false;
+
+        return;
+
+      }
 
     }
 
-  }
-
-
-  const anahtar =
-    `${analiz.mac.fixture.id}_${pazar}_${tur}_${site}`;
-
-
-  if(
-    kutu.checked
-  ){
 
     durum.kupon.push({
 
-      anahtar,
+      kimlik:
+        Date.now()
+        +
+        Math.random(),
 
       macId:
-        analiz.mac.fixture.id,
+        analiz.fikstur.fixture.id,
 
       mac:
-        `${analiz.mac.teams.home.name} - ${analiz.mac.teams.away.name}`,
+        `${analiz.fikstur.teams.home.name} - ${analiz.fikstur.teams.away.name}`,
 
       pazar,
 
@@ -3195,14 +3130,13 @@ function kuponSecimiDegisti(
 
       oran,
 
-      goalGridPuani:
-        analiz.puan,
-
       modelOlasilik:
-        pazarOlasiligi(
-          analiz,
+        analiz.pazarlar[
           pazar
-        )
+        ],
+
+      goalGridPuani:
+        analiz.puan
 
     });
 
@@ -3211,8 +3145,25 @@ function kuponSecimiDegisti(
     durum.kupon =
       durum.kupon.filter(
         secim =>
-          secim.anahtar !==
-          anahtar
+          !(
+            secim.macId ===
+            analiz.fikstur.fixture.id
+
+            &&
+
+            secim.pazar ===
+            pazar
+
+            &&
+
+            secim.tur ===
+            tur
+
+            &&
+
+            secim.site ===
+            site
+          )
       );
 
   }
@@ -3225,26 +3176,26 @@ function kuponSecimiDegisti(
 
 function kuponuGuncelle(){
 
-  const panel =
-    $("#kuponPanel");
-
-
   if(
     !durum.kupon.length
   ){
 
-    panel.classList.add(
-      "gizli"
-    );
+    $("#kuponPanel")
+      .classList
+      .add(
+        "gizli"
+      );
 
     return;
 
   }
 
 
-  panel.classList.remove(
-    "gizli"
-  );
+  $("#kuponPanel")
+    .classList
+    .remove(
+      "gizli"
+    );
 
 
   let toplamOran=1;
@@ -3278,22 +3229,20 @@ function kuponuGuncelle(){
   );
 
 
-  const ortalama =
-    puanToplam /
-    durum.kupon.length;
-
-
   $("#kuponSecimSayisi").textContent =
     `${durum.kupon.length} seçim`;
 
 
   $("#toplamOran").textContent =
-    toplamOran.toFixed(2);
+    toplamOran.toFixed(
+      2
+    );
 
 
   $("#ortalamaGuven").textContent =
     Math.round(
-      ortalama
+      puanToplam /
+      durum.kupon.length
     )
     +
     "/100";
@@ -3311,38 +3260,40 @@ function kuponuGuncelle(){
     (
       birlesik *
       100
-    ).toFixed(1);
+    ).toFixed(
+      1
+    );
 
 
-  $("#kuponDetay").innerHTML =
+  $("#kuponAyaklari").innerHTML =
     durum.kupon
-      .map(
-        secim =>
-          `
-          <div class="kuponAyak">
+    .map(
+      secim =>
+        `
+        <div class="kuponAyagi">
 
-            <b>
-              ${secim.mac}
-            </b>
+          <b>
+            ${secim.mac}
+          </b>
 
-            <div class="durum">
-              ${secim.pazar}
-              •
-              ${secim.site}
-              @
-              ${secim.oran.toFixed(2)}
-              •
-              GoalGrid ${secim.goalGridPuani}/100
-            </div>
-
+          <div class="durum">
+            ${secim.pazar}
+            •
+            ${secim.site}
+            @
+            ${secim.oran.toFixed(2)}
+            •
+            Güven ${secim.goalGridPuani}/100
           </div>
-          `
-      )
-      .join("");
+
+        </div>
+        `
+    )
+    .join("");
 
 
   const yatirilan =
-    parseFloat(
+    Number(
       $("#yatirilan")?.value
     )
     ||
@@ -3353,7 +3304,8 @@ function kuponuGuncelle(){
     (
       yatirilan *
       toplamOran
-    ).toLocaleString(
+    )
+    .toLocaleString(
       "tr-TR",
       {
         maximumFractionDigits:2
@@ -3365,13 +3317,13 @@ function kuponuGuncelle(){
 }
 
 
-function kuponuAcKapat(){
+function kuponAyrintiAcKapat(){
 
   $("#kuponAyrinti")
-    .classList
-    .toggle(
-      "gizli"
-    );
+  .classList
+  .toggle(
+    "gizli"
+  );
 
 }
 
@@ -3382,13 +3334,14 @@ function kuponuTemizle(){
 
 
   document
-    .querySelectorAll(
-      'input[type="checkbox"]'
-    )
-    .forEach(
-      kutu =>
-        kutu.checked=false
-    );
+  .querySelectorAll(
+    'input[type="checkbox"]'
+  )
+  .forEach(
+    kutu =>
+      kutu.checked =
+      false
+  );
 
 
   kuponuGuncelle();
@@ -3396,13 +3349,13 @@ function kuponuTemizle(){
 }
 
 
-function kuponlariOku(){
+function kuponGecmisiOku(){
 
   try{
 
     return JSON.parse(
       localStorage.getItem(
-        "goalgrid_kupon_gecmisi"
+        "goalgrid_kupon_gecmisi_v14"
       )
     ) || [];
 
@@ -3437,7 +3390,7 @@ function kuponuKaydet(){
 
 
   const kasa =
-    parseFloat(
+    Number(
       $("#kasa").value
     )
     ||
@@ -3445,7 +3398,7 @@ function kuponuKaydet(){
 
 
   const yatirilan =
-    parseFloat(
+    Number(
       $("#yatirilan").value
     )
     ||
@@ -3458,7 +3411,8 @@ function kuponuKaydet(){
       Date.now(),
 
     zaman:
-      new Date().toISOString(),
+      new Date()
+      .toISOString(),
 
     kasa,
 
@@ -3471,16 +3425,20 @@ function kuponuKaydet(){
       toplamOran,
 
     secimler:
-      [...durum.kupon],
+      JSON.parse(
+        JSON.stringify(
+          durum.kupon
+        )
+      ),
 
-    durum:
+    sonuc:
       "Bekliyor"
 
   };
 
 
   const kuponlar =
-    kuponlariOku();
+    kuponGecmisiOku();
 
 
   kuponlar.unshift(
@@ -3489,7 +3447,7 @@ function kuponuKaydet(){
 
 
   localStorage.setItem(
-    "goalgrid_kupon_gecmisi",
+    "goalgrid_kupon_gecmisi_v14",
     JSON.stringify(
       kuponlar
     )
@@ -3497,13 +3455,152 @@ function kuponuKaydet(){
 
 
   alert(
-    "Kupon kaydedildi."
+    "Kupon geçmişe kaydedildi."
   );
 
 }
 
 
-function oranAlani(
+function metre(
+  ad,
+  puan
+){
+
+  return`
+  <div class="metrik">
+
+    <small>
+      ${ad}
+    </small>
+
+    <b>
+      ${puan}/100
+    </b>
+
+    <div class="cubuk">
+
+      <div
+        class="cubukDolgu"
+        style="width:${puan}%">
+      </div>
+
+    </div>
+
+  </div>
+  `;
+
+}
+
+
+function oranBolumu(
+  analiz,
+  analizIndex
+){
+
+  const pazarlar =
+    Object.entries(
+      analiz.pazarlar
+    )
+    .sort(
+      (a,b) =>
+        b[1] -
+        a[1]
+    )
+    .map(
+      x =>
+        x[0]
+    );
+
+
+  const varsayilan =
+    analiz.anaPazar;
+
+
+  const secenekler =
+    pazarlar
+    .map(
+      pazar =>
+        `
+        <option
+          value="${pazar}"
+          ${pazar===varsayilan?"selected":""}>
+          ${pazar}
+          (%${Math.round(analiz.pazarlar[pazar]*100)})
+        </option>
+        `
+    )
+    .join("");
+
+
+  return`
+  <div class="bolum">
+
+    <div class="bolumBaslik">
+      ORAN VE KUPON
+    </div>
+
+
+    <div class="pazarSecici">
+
+      <select
+        id="pazar_${analizIndex}"
+        onchange="oranAlanlariniYenile(${analizIndex})">
+
+        ${secenekler}
+
+      </select>
+
+    </div>
+
+
+    <div
+      id="oranAlanlari_${analizIndex}">
+
+      ${
+        tekPazarOranAlani(
+          analiz,
+          analizIndex,
+          varsayilan
+        )
+      }
+
+    </div>
+
+  </div>
+  `;
+
+}
+
+
+function oranAlanlariniYenile(
+  analizIndex
+){
+
+  const analiz =
+    durum.analizler[
+      analizIndex
+    ];
+
+
+  const pazar =
+    $(
+      `#pazar_${analizIndex}`
+    ).value;
+
+
+  $(
+    `#oranAlanlari_${analizIndex}`
+  ).innerHTML =
+    tekPazarOranAlani(
+      analiz,
+      analizIndex,
+      pazar
+    );
+
+}
+
+
+function tekPazarOranAlani(
   analiz,
   analizIndex,
   pazar
@@ -3515,152 +3612,173 @@ function oranAlani(
     );
 
 
+  const macId =
+    analiz.fikstur.fixture.id;
+
+
   return`
-  <div class="bolum">
+  <div class="oranAlanlari">
 
-    <div class="bolumBaslik">
-      ${pazar} ORAN GİRİŞİ
-    </div>
+    <div class="oranKarti">
 
+      <label>
+        Yurtiçi Site
+      </label>
 
-    <div class="oranGrid">
+      <select
+        id="site_yurtici_${analizIndex}_${kod}">
 
-      <div class="oranKutu">
+        <option>
+          Nesine
+        </option>
 
-        <label>
-          Yurtiçi
-        </label>
+        <option>
+          Misli
+        </option>
 
-        <select
-          id="site_yurtici_${analizIndex}_${kod}">
+        <option>
+          Bilyoner
+        </option>
 
-          <option value="Nesine">
-            Nesine
-          </option>
-
-          <option value="Misli">
-            Misli
-          </option>
-
-          <option value="Bilyoner">
-            Bilyoner
-          </option>
-
-        </select>
+      </select>
 
 
-        <div class="oranSatir">
-
-          <input
-            id="oran_yurtici_${analizIndex}_${kod}"
-            type="number"
-            inputmode="decimal"
-            step="0.01"
-            placeholder="Oran">
-
-
-          <input
-            id="kupon_yurtici_${analizIndex}_${kod}"
-            type="checkbox"
-            onchange="kuponSecimiDegisti(${analizIndex},'${pazar}','yurtici')">
-
-        </div>
-
-
-        <button
-          class="ikincil"
-          style="width:100%;margin-top:7px"
-          onclick="oranDegerlendir(${analizIndex},'${pazar}','yurtici')">
-
-          Oranı Değerlendir
-
-        </button>
-
-
-        <div
-          id="oranSonuc_yurtici_${analizIndex}_${kod}"
-          class="oranSonuc">
-        </div>
-
-      </div>
-
-
-      <div class="oranKutu">
-
-        <label>
-          Yurtdışı
-        </label>
+      <div class="oranVeKupon">
 
         <input
-          value="Jojobet"
-          disabled
-          style="opacity:.8">
+          id="oran_yurtici_${analizIndex}_${kod}"
+          type="number"
+          inputmode="decimal"
+          step="0.01"
+          placeholder="Oran">
 
 
-        <div class="oranSatir">
+        <input
+          id="kupon_yurtici_${analizIndex}_${kod}"
+          type="checkbox"
+          title="Kupona ekle"
+          onchange="kuponSecimiDegisti(${analizIndex},'${pazar}','yurtici')">
 
-          <input
-            id="oran_yurtdisi_${analizIndex}_${kod}"
-            type="number"
-            inputmode="decimal"
-            step="0.01"
-            placeholder="Oran">
-
-
-          <input
-            id="kupon_yurtdisi_${analizIndex}_${kod}"
-            type="checkbox"
-            onchange="kuponSecimiDegisti(${analizIndex},'${pazar}','yurtdisi')">
-
-        </div>
+      </div>
 
 
-        <button
-          class="ikincil"
-          style="width:100%;margin-top:7px"
-          onclick="oranDegerlendir(${analizIndex},'${pazar}','yurtdisi')">
+      <button
+        class="ikincil"
+        style="width:100%;margin-top:8px"
+        onclick="oranDegerlendir(${analizIndex},'${pazar}','yurtici')">
 
-          Oranı Değerlendir
+        Oranı Kaydet ve Değerlendir
 
-        </button>
+      </button>
 
 
-        <div
-          id="oranSonuc_yurtdisi_${analizIndex}_${kod}"
-          class="oranSonuc">
-        </div>
+      <div
+        id="oranSonucu_yurtici_${analizIndex}_${kod}"
+        class="oranSonucu">
+      </div>
+
+
+      <div class="oranGecmisi">
+
+        <b>
+          Son Girişler
+        </b><br>
+
+        <span
+          id="gecmis_yurtici_${analizIndex}_${kod}">
+
+          ${
+            oranGecmisiYazisi(
+              macId,
+              pazar,
+              "yurtici"
+            )
+          }
+
+        </span>
 
       </div>
 
     </div>
 
-  </div>
-  `;
 
-}
+    <div class="oranKarti">
 
+      <label>
+        Yurtdışı Site
+      </label>
 
-function metre(
-  baslik,
-  deger
-){
+      <input
+        type="number"
+        value=""
+        style="display:none">
 
-  return`
-  <div class="metrik">
-
-    <small>
-      ${baslik}
-    </small>
-
-    <b>
-      ${deger}/100
-    </b>
-
-    <div class="cubuk">
 
       <div
-        class="dolgu"
-        style="width:${deger}%">
+        style="
+          padding:10px;
+          border:1px solid #31425d;
+          border-radius:10px;
+          font-weight:850;
+          background:#07101d">
+        Jojobet
+      </div>
+
+
+      <div class="oranVeKupon">
+
+        <input
+          id="oran_yurtdisi_${analizIndex}_${kod}"
+          type="number"
+          inputmode="decimal"
+          step="0.01"
+          placeholder="Oran">
+
+
+        <input
+          id="kupon_yurtdisi_${analizIndex}_${kod}"
+          type="checkbox"
+          title="Kupona ekle"
+          onchange="kuponSecimiDegisti(${analizIndex},'${pazar}','yurtdisi')">
+
+      </div>
+
+
+      <button
+        class="ikincil"
+        style="width:100%;margin-top:8px"
+        onclick="oranDegerlendir(${analizIndex},'${pazar}','yurtdisi')">
+
+        Oranı Kaydet ve Değerlendir
+
+      </button>
+
+
+      <div
+        id="oranSonucu_yurtdisi_${analizIndex}_${kod}"
+        class="oranSonucu">
+      </div>
+
+
+      <div class="oranGecmisi">
+
+        <b>
+          Son Girişler
+        </b><br>
+
+        <span
+          id="gecmis_yurtdisi_${analizIndex}_${kod}">
+
+          ${
+            oranGecmisiYazisi(
+              macId,
+              pazar,
+              "yurtdisi"
+            )
+          }
+
+        </span>
+
       </div>
 
     </div>
@@ -3676,13 +3794,13 @@ function macKarti(
   index
 ){
 
-  const mac =
-    analiz.mac;
+  const fikstur =
+    analiz.fikstur;
 
 
   const saat =
     new Date(
-      mac.fixture.date
+      fikstur.fixture.date
     )
     .toLocaleTimeString(
       "tr-TR",
@@ -3706,13 +3824,13 @@ function macKarti(
         <div>
 
           <div class="lig">
-            ${mac.league.name}
+            ${fikstur.league.name}
           </div>
 
           <div class="takimlar">
-            ${mac.teams.home.name}
+            ${fikstur.teams.home.name}
             —
-            ${mac.teams.away.name}
+            ${fikstur.teams.away.name}
           </div>
 
         </div>
@@ -3724,15 +3842,15 @@ function macKarti(
       </div>
 
 
-      <div class="tahmin">
+      <div class="anaTahmin">
 
         <div>
 
-          <div class="pazar">
+          <div class="pazarAdi">
 
             ${analiz.anaPazar}
 
-            <span class="sinif oynama">
+            <span class="sinif sinifOynama">
               OYNAMA
             </span>
 
@@ -3748,7 +3866,7 @@ function macKarti(
       </div>
 
 
-      <div class="veriEtiketi">
+      <div class="kaynak">
         ${analiz.kaynak}
       </div>
 
@@ -3756,17 +3874,6 @@ function macKarti(
     `;
 
   }
-
-
-  const pazarlar =
-    [
-      analiz.anaPazar,
-      analiz.alternatif.ad
-    ]
-    .filter(
-      (v,i,a) =>
-        a.indexOf(v) === i
-    );
 
 
   return`
@@ -3777,13 +3884,13 @@ function macKarti(
       <div>
 
         <div class="lig">
-          ${mac.league.name}
+          ${fikstur.league.name}
         </div>
 
         <div class="takimlar">
-          ${mac.teams.home.name}
+          ${fikstur.teams.home.name}
           —
-          ${mac.teams.away.name}
+          ${fikstur.teams.away.name}
         </div>
 
       </div>
@@ -3795,11 +3902,11 @@ function macKarti(
     </div>
 
 
-    <div class="tahmin">
+    <div class="anaTahmin">
 
       <div>
 
-        <div class="pazar">
+        <div class="pazarAdi">
 
           🎯 ${analiz.anaPazar}
 
@@ -3816,7 +3923,7 @@ function macKarti(
 
       </div>
 
-      <div class="yuzde">
+      <div class="buyukYuzde">
         %${Math.round(analiz.anaOlasilik*100)}
       </div>
 
@@ -3828,12 +3935,23 @@ function macKarti(
       <div class="metrik">
 
         <small>
-          Beklenen Gol
+          Ev Sahibi Beklenen Gol
         </small>
 
         <b>
           ${analiz.evBeklenen.toFixed(2)}
-          —
+        </b>
+
+      </div>
+
+
+      <div class="metrik">
+
+        <small>
+          Deplasman Beklenen Gol
+        </small>
+
+        <b>
           ${analiz.depBeklenen.toFixed(2)}
         </b>
 
@@ -3917,27 +4035,13 @@ function macKarti(
 
       </div>
 
-
-      <div class="metrik">
-
-        <small>
-          Alternatif
-        </small>
-
-        <b>
-          ${analiz.alternatif.ad}
-          %${Math.round(analiz.alternatif.olasilik*100)}
-        </b>
-
-      </div>
-
     </div>
 
 
     <div class="bolum">
 
       <div class="bolumBaslik">
-        GERÇEK FORM
+        SON 10 MAÇ PROFİLİ
       </div>
 
 
@@ -3946,7 +4050,7 @@ function macKarti(
         <div class="metrik">
 
           <small>
-            Örneklem
+            Veri Örneklemi
           </small>
 
           <b>
@@ -3976,7 +4080,7 @@ function macKarti(
         <div class="metrik">
 
           <small>
-            Gol Üretimi
+            Attığı Gol
           </small>
 
           <b>
@@ -3991,7 +4095,7 @@ function macKarti(
         <div class="metrik">
 
           <small>
-            Gol Yeme
+            Yediği Gol
           </small>
 
           <b>
@@ -4006,13 +4110,13 @@ function macKarti(
         <div class="metrik">
 
           <small>
-            Şut
+            KG Var Geçmişi
           </small>
 
           <b>
-            ${analiz.evForm.sut===null?"—":analiz.evForm.sut.toFixed(1)}
+            %${Math.round(analiz.evForm.kgVar*100)}
             /
-            ${analiz.depForm.sut===null?"—":analiz.depForm.sut.toFixed(1)}
+            %${Math.round(analiz.depForm.kgVar*100)}
           </b>
 
         </div>
@@ -4021,13 +4125,47 @@ function macKarti(
         <div class="metrik">
 
           <small>
-            Kaleyi Bulan Şut
+            2.5 Üst Geçmişi
           </small>
 
           <b>
-            ${analiz.evForm.isabetliSut===null?"—":analiz.evForm.isabetliSut.toFixed(1)}
+            %${Math.round(analiz.evForm.ust25*100)}
             /
-            ${analiz.depForm.isabetliSut===null?"—":analiz.depForm.isabetliSut.toFixed(1)}
+            %${Math.round(analiz.depForm.ust25*100)}
+          </b>
+
+        </div>
+
+
+        <div class="metrik">
+
+          <small>
+            Gol Yememe
+          </small>
+
+          <b>
+            %${Math.round(analiz.evForm.golYememe*100)}
+            /
+            %${Math.round(analiz.depForm.golYememe*100)}
+          </b>
+
+        </div>
+
+
+        <div class="metrik">
+
+          <small>
+            Son 10 Sonuç
+          </small>
+
+          <b>
+            ${analiz.evForm.galibiyet}G
+            ${analiz.evForm.beraberlik}B
+            ${analiz.evForm.maglubiyet}M
+            /
+            ${analiz.depForm.galibiyet}G
+            ${analiz.depForm.beraberlik}B
+            ${analiz.depForm.maglubiyet}M
           </b>
 
         </div>
@@ -4063,10 +4201,7 @@ function macKarti(
 
         ${metre(
           "İstikrar",
-          Math.max(
-            0,
-            100-analiz.oynaklik
-          )
+          analiz.istikrar
         )}
 
       </div>
@@ -4077,29 +4212,29 @@ function macKarti(
     <div class="bolum">
 
       <div class="bolumBaslik">
-        NEDEN?
+        NEDEN BU TAHMİN?
       </div>
 
       <div class="aciklama">
 
-        Son
-        ${analiz.evForm.adet}/${analiz.depForm.adet}
-        maç •
+        Ev sahibi son ${analiz.evForm.adet} maçta
+        maç başına ${analiz.evForm.attigi.toFixed(2)} gol üretip
+        ${analiz.evForm.yedigi.toFixed(2)} gol yedi.
 
-        Maç başına puan
-        ${analiz.evForm.puanOrt.toFixed(2)}
-        /
-        ${analiz.depForm.puanOrt.toFixed(2)}
-        •
+        Deplasman son ${analiz.depForm.adet} maçta
+        maç başına ${analiz.depForm.attigi.toFixed(2)} gol üretip
+        ${analiz.depForm.yedigi.toFixed(2)} gol yedi.
 
-        Gol üretimi
-        ${analiz.evForm.attigi.toFixed(2)}
-        /
-        ${analiz.depForm.attigi.toFixed(2)}
-        •
+        Model ile tarihsel gol davranışı uyumu
+        ${analiz.uyum}/100.
 
-        Model uyumu
-        ${analiz.uyum}/100
+        En yüksek hesaplanan pazar
+        ${analiz.anaPazar}
+        (%${Math.round(analiz.anaOlasilik*100)}).
+
+        İkinci seçenek
+        ${analiz.alternatif.ad}
+        (%${Math.round(analiz.alternatif.olasilik*100)}).
 
       </div>
 
@@ -4117,7 +4252,7 @@ function macKarti(
         ${
           analiz.riskler.length
           ? analiz.riskler.join(" • ")
-          : "Mevcut veri katmanında belirgin yapısal risk tespit edilmedi."
+          : "Modelin mevcut verisinde belirgin yapısal risk tespit edilmedi."
         }
 
       </div>
@@ -4126,20 +4261,14 @@ function macKarti(
 
 
     ${
-      pazarlar
-        .map(
-          pazar =>
-            oranAlani(
-              analiz,
-              index,
-              pazar
-            )
-        )
-        .join("")
+      oranBolumu(
+        analiz,
+        index
+      )
     }
 
 
-    <div class="veriEtiketi">
+    <div class="kaynak">
       ${analiz.kaynak}
     </div>
 
@@ -4149,10 +4278,10 @@ function macKarti(
 }
 
 
-function kayitliKuponlariCiz(){
+function kuponGecmisiniCiz(){
 
   const kuponlar =
-    kuponlariOku();
+    kuponGecmisiOku();
 
 
   if(
@@ -4161,8 +4290,8 @@ function kayitliKuponlariCiz(){
 
     $("#icerik").innerHTML =
       `
-      <div class="bos">
-        Henüz kayıtlı kupon yok.
+      <div class="bosMesaj">
+        Henüz kayıtlı kupon bulunmuyor.
       </div>
       `;
 
@@ -4173,97 +4302,97 @@ function kayitliKuponlariCiz(){
 
   $("#icerik").innerHTML =
     kuponlar
-      .map(
-        kupon =>
-          `
-          <section class="kart">
+    .map(
+      kupon =>
+        `
+        <section class="kart">
 
-            <div class="ustSatir">
+          <div class="ustSatir">
 
-              <div>
+            <div>
 
-                <b>
-                  ${new Date(kupon.zaman).toLocaleString("tr-TR")}
-                </b>
+              <b>
+                ${new Date(kupon.zaman).toLocaleString("tr-TR")}
+              </b>
 
-                <div class="durum">
-                  ${kupon.secimler.length} seçim
-                </div>
-
-              </div>
-
-              <div>
-                <b>
-                  ${kupon.toplamOran.toFixed(2)}
-                </b>
+              <div class="durum">
+                ${kupon.secimler.length} seçim
               </div>
 
             </div>
 
+            <div style="font-size:22px;font-weight:900">
+              ${kupon.toplamOran.toFixed(2)}
+            </div>
 
-            <div class="bolum">
+          </div>
 
-              ${
-                kupon.secimler
-                  .map(
-                    secim =>
-                      `
-                      <div class="kuponAyak">
 
-                        <b>
-                          ${secim.mac}
-                        </b>
+          <div class="bolum">
 
-                        <div class="durum">
-                          ${secim.pazar}
-                          •
-                          ${secim.site}
-                          @
-                          ${secim.oran.toFixed(2)}
-                        </div>
+            ${
+              kupon.secimler
+              .map(
+                secim =>
+                  `
+                  <div class="kuponAyagi">
 
-                      </div>
-                      `
-                  )
-                  .join("")
-              }
+                    <b>
+                      ${secim.mac}
+                    </b>
+
+                    <div class="durum">
+                      ${secim.pazar}
+                      •
+                      ${secim.site}
+                      @
+                      ${secim.oran.toFixed(2)}
+                      •
+                      Güven ${secim.goalGridPuani}/100
+                    </div>
+
+                  </div>
+                  `
+              )
+              .join("")
+            }
+
+          </div>
+
+
+          <div class="metrikler">
+
+            <div class="metrik">
+
+              <small>
+                Yatırılan
+              </small>
+
+              <b>
+                ${kupon.yatirilan.toLocaleString("tr-TR")} TL
+              </b>
 
             </div>
 
 
-            <div class="metrikler">
+            <div class="metrik">
 
-              <div class="metrik">
+              <small>
+                Potansiyel Dönüş
+              </small>
 
-                <small>
-                  Yatırılan
-                </small>
-
-                <b>
-                  ${kupon.yatirilan.toLocaleString("tr-TR")} TL
-                </b>
-
-              </div>
-
-
-              <div class="metrik">
-
-                <small>
-                  Potansiyel Dönüş
-                </small>
-
-                <b>
-                  ${kupon.potansiyel.toLocaleString("tr-TR")} TL
-                </b>
-
-              </div>
+              <b>
+                ${kupon.potansiyel.toLocaleString("tr-TR")} TL
+              </b>
 
             </div>
 
-          </section>
-          `
-      )
-      .join("");
+          </div>
+
+        </section>
+        `
+    )
+    .join("");
 
 }
 
@@ -4277,24 +4406,30 @@ function ekraniCiz(){
   $("#gucluSayisi").textContent =
     durum.analizler.filter(
       analiz =>
-        analiz.sinif === "A"
+        analiz.sinif ===
+        "A"
+
         ||
-        analiz.sinif === "A+"
+
+        analiz.sinif ===
+        "A+"
     ).length;
 
 
   $("#oynamaSayisi").textContent =
     durum.analizler.filter(
       analiz =>
-        analiz.sinif === "OYNAMA"
+        analiz.sinif ===
+        "OYNAMA"
     ).length;
 
 
   if(
-    durum.sekme === "kuponlar"
+    durum.sekme ===
+    "kuponlar"
   ){
 
-    kayitliKuponlariCiz();
+    kuponGecmisiniCiz();
 
     return;
 
@@ -4306,15 +4441,20 @@ function ekraniCiz(){
 
 
   if(
-    durum.sekme === "gucluler"
+    durum.sekme ===
+    "guclu"
   ){
 
     liste =
       liste.filter(
         analiz =>
-          analiz.sinif === "A"
+          analiz.sinif ===
+          "A"
+
           ||
-          analiz.sinif === "A+"
+
+          analiz.sinif ===
+          "A+"
       );
 
   }
@@ -4326,7 +4466,7 @@ function ekraniCiz(){
 
     $("#icerik").innerHTML =
       `
-      <div class="bos">
+      <div class="bosMesaj">
         Bu kategoride maç bulunmuyor.
       </div>
       `;
@@ -4338,16 +4478,16 @@ function ekraniCiz(){
 
   $("#icerik").innerHTML =
     liste
-      .map(
-        analiz =>
-          macKarti(
-            analiz,
-            durum.analizler.indexOf(
-              analiz
-            )
+    .map(
+      analiz =>
+        macKarti(
+          analiz,
+          durum.analizler.indexOf(
+            analiz
           )
-      )
-      .join("");
+        )
+    )
+    .join("");
 
 }
 
@@ -4363,15 +4503,15 @@ document
       () => {
 
         document
-          .querySelectorAll(
-            ".sekme"
-          )
-          .forEach(
-            x =>
-              x.classList.remove(
-                "aktif"
-              )
-          );
+        .querySelectorAll(
+          ".sekme"
+        )
+        .forEach(
+          x =>
+            x.classList.remove(
+              "aktif"
+            )
+        );
 
 
         dugme.classList.add(
@@ -4406,24 +4546,18 @@ $("#bugun").textContent =
   );
 
 
-try{
-
-  const kasa =
-    localStorage.getItem(
-      "goalgrid_kasa"
-    );
+const eskiKasa =
+  localStorage.getItem(
+    "goalgrid_kasa"
+  );
 
 
-  if(
-    kasa
-  ){
+if(eskiKasa){
 
-    $("#kasa").value=
-      kasa;
+  $("#kasa").value =
+    eskiKasa;
 
-  }
-
-}catch{}
+}
 
 
 $("#kasa").addEventListener(
