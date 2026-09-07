@@ -5,33 +5,114 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>GoalGrid</title>
+<title>GoalGrid V0.3</title>
 
 <style>
+:root{
+ --bg:#07101d;--card:#101b2b;--card2:#142238;
+ --text:#eef4ff;--muted:#8fa1b9;--green:#6ee7b7;
+ --blue:#93c5fd;--line:#24324a;--red:#fb7185;
+}
+*{box-sizing:border-box}
 body{
- margin:0;background:#07101d;color:#eef4ff;
- font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+ margin:0;background:linear-gradient(180deg,#08111f,#060b13);
+ color:var(--text);
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ min-height:100vh
 }
-main{max-width:700px;margin:auto;padding:30px 16px}
-h1{font-size:34px;margin:0}
-.sub{color:#8fa1b9}
+main{
+ max-width:760px;margin:auto;
+ padding:calc(24px + env(safe-area-inset-top)) 14px 50px
+}
+h1{font-size:32px;margin:0}
+.subtitle{color:var(--muted);margin:4px 0 16px}
 .card{
- background:#101b2b;border:1px solid #24324a;
- border-radius:18px;padding:16px;margin:14px 0
+ background:linear-gradient(180deg,var(--card2),var(--card));
+ border:1px solid var(--line);
+ border-radius:18px;
+ padding:15px;
+ margin-bottom:11px
 }
+button{
+ border:0;border-radius:13px;
+ padding:12px 15px;
+ font-weight:800;font-size:14px
+}
+.primary{background:var(--green);color:#052218}
+.dark{background:#152238;color:white;border:1px solid var(--line)}
 input{
- width:100%;box-sizing:border-box;padding:13px;
+ width:100%;padding:13px;
  border-radius:12px;border:1px solid #31425d;
  background:#07101d;color:white;margin:8px 0
 }
-button{
- padding:12px 15px;border:0;border-radius:12px;
- background:#6ee7b7;color:#052218;font-weight:800
+.stats{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:8px;margin-bottom:11px
 }
-.league,.match{
- padding:10px 0;border-bottom:1px solid #24324a
+.stat{text-align:center}
+.stat b{display:block;font-size:23px}
+.stat small{color:var(--muted)}
+.tabs{display:flex;gap:7px;overflow:auto;margin:12px 0}
+.tab{
+ background:#0d1726;color:var(--muted);
+ border:1px solid var(--line);
+ border-radius:999px;white-space:nowrap;padding:9px 12px
 }
-.muted{color:#8fa1b9;font-size:12px}
+.tab.active{background:#183a4d;color:white}
+.status{font-size:13px;color:var(--muted)}
+.match{margin-bottom:11px}
+.head{
+ display:flex;justify-content:space-between;
+ gap:10px;align-items:flex-start
+}
+.league{font-size:11px;color:var(--muted)}
+.teams{font-size:17px;font-weight:850;margin-top:3px}
+.time{font-size:12px;color:var(--blue);font-weight:800}
+.pick{
+ display:grid;grid-template-columns:1fr auto;
+ gap:10px;margin-top:12px;padding-top:12px;
+ border-top:1px solid var(--line)
+}
+.market{font-weight:850;font-size:16px}
+.prob{font-size:25px;font-weight:900}
+.grade{
+ display:inline-block;margin-left:7px;
+ padding:4px 8px;border-radius:999px;
+ font-size:11px;font-weight:900
+}
+.aplus{background:#104934;color:#9cf4d0}
+.a{background:#193d60;color:#bbddff}
+.b{background:#4a3817;color:#ffe79c}
+.pass{background:#41242f;color:#ffb9c6}
+.grid{
+ display:grid;grid-template-columns:repeat(2,1fr);
+ gap:7px;margin-top:11px
+}
+.metric{
+ background:#0b1523;border:1px solid #213149;
+ border-radius:11px;padding:9px
+}
+.metric small{display:block;color:var(--muted);font-size:10px}
+.metric b{font-size:14px}
+.reason{
+ color:#bcc9da;font-size:12px;
+ line-height:1.5;margin-top:10px
+}
+.alt{
+ margin-top:8px;padding-top:8px;
+ border-top:1px dashed #2a3950;
+ color:#9fb1c8;font-size:12px
+}
+.risk{color:#ffd78b}
+.good{color:#8cf0c8}
+.hidden{display:none}
+.empty{
+ padding:30px 10px;text-align:center;color:var(--muted)
+}
+.leagueRow{
+ display:flex;justify-content:space-between;
+ padding:11px 0;border-bottom:1px solid var(--line)
+}
 </style>
 </head>
 
@@ -39,148 +120,819 @@ button{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="sub">Kişisel Futbol Analiz Sistemi • V0.2</p>
+<p class="subtitle">Kişisel futbol analiz sistemi • V0.3</p>
 
-<section class="card">
-<h2>API Bağlantısı</h2>
-
-<input id="key" type="password" placeholder="API-Football Key">
-
-<button onclick="saveKey()">Anahtarı Kaydet</button>
-
-<p id="status" class="muted">
-Anahtar yalnızca bu telefonda saklanır.
+<section class="card" id="apiCard">
+<b>API-Football</b>
+<input id="apiKey" type="password" placeholder="API Key">
+<button class="primary" onclick="saveKey()">Anahtarı Kaydet</button>
+<p id="apiStatus" class="status">
+Anahtar sadece bu telefonda saklanır.
 </p>
 </section>
 
 <section class="card">
-<h2>Bugünün Maçları</h2>
-
-<button onclick="loadMatches()">⚽ Maçları Tara</button>
-
-<div id="matches"></div>
+<div class="head">
+<div>
+<div style="font-size:11px;color:#6ee7b7;font-weight:800">BUGÜN</div>
+<div id="dateLabel" style="font-size:18px;font-weight:850;margin-top:4px"></div>
+</div>
+<button class="primary" onclick="run()">⚽ Tara & Analiz Et</button>
+</div>
 </section>
 
-<section class="card">
-<h2>Takip Edilen Ligler</h2>
-
-<div id="leagues"></div>
+<section class="stats">
+<div class="card stat">
+<b id="countAll">0</b>
+<small>Maç</small>
+</div>
+<div class="card stat">
+<b id="countA">0</b>
+<small>A / A+</small>
+</div>
+<div class="card stat">
+<b id="countRoll">0</b>
+<small>Roll Adayı</small>
+</div>
 </section>
+
+<div class="tabs">
+<button class="tab active" data-tab="best">En Güçlüler</button>
+<button class="tab" data-tab="all">Tüm Maçlar</button>
+<button class="tab" data-tab="leagues">Ligler</button>
+</div>
+
+<section class="card status" id="status">
+Hazır.
+</section>
+
+<div id="content"></div>
+
+</main>
 
 <script>
 
-const leagues=[
-["Premier League",39],
-["Championship",40],
-["Bundesliga",78],
-["Serie A",135],
-["La Liga",140],
-["Ligue 1",61],
-["Eredivisie",88],
-["Eerste Divisie",89],
-["Türkiye Süper Lig",203],
-["Türkiye 1. Lig",204],
-["Belçika Jupiler Pro League",144],
-["Şampiyonlar Ligi",2],
-["Avrupa Ligi",3],
-["Konferans Ligi",848]
+const API="https://v3.football.api-sports.io";
+
+const LEAGUES=[
+ {id:39,name:"Premier League",country:"İngiltere"},
+ {id:40,name:"Championship",country:"İngiltere"},
+ {id:78,name:"Bundesliga",country:"Almanya"},
+ {id:135,name:"Serie A",country:"İtalya"},
+ {id:140,name:"La Liga",country:"İspanya"},
+ {id:61,name:"Ligue 1",country:"Fransa"},
+ {id:88,name:"Eredivisie",country:"Hollanda"},
+ {id:89,name:"Eerste Divisie",country:"Hollanda"},
+ {id:203,name:"Süper Lig",country:"Türkiye"},
+ {id:204,name:"1. Lig",country:"Türkiye"},
+ {id:144,name:"Jupiler Pro League",country:"Belçika"},
+ {id:2,name:"Şampiyonlar Ligi",country:"Avrupa"},
+ {id:3,name:"Avrupa Ligi",country:"Avrupa"},
+ {id:848,name:"Konferans Ligi",country:"Avrupa"}
 ];
 
-document.querySelector("#leagues").innerHTML=
-leagues.map(x=>`<div class="league">✓ ${x[0]}</div>`).join("");
+let state={
+ tab:"best",
+ analyses:[]
+};
 
-document.querySelector("#key").value=
-localStorage.getItem("ggkey")||"";
+const $=q=>document.querySelector(q);
 
-function saveKey(){
+function istanbulDate(){
+ const parts=new Intl.DateTimeFormat("en-CA",{
+  timeZone:"Europe/Istanbul",
+  year:"numeric",month:"2-digit",day:"2-digit"
+ }).formatToParts(new Date());
 
- const key=document.querySelector("#key").value.trim();
+ const obj={};
 
- localStorage.setItem("ggkey",key);
+ parts.forEach(p=>obj[p.type]=p.value);
 
- document.querySelector("#status").textContent=
- "✓ API anahtarı kaydedildi.";
+ return `${obj.year}-${obj.month}-${obj.day}`;
+}
+
+function dateShift(dateString,days){
+
+ const d=new Date(dateString+"T12:00:00Z");
+
+ d.setUTCDate(d.getUTCDate()+days);
+
+ return d.toISOString().slice(0,10);
 
 }
 
-async function loadMatches(){
+function currentSeason(){
 
- const key=localStorage.getItem("ggkey");
+ const d=new Date();
 
- if(!key){
-   alert("Önce API anahtarını kaydet.");
-   return;
- }
+ const m=Number(
+  new Intl.DateTimeFormat("en",{
+   timeZone:"Europe/Istanbul",
+   month:"numeric"
+  }).format(d)
+ );
 
- const d=new Date().toISOString().slice(0,10);
+ const y=Number(
+  new Intl.DateTimeFormat("en",{
+   timeZone:"Europe/Istanbul",
+   year:"numeric"
+  }).format(d)
+ );
 
- const box=document.querySelector("#matches");
+ return m>=7 ? y : y-1;
 
- box.innerHTML='<p class="muted">Maçlar taranıyor…</p>';
+}
 
- try{
+function key(){
+ return localStorage.getItem("goalgrid_key")||"";
+}
 
- const r=await fetch(
- `https://v3.football.api-sports.io/fixtures?date=${d}&timezone=Europe/Istanbul`,
- {
- headers:{
- "x-apisports-key":key
- }
+function saveKey(){
+
+ const v=$("#apiKey").value.trim();
+
+ if(!v)return;
+
+ localStorage.setItem("goalgrid_key",v);
+
+ $("#apiStatus").textContent="✓ API anahtarı kaydedildi.";
+
+}
+
+async function api(path){
+
+ const r=await fetch(API+path,{
+  headers:{
+   "x-apisports-key":key()
+  }
  });
 
  const j=await r.json();
 
- const ids=new Set(leagues.map(x=>x[1]));
+ if(j.errors && Object.keys(j.errors).length){
+  throw new Error(JSON.stringify(j.errors));
+ }
 
- const games=(j.response||[])
- .filter(x=>ids.has(x.league.id));
+ return j.response||[];
 
- if(!games.length){
+}
 
- box.innerHTML=
- '<p class="muted">Bugün seçili liglerde maç bulunamadı.</p>';
+function normalize(x){
 
- return;
+ return{
+  id:x.fixture.id,
+  date:x.fixture.date,
+  status:x.fixture.status.short,
+
+  league:{
+   id:x.league.id,
+   name:x.league.name,
+   country:x.league.country
+  },
+
+  home:{
+   id:x.teams.home.id,
+   name:x.teams.home.name
+  },
+
+  away:{
+   id:x.teams.away.id,
+   name:x.teams.away.name
+  },
+
+  gh:x.goals.home,
+  ga:x.goals.away
+ };
+
+}
+
+function poisson(k,l){
+
+ let f=1;
+
+ for(let i=2;i<=k;i++)f*=i;
+
+ return Math.exp(-l)*Math.pow(l,k)/f;
+
+}
+
+function probabilities(hx,ax){
+
+ let home=0,draw=0,away=0;
+ let btts=0,o15=0,o25=0,o35=0;
+
+ for(let i=0;i<=8;i++){
+
+  for(let j=0;j<=8;j++){
+
+   const p=poisson(i,hx)*poisson(j,ax);
+
+   if(i>j)home+=p;
+   else if(i===j)draw+=p;
+   else away+=p;
+
+   if(i>0 && j>0)btts+=p;
+
+   if(i+j>=2)o15+=p;
+   if(i+j>=3)o25+=p;
+   if(i+j>=4)o35+=p;
+
+  }
 
  }
 
- box.innerHTML=games.map(x=>{
+ return{
+  home,draw,away,
+  btts,o15,o25,o35
+ };
 
- const time=new Date(x.fixture.date)
- .toLocaleTimeString("tr-TR",{
- hour:"2-digit",
- minute:"2-digit"
+}
+
+function finished(m){
+ return m.status==="FT";
+}
+
+function form(teamId,games,venue=null){
+
+ let list=games.filter(m=>
+  finished(m) &&
+  (m.home.id===teamId || m.away.id===teamId)
+ );
+
+ if(venue==="home"){
+  list=list.filter(m=>m.home.id===teamId);
+ }
+
+ if(venue==="away"){
+  list=list.filter(m=>m.away.id===teamId);
+ }
+
+ list=list
+ .sort((a,b)=>new Date(b.date)-new Date(a.date))
+ .slice(0,8);
+
+ let gf=0,ga=0,w=0,d=0,l=0;
+
+ list.forEach(m=>{
+
+  const home=m.home.id===teamId;
+
+  const scored=home ? m.gh : m.ga;
+  const conceded=home ? m.ga : m.gh;
+
+  gf+=scored||0;
+  ga+=conceded||0;
+
+  if(scored>conceded)w++;
+  else if(scored===conceded)d++;
+  else l++;
+
  });
 
- return `
- <div class="match">
+ const n=list.length||1;
 
- <b>
- ${x.teams.home.name}
- —
- ${x.teams.away.name}
- </b>
+ return{
+  n:list.length,
+  gf:gf/n,
+  ga:ga/n,
+  ppg:(w*3+d)/n,
+  games:list
+ };
 
- <div class="muted">
- ${x.league.name} • ${time}
- </div>
+}
 
- </div>
- `;
+function schedule(teamId,target,fixtures){
 
- }).join("");
+ const t=new Date(target.date);
+
+ const prev=fixtures
+ .filter(m=>
+   finished(m) &&
+   (m.home.id===teamId || m.away.id===teamId) &&
+   new Date(m.date)<t
+ )
+ .sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
+
+ const next=fixtures
+ .filter(m=>
+   !finished(m) &&
+   m.id!==target.id &&
+   (m.home.id===teamId || m.away.id===teamId) &&
+   new Date(m.date)>t
+ )
+ .sort((a,b)=>new Date(a.date)-new Date(b.date))[0];
+
+ function days(m){
+
+  if(!m)return null;
+
+  return Math.round(
+   Math.abs(new Date(m.date)-t)/86400000
+  );
+
+ }
+
+ return{
+  prev:days(prev),
+  next:days(next)
+ };
+
+}
+
+function grade(score){
+
+ if(score>=88)return["A+","aplus"];
+ if(score>=80)return["A","a"];
+ if(score>=72)return["B","b"];
+
+ return["PASS","pass"];
+
+}
+
+function analyze(match,leagueFixtures){
+
+ const homeAll=form(match.home.id,leagueFixtures);
+ const awayAll=form(match.away.id,leagueFixtures);
+
+ const homeVenue=form(match.home.id,leagueFixtures,"home");
+ const awayVenue=form(match.away.id,leagueFixtures,"away");
+
+ const hGF=
+  homeVenue.n>=3 ? homeVenue.gf : homeAll.gf;
+
+ const hGA=
+  homeVenue.n>=3 ? homeVenue.ga : homeAll.ga;
+
+ const aGF=
+  awayVenue.n>=3 ? awayVenue.gf : awayAll.gf;
+
+ const aGA=
+  awayVenue.n>=3 ? awayVenue.ga : awayAll.ga;
+
+ let hx=
+  0.45*hGF +
+  0.35*aGA +
+  0.20*1.45;
+
+ let ax=
+  0.45*aGF +
+  0.35*hGA +
+  0.20*1.20;
+
+ hx=Math.max(.30,Math.min(3.1,hx));
+ ax=Math.max(.25,Math.min(2.9,ax));
+
+ const hr=schedule(
+  match.home.id,
+  match,
+  leagueFixtures
+ );
+
+ const ar=schedule(
+  match.away.id,
+  match,
+  leagueFixtures
+ );
+
+ if(hr.prev!==null && hr.prev<=3)hx*=.95;
+ if(ar.prev!==null && ar.prev<=3)ax*=.95;
+
+ const p=probabilities(hx,ax);
+
+ const candidates=[
+  {name:"1.5 Üst",p:p.o15},
+  {name:"Ev Sahibi 1X",p:p.home+p.draw},
+  {name:"Deplasman X2",p:p.away+p.draw},
+  {name:"2.5 Üst",p:p.o25},
+  {name:"KG Var",p:p.btts},
+  {name:"Ev Sahibi Kazanır",p:p.home},
+  {name:"Deplasman Kazanır",p:p.away},
+  {name:"3.5 Üst",p:p.o35}
+ ];
+
+ candidates.sort((a,b)=>b.p-a.p);
+
+ const main=candidates[0];
+ const second=candidates[1];
+
+ const sample=
+  Math.min(homeAll.n,awayAll.n);
+
+ let score=
+  main.p*100;
+
+ score += Math.min(7,sample*.8);
+
+ let rotationRisk=false;
+
+ if(
+  (hr.next!==null && hr.next<=3) ||
+  (ar.next!==null && ar.next<=3)
+ ){
+  score-=4;
+  rotationRisk=true;
+ }
+
+ if(
+  (hr.prev!==null && hr.prev<=3) ||
+  (ar.prev!==null && ar.prev<=3)
+ ){
+  score-=3;
+ }
+
+ if(sample<4){
+  score=Math.min(score,76);
+ }
+
+ score=Math.round(
+  Math.max(45,Math.min(95,score))
+ );
+
+ const g=grade(score);
+
+ const reasons=[];
+
+ reasons.push(
+  `Örneklem ${homeAll.n}/${awayAll.n} maç`
+ );
+
+ reasons.push(
+  `Form PPG ${homeAll.ppg.toFixed(2)} / ${awayAll.ppg.toFixed(2)}`
+ );
+
+ reasons.push(
+  `Gol ort. ${homeAll.gf.toFixed(2)}-${homeAll.ga.toFixed(2)} / ${awayAll.gf.toFixed(2)}-${awayAll.ga.toFixed(2)}`
+ );
+
+ if(hr.prev!==null || ar.prev!==null){
+  reasons.push(
+   `Dinlenme ${hr.prev??"?"}/${ar.prev??"?"} gün`
+  );
+ }
+
+ return{
+  match,
+  score,
+  grade:g[0],
+  gradeClass:g[1],
+
+  market:main.name,
+  probability:main.p,
+
+  secondary:second.name,
+  secondaryProbability:second.p,
+
+  hx,
+  ax,
+  totalXg:hx+ax,
+
+  homeAll,
+  awayAll,
+
+  hr,
+  ar,
+
+  rotationRisk,
+  reasons,
+
+  probs:p
+ };
+
+}
+
+async function run(){
+
+ if(!key()){
+  alert("Önce API anahtarını kaydet.");
+  return;
+ }
+
+ $("#status").textContent=
+ "Bugünün maçları alınıyor…";
+
+ try{
+
+  const today=istanbulDate();
+
+  const allowed=new Set(
+   LEAGUES.map(x=>x.id)
+  );
+
+  const rawToday=await api(
+   `/fixtures?date=${today}&timezone=Europe/Istanbul`
+  );
+
+  const todayGames=rawToday
+   .map(normalize)
+   .filter(m=>allowed.has(m.league.id));
+
+  if(!todayGames.length){
+
+   state.analyses=[];
+
+   render();
+
+   $("#status").textContent=
+   "Bugün seçili liglerde maç bulunamadı.";
+
+   return;
+  }
+
+  const activeLeagues=[
+   ...new Set(
+    todayGames.map(x=>x.league.id)
+   )
+  ];
+
+  const from=dateShift(today,-60);
+  const to=dateShift(today,7);
+  const season=currentSeason();
+
+  $("#status").textContent=
+  `${activeLeagues.length} aktif lig için form ve fikstür verisi alınıyor…`;
+
+  const leagueMap={};
+
+  for(const leagueId of activeLeagues){
+
+   try{
+
+    const data=await api(
+     `/fixtures?league=${leagueId}&season=${season}&from=${from}&to=${to}&timezone=Europe/Istanbul`
+    );
+
+    leagueMap[leagueId]=data.map(normalize);
+
+   }catch(e){
+
+    leagueMap[leagueId]=[];
+
+   }
+
+  }
+
+  state.analyses=todayGames.map(match=>{
+
+   return analyze(
+    match,
+    leagueMap[match.league.id]||[]
+   );
+
+  })
+  .sort((a,b)=>b.score-a.score);
+
+  localStorage.setItem(
+   "goalgrid_last_analysis",
+   JSON.stringify({
+    time:Date.now(),
+    analyses:state.analyses
+   })
+  );
+
+  render();
+
+  $("#status").textContent=
+  `✓ ${state.analyses.length} maç analiz edildi. ${activeLeagues.length+1} API çağrısı kullanıldı.`;
 
  }catch(e){
 
- box.innerHTML=
- '<p class="muted">Veri alınamadı: '+e.message+'</p>';
+  $("#status").textContent=
+  "Hata: "+e.message;
 
  }
 
 }
 
+function matchCard(a){
+
+ const m=a.match;
+
+ const time=new Date(m.date)
+ .toLocaleTimeString("tr-TR",{
+  hour:"2-digit",
+  minute:"2-digit",
+  timeZone:"Europe/Istanbul"
+ });
+
+ return`
+ <section class="card match">
+
+  <div class="head">
+
+   <div>
+    <div class="league">
+     ${m.league.name}
+    </div>
+
+    <div class="teams">
+     ${m.home.name} — ${m.away.name}
+    </div>
+   </div>
+
+   <div class="time">
+    ${time}
+   </div>
+
+  </div>
+
+  <div class="pick">
+
+   <div>
+
+    <div class="market">
+     🎯 ${a.market}
+
+     <span class="grade ${a.gradeClass}">
+      ${a.grade}
+     </span>
+
+    </div>
+
+    <div class="status">
+     GoalGrid ${a.score}/100
+    </div>
+
+   </div>
+
+   <div class="prob">
+    %${Math.round(a.probability*100)}
+   </div>
+
+  </div>
+
+  <div class="grid">
+
+   <div class="metric">
+    <small>Beklenen gol</small>
+    <b>
+     ${a.hx.toFixed(2)}
+     —
+     ${a.ax.toFixed(2)}
+    </b>
+   </div>
+
+   <div class="metric">
+    <small>Toplam gol beklentisi</small>
+    <b>${a.totalXg.toFixed(2)}</b>
+   </div>
+
+   <div class="metric">
+    <small>KG Var</small>
+    <b>%${Math.round(a.probs.btts*100)}</b>
+   </div>
+
+   <div class="metric">
+    <small>2.5 Üst</small>
+    <b>%${Math.round(a.probs.o25*100)}</b>
+   </div>
+
+   <div class="metric">
+    <small>1X</small>
+    <b>%${Math.round((a.probs.home+a.probs.draw)*100)}</b>
+   </div>
+
+   <div class="metric">
+    <small>X2</small>
+    <b>%${Math.round((a.probs.away+a.probs.draw)*100)}</b>
+   </div>
+
+  </div>
+
+  <div class="reason">
+   ${a.reasons.join(" • ")}
+  </div>
+
+  ${
+   a.rotationRisk
+   ? `<div class="reason risk">
+      ⚠️ Yakın fikstür var: rotasyon riski puana eksi olarak işlendi.
+     </div>`
+   : `<div class="reason good">
+      ✓ Yakın fikstür kaynaklı belirgin rotasyon alarmı yok.
+     </div>`
+  }
+
+  <div class="alt">
+   Alternatif:
+   <b>${a.secondary}</b>
+   —
+   %${Math.round(a.secondaryProbability*100)}
+  </div>
+
+ </section>
+ `;
+
+}
+
+function render(){
+
+ $("#countAll").textContent=
+ state.analyses.length;
+
+ $("#countA").textContent=
+ state.analyses.filter(
+  x=>x.score>=80
+ ).length;
+
+ $("#countRoll").textContent=
+ Math.min(
+  3,
+  state.analyses.filter(
+   x=>x.score>=80
+  ).length
+ );
+
+ if(state.tab==="leagues"){
+
+  $("#content").innerHTML=
+  `<section class="card">
+   ${LEAGUES.map(l=>`
+    <div class="leagueRow">
+     <div>
+      <b>${l.name}</b>
+      <div class="status">${l.country}</div>
+     </div>
+     <div class="good">✓</div>
+    </div>
+   `).join("")}
+  </section>`;
+
+  return;
+ }
+
+ let arr=[...state.analyses];
+
+ if(state.tab==="best"){
+
+  arr=arr
+   .filter(x=>x.score>=80)
+   .slice(0,10);
+
+ }
+
+ if(!arr.length){
+
+  $("#content").innerHTML=
+  `<div class="empty">
+   Bu sekmede henüz analiz bulunmuyor.
+  </div>`;
+
+  return;
+ }
+
+ $("#content").innerHTML=
+ arr.map(matchCard).join("");
+
+}
+
+document
+.querySelectorAll(".tab")
+.forEach(btn=>{
+
+ btn.onclick=()=>{
+
+  document
+  .querySelectorAll(".tab")
+  .forEach(x=>x.classList.remove("active"));
+
+  btn.classList.add("active");
+
+  state.tab=btn.dataset.tab;
+
+  render();
+
+ };
+
+});
+
+$("#apiKey").value=key();
+
+$("#dateLabel").textContent=
+new Intl.DateTimeFormat("tr-TR",{
+ weekday:"long",
+ day:"numeric",
+ month:"long",
+ year:"numeric",
+ timeZone:"Europe/Istanbul"
+}).format(new Date());
+
+try{
+
+ const saved=JSON.parse(
+  localStorage.getItem("goalgrid_last_analysis")
+ );
+
+ if(saved?.analyses){
+
+  state.analyses=saved.analyses;
+
+  render();
+
+ }
+
+}catch{}
+
 </script>
 
-</main>
 </body>
 </html>
