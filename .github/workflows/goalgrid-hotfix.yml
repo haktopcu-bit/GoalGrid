@@ -25,14 +25,14 @@ jobs:
           else
             python tools/goalgrid_hotfix.py
           fi
-      - name: Commit patched index
+      - name: Commit patched GoalGrid files
         run: |
           git config user.name "goalgrid-bot"
           git config user.email "goalgrid-bot@users.noreply.github.com"
-          git add index.html
+          git add index.html functions/data.js
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            git commit -m "Force UEFA and Dutch competitions into GoalGrid"
+            git commit -m "Fix UEFA history pool and domestic cup filtering"
             git push
           fi
