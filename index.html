@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>GoalGrid V1.9.9</title>
+<title>GoalGrid V1.10.0</title>
 
 <style>
 :root{
@@ -444,7 +444,7 @@ input[type="date"]{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="subtitle">Futbol Karar Motoru • V1.9.9</p>
+<p class="subtitle">Futbol Karar Motoru • V1.10.0</p>
 
 <section class="card">
 
@@ -1216,35 +1216,20 @@ function teamKey(name){
 
 
 function sameTeamName(a,b){
-
-  const x =
-    teamKey(a);
-
-  const y =
-    teamKey(b);
-
-  if(!x || !y){
-    return false;
-  }
-
-  if(x===y){
-    return true;
-  }
-
-  return(
-    (
-      x.length>=5 &&
-      y.includes(x)
-    )
-    ||
-    (
-      y.length>=5 &&
-      x.includes(y)
-    )
-  );
-
+  const x=teamKey(a);
+  const y=teamKey(b);
+  if(!x || !y) return false;
+  if(x===y) return true;
+  if((x.length>=5 && y.includes(x)) || (y.length>=5 && x.includes(y))) return true;
+  const stop=new Set(["fc","cf","ac","sc","fk","sk","club","de","del","the","city","united","utd"]);
+  const tokens=v=>plain(v).replace(/[^a-z0-9 ]+/g," ").split(/\s+/).filter(t=>t.length>=3 && !stop.has(t));
+  const tx=tokens(a), ty=tokens(b);
+  if(!tx.length || !ty.length) return false;
+  let common=0;
+  tx.forEach(t=>{if(ty.includes(t)) common++;});
+  if(common>=1 && common/Math.min(tx.length,ty.length)>=0.5) return true;
+  return tx[0]===ty[0] && tx[0].length>=5;
 }
-
 
 function sameTeam(
   targetName,
@@ -1392,122 +1377,42 @@ function normalizeApiFootballHistoryMatch(match){
 
 
 async function loadTeamHistory(teamId){
-  /* V1.9.7: Free planda güncel sezon takım geçmişi kapalı; yerel çoklu kaynak kullan. */
-  return [];
-
-
-  if(teamId===null || teamId===undefined || teamId===""){
-    return[];
-  }
-
-  const key =
-    "goalgrid_team_v193_"
-    +
-    teamId;
-
-
-  const cached =
-    localStorage.getItem(
-      key
-    );
-
-
-  if(cached){
-
-    try{
-
-      const parsed =
-        JSON.parse(
-          cached
-        );
-
-
-      if(
-        Date.now()
-        -
-        parsed.time
-        <
-        60 *
-        60 *
-        1000
-      ){
-
-        return parsed.matches;
-
-      }
-
-    }catch{}
-
-  }
-
-
-  const seasonCandidates = [2026, 2025];
-  const fixtures = [];
-  const seasonErrors = [];
-
-  for(const season of seasonCandidates){
-    try{
-      const seasonFixtures = await apiFootball(
-        `/fixtures?team=${teamId}&season=${season}&timezone=Europe/Istanbul`
-      );
-      fixtures.push(...seasonFixtures);
-    }catch(error){
-      seasonErrors.push(`${season}: ${error.message}`);
+  if(teamId===null || teamId===undefined || teamId==="") return [];
+  const key="goalgrid_team_v110_"+teamId;
+  try{
+    const cached=localStorage.getItem(key);
+    if(cached){
+      const p=JSON.parse(cached);
+      if(Date.now()-p.time < 60*60*1000) return p.matches || [];
     }
+  }catch{}
+  const fixtures=[];
+  const errors=[];
+  for(const season of [2024,2023]){
+    try{
+      const arr=await apiFootball(`/fixtures?team=${teamId}&season=${season}&timezone=Europe/Istanbul`);
+      fixtures.push(...arr);
+      if(fixtures.length>=20) break;
+    }catch(e){ errors.push(`${season}: ${e.message}`); }
   }
-
-  if(!fixtures.length && seasonErrors.length){
-    throw new Error(seasonErrors.join(" • "));
-  }
-
-  const matches =
-    fixtures
-      .filter(match => {
-        const leagueName = plain(match.league?.name);
-        const country = plain(match.league?.country);
-
-        if(includesAny(leagueName, EUROPE_NAMES)){
-          return true;
-        }
-
-        if(leagueName.includes("friendly")){
-          return false;
-        }
-
-        const rule = COUNTRY_RULES[country];
-        if(rule && includesAny(leagueName, rule.cups)){
-          return false;
-        }
-
-        return true;
-      })
-      .map(
-        normalizeApiFootballHistoryMatch
-      )
-      .filter(
-        x =>
-          x.team1 &&
-          x.team2
-      )
-      .sort((a,b)=>String(b.date).localeCompare(String(a.date)))
-      .slice(0,40);
-
-
-  localStorage.setItem(
-    key,
-    JSON.stringify({
-      time:
-        Date.now(),
-
-      matches
+  const matches=fixtures
+    .filter(match=>{
+      const ln=plain(match.league?.name);
+      if(includesAny(ln,EUROPE_NAMES)) return true;
+      if(ln.includes("friendly")) return false;
+      const country=plain(match.league?.country);
+      const rule=COUNTRY_RULES[country];
+      if(rule && includesAny(ln,rule.cups)) return false;
+      return true;
     })
-  );
-
-
+    .map(normalizeApiFootballHistoryMatch)
+    .filter(x=>x.team1 && x.team2 && completed(x))
+    .sort((a,b)=>String(b.date).localeCompare(String(a.date)))
+    .slice(0,30);
+  try{localStorage.setItem(key,JSON.stringify({time:Date.now(),matches}));}catch{}
+  if(!matches.length && errors.length) throw new Error(errors.join(" • "));
   return matches;
-
 }
-
 
 function normalizeFootballDataMatch(match){
 
@@ -1635,7 +1540,7 @@ async function loadFootballData(code){
 
 
   const key =
-    "goalgrid_fd_v181_"
+    "goalgrid_fd_v110_"
     +
     code;
 
@@ -1745,7 +1650,7 @@ async function loadOpenFootball(code){
 
 
   const key =
-    "goalgrid_of_v181_"
+    "goalgrid_of_v110_"
     +
     code;
 
@@ -1848,25 +1753,6 @@ async function loadOpenFootball(code){
 
   return matches;
 
-}
-
-
-async function loadSofaHistory(teamName){
-  if(!teamName) return [];
-  const key="goalgrid_sofa_v199_"+teamKey(teamName);
-  try{
-    const cached=localStorage.getItem(key);
-    if(cached){
-      const p=JSON.parse(cached);
-      if(Date.now()-p.time < 30*60*1000) return p.matches || [];
-    }
-  }catch{}
-  const response=await fetch(`/sofa-history?team=${encodeURIComponent(teamName)}`,{cache:"no-store"});
-  const json=await response.json();
-  if(!response.ok || !json.ok) throw new Error(json.error || `Sofascore ${response.status}`);
-  const matches=Array.isArray(json.matches)?json.matches:[];
-  try{localStorage.setItem(key,JSON.stringify({time:Date.now(),matches}));}catch{}
-  return matches;
 }
 
 
@@ -2708,7 +2594,7 @@ async function buildFixtureHistory(
     awayCount=lastMatches(fixture.teams.away.name,fixture.teams.away.id,merged,targetDate).length;
   }
 
-  // API-Football is only a final fallback. On Free plan this currently returns [].
+  // API-Football historical seasons (2024/2023) are the final fallback on the Free plan.
   if(homeCount<2 || awayCount<2){
     try{
       const [homeHistory,awayHistory]=await Promise.all([
@@ -3146,10 +3032,6 @@ function analyseFixture(
             return(
               "OpenFootball"
             );
-          }
-
-          if(source.startsWith("Sofascore")){
-            return "Sofascore";
           }
 
           return source;
