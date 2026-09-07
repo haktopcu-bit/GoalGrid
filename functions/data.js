@@ -1,5 +1,6 @@
 export async function onRequestGet(context) {
   const url = new URL(context.request.url);
+
   const league = url.searchParams.get("league");
 
   const files = {
@@ -15,71 +16,102 @@ export async function onRequestGet(context) {
   const file = files[league];
 
   if (!file) {
-    return new Response(
-      JSON.stringify({
-        ok: false,
-        error: "Desteklenmeyen lig"
-      }),
+    return json(
       {
-        status: 400,
-        headers: {
-          "content-type": "application/json; charset=utf-8"
-        }
-      }
+        ok: false,
+        hata: "Bu lig henüz desteklenmiyor."
+      },
+      400
     );
   }
 
-  const source =
-    `https://raw.githubusercontent.com/openfootball/football.json/master/2026-27/${file}`;
-
   try {
-    const response = await fetch(source);
+    const sezonlar = [
+      "2026-27",
+      "2025-26"
+    ];
 
-    if (!response.ok) {
-      return new Response(
-        JSON.stringify({
-          ok: false,
-          error: `Kaynak hatası ${response.status}`
-        }),
-        {
-          status: 502,
-          headers: {
-            "content-type": "application/json; charset=utf-8"
-          }
+    const tumMaclar = [];
+
+    for (const sezon of sezonlar) {
+      const source =
+        `https://raw.githubusercontent.com/openfootball/football.json/master/${sezon}/${file}`;
+
+      const response = await fetch(source, {
+        headers: {
+          "User-Agent": "GoalGrid/1.4"
         }
+      });
+
+      if (!response.ok) {
+        continue;
+      }
+
+      const data = await response.json();
+
+      const matches = Array.isArray(data.matches)
+        ? data.matches
+        : [];
+
+      matches.forEach(match => {
+        tumMaclar.push({
+          ...match,
+          sezon
+        });
+      });
+    }
+
+    if (!tumMaclar.length) {
+      return json(
+        {
+          ok: false,
+          hata: "Geçmiş maç verisi bulunamadı."
+        },
+        502
       );
     }
 
-    const data = await response.json();
+    tumMaclar.sort((a, b) => {
+      const aa = `${a.date || ""} ${a.time || "00:00"}`;
+      const bb = `${b.date || ""} ${b.time || "00:00"}`;
+      return aa.localeCompare(bb);
+    });
 
-    return new Response(
-      JSON.stringify({
-        ok: true,
-        league,
-        source: "OpenFootball",
-        data
-      }),
+    return json(
       {
-        headers: {
-          "content-type": "application/json; charset=utf-8",
-          "cache-control": "public, max-age=1800",
-          "access-control-allow-origin": "*"
-        }
+        ok: true,
+        lig: league,
+        kaynak: "OpenFootball",
+        sezonlar,
+        maclar: tumMaclar
+      },
+      200,
+      {
+        "cache-control": "public, max-age=1800"
       }
     );
 
   } catch (error) {
-    return new Response(
-      JSON.stringify({
-        ok: false,
-        error: error.message
-      }),
+    return json(
       {
-        status: 500,
-        headers: {
-          "content-type": "application/json; charset=utf-8"
-        }
-      }
+        ok: false,
+        hata: error.message
+      },
+      500
     );
   }
+}
+
+function json(data, status = 200, extraHeaders = {}) {
+  return new Response(
+    JSON.stringify(data),
+    {
+      status,
+      headers: {
+        "content-type": "application/json; charset=utf-8",
+        "access-control-allow-origin": "*",
+        ...extraHeaders
+      }
+    }
+  );
 }
