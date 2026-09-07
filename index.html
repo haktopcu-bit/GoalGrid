@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>GoalGrid V1.9.1</title>
+<title>GoalGrid V1.9.2</title>
 
 <style>
 :root{
@@ -444,7 +444,7 @@ input[type="date"]{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="subtitle">Futbol Karar Motoru • V1.9.1</p>
+<p class="subtitle">Futbol Karar Motoru • V1.9.2</p>
 
 <section class="card">
 
@@ -1196,7 +1196,20 @@ const TEAM_ALIASES = {
 
   sportingcp:"sporting",
   sportinglisbon:"sporting",
-  sporting:"sporting"
+  sporting:"sporting",
+
+  necnijmegen:"nec",
+  nec:"nec",
+  excelsiorrotterdam:"excelsior",
+  excelsior:"excelsior",
+  clubbruggekv:"clubbrugge",
+  clubbrugge:"clubbrugge",
+  aekathensfc:"aekathens",
+  aekathens:"aekathens",
+  lasklinz:"lask",
+  lask:"lask",
+  astonvillafc:"astonvilla",
+  astonvilla:"astonvilla"
 
 };
 
@@ -1402,7 +1415,7 @@ function normalizeApiFootballHistoryMatch(match){
 async function loadTeamHistory(teamId){
 
   const key =
-    "goalgrid_team_v190_"
+    "goalgrid_team_v192_"
     +
     teamId;
 
@@ -1444,7 +1457,7 @@ async function loadTeamHistory(teamId){
 
   const fixtures =
     await apiFootball(
-      `/fixtures?team=${teamId}&last=40&status=FT&timezone=Europe/Istanbul`
+      `/fixtures?team=${teamId}&last=20&timezone=Europe/Istanbul`
     );
 
 
@@ -2703,63 +2716,43 @@ async function buildFixtureHistory(
 
 
   /*
-    Avrupa ve kupa maçlarında en güvenilir takım eşleştirme:
-    API-Football takım ID.
+    Önce ücretsiz/lig kaynaklarını kullan. Takım için 2 maçtan az kalırsa
+    yalnız o takım için API-Football geçmişine düş. Böylece günlük API kotası
+    onlarca gereksiz takım çağrısıyla tüketilmez.
   */
 
   try{
+    const localMerged = mergeMatches(...groups);
+    const targetDate = String(fixture.fixture?.date || "").slice(0,10);
 
-    const [
-      homeHistory,
-      awayHistory
-    ] =
-      await Promise.all([
-        loadTeamHistory(
-          fixture.teams.home.id
-        ),
-        loadTeamHistory(
-          fixture.teams.away.id
-        )
-      ]);
+    const localHomeCount = lastMatches(
+      fixture.teams.home.name, fixture.teams.home.id, localMerged, targetDate
+    ).length;
 
+    const localAwayCount = lastMatches(
+      fixture.teams.away.name, fixture.teams.away.id, localMerged, targetDate
+    ).length;
 
-    if(
-      homeHistory.length
-    ){
+    const needHome = localHomeCount < 2;
+    const needAway = localAwayCount < 2;
 
-      groups.push(
-        homeHistory
-      );
+    const [homeHistory,awayHistory] = await Promise.all([
+      needHome ? loadTeamHistory(fixture.teams.home.id) : Promise.resolve([]),
+      needAway ? loadTeamHistory(fixture.teams.away.id) : Promise.resolve([])
+    ]);
 
-      sources.push(
-        `API-Football ${fixture.teams.home.name} (${homeHistory.length})`
-      );
-
+    if(homeHistory.length){
+      groups.push(homeHistory);
+      sources.push(`API-Football ${fixture.teams.home.name} (${homeHistory.length})`);
     }
 
-
-    if(
-      awayHistory.length
-    ){
-
-      groups.push(
-        awayHistory
-      );
-
-      sources.push(
-        `API-Football ${fixture.teams.away.name} (${awayHistory.length})`
-      );
-
+    if(awayHistory.length){
+      groups.push(awayHistory);
+      sources.push(`API-Football ${fixture.teams.away.name} (${awayHistory.length})`);
     }
 
   }catch(error){
-
-    errors.push(
-      "API-Football takım geçmişi: "
-      +
-      error.message
-    );
-
+    errors.push("API-Football takım geçmişi: " + error.message);
   }
 
 
