@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>GoalGrid V1.6</title>
+<title>GoalGrid V1.7</title>
 
 <style>
 :root{
@@ -35,7 +35,7 @@ body{
 main{
   max-width:850px;
   margin:auto;
-  padding:calc(22px + env(safe-area-inset-top)) 13px 250px;
+  padding:calc(22px + env(safe-area-inset-top)) 13px 260px;
 }
 
 h1{
@@ -102,9 +102,7 @@ button{
   gap:7px;
 }
 
-.stat{
-  text-align:center;
-}
+.stat{text-align:center}
 
 .stat b{
   display:block;
@@ -280,7 +278,7 @@ button{
 
 .source{
   display:inline-block;
-  margin-top:9px;
+  margin-top:5px;
   padding:5px 8px;
   background:#0b2030;
   color:#9ac7e9;
@@ -295,7 +293,8 @@ button{
 }
 
 select,
-input[type="number"]{
+input[type="number"],
+input[type="date"]{
   width:100%;
   padding:10px;
   border:1px solid #31425d;
@@ -303,6 +302,22 @@ input[type="number"]{
   background:#07101d;
   color:white;
   font-size:16px;
+}
+
+.dateControls{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  margin-top:8px;
+}
+
+.quickDates{
+  display:flex;
+  gap:7px;
+}
+
+.quickDates button{
+  flex:1;
 }
 
 .oddsGrid{
@@ -378,9 +393,7 @@ input[type="number"]{
   margin-top:8px;
 }
 
-.couponStats .metric{
-  text-align:center;
-}
+.couponStats .metric{text-align:center}
 
 .couponDetails{
   max-height:260px;
@@ -400,9 +413,7 @@ input[type="number"]{
   margin-top:9px;
 }
 
-.actions button{
-  flex:1;
-}
+.actions button{flex:1}
 
 .empty{
   padding:35px 10px;
@@ -410,9 +421,7 @@ input[type="number"]{
   color:var(--muted);
 }
 
-.hidden{
-  display:none;
-}
+.hidden{display:none}
 
 @media(max-width:520px){
   .oddsGrid{
@@ -431,47 +440,96 @@ input[type="number"]{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="subtitle">Futbol Karar Motoru • V1.6</p>
+<p class="subtitle">Futbol Karar Motoru • V1.7</p>
 
 <section class="card">
+
   <div class="row">
+
     <div>
       <b id="apiTitle">API</b>
       <div id="apiState" class="muted"></div>
     </div>
 
-    <button class="secondary" onclick="changeApiKey()">
+    <button
+      class="secondary"
+      onclick="changeApiKey()">
       Değiştir
     </button>
+
   </div>
 
   <div class="section">
-    <div class="sectionTitle">VERİ KAYNAKLARI</div>
+
+    <div class="sectionTitle">
+      VERİ KAYNAKLARI
+    </div>
 
     <div class="sourceList">
       <span class="source">API-Football • Fikstür</span>
-      <span class="source">football-data.org • Büyük Ligler</span>
-      <span class="source">OpenFootball • Geçmiş / Yedek</span>
+      <span class="source">football-data.org • Maç / Geçmiş</span>
+      <span class="source">OpenFootball • Maç / Geçmiş / Yedek</span>
     </div>
+
+    <div class="muted" style="margin-top:8px">
+      Aynı ligde birden fazla kaynak varsa GoalGrid verileri birleştirir.
+    </div>
+
   </div>
+
 </section>
+
 
 <section class="card">
-  <div class="row">
-    <div>
-      <div class="league">BUGÜN</div>
-      <div id="today" style="font-size:19px;font-weight:900"></div>
+
+  <div class="sectionTitle">
+    ANALİZ TARİHİ
+  </div>
+
+  <div class="dateControls">
+
+    <input
+      id="selectedDate"
+      type="date">
+
+    <div class="quickDates">
+
+      <button
+        class="secondary"
+        onclick="setToday()">
+        Bugün
+      </button>
+
+      <button
+        class="secondary"
+        onclick="setTomorrow()">
+        Yarın
+      </button>
+
     </div>
 
-    <button class="primary" onclick="scan()">
-      Tara ve Analiz Et
+    <div
+      id="selectedDateText"
+      class="muted">
+    </div>
+
+    <button
+      class="primary"
+      onclick="scan()">
+      Seçilen Tarihi Tara ve Analiz Et
     </button>
+
   </div>
 
-  <div id="scanState" class="muted" style="margin-top:10px">
+  <div
+    id="scanState"
+    class="muted"
+    style="margin-top:10px">
     Hazır.
   </div>
+
 </section>
+
 
 <section class="stats">
 
@@ -497,39 +555,56 @@ input[type="number"]{
 
 </section>
 
+
 <div class="tabs">
 
-  <button class="tab active" data-tab="strong">
+  <button
+    class="tab active"
+    data-tab="strong">
     En Güçlüler
   </button>
 
-  <button class="tab" data-tab="all">
+  <button
+    class="tab"
+    data-tab="all">
     Tüm Maçlar
   </button>
 
-  <button class="tab" data-tab="coupons">
+  <button
+    class="tab"
+    data-tab="coupons">
     Kupon Geçmişi
   </button>
 
 </div>
 
+
 <div id="content"></div>
 
 </main>
 
-<section id="couponPanel" class="couponPanel hidden">
+
+<section
+  id="couponPanel"
+  class="couponPanel hidden">
+
   <div class="couponInner">
 
     <div class="row">
+
       <div>
         <b>🎟️ Aktif Kupon</b>
         <div id="couponCount" class="muted"></div>
       </div>
 
-      <button class="secondary" onclick="toggleCouponDetails()">
+      <button
+        class="secondary"
+        onclick="toggleCouponDetails()">
         Ayrıntı
       </button>
+
     </div>
+
 
     <div class="couponStats">
 
@@ -555,19 +630,31 @@ input[type="number"]{
 
     </div>
 
-    <div id="couponDetails" class="hidden">
 
-      <div id="couponLegs" class="couponDetails"></div>
+    <div
+      id="couponDetails"
+      class="hidden">
+
+      <div
+        id="couponLegs"
+        class="couponDetails">
+      </div>
 
       <div class="oddsGrid">
 
         <div class="oddsCard">
           <label>Mevcut Kasa</label>
-          <input id="bankroll" type="number" inputmode="decimal" placeholder="1000">
+
+          <input
+            id="bankroll"
+            type="number"
+            inputmode="decimal"
+            placeholder="1000">
         </div>
 
         <div class="oddsCard">
           <label>Yatırılacak Tutar</label>
+
           <input
             id="stake"
             type="number"
@@ -578,20 +665,33 @@ input[type="number"]{
 
       </div>
 
-      <div class="card" style="margin-top:8px">
-        <small class="muted">Potansiyel Dönüş</small>
-        <div id="potentialReturn" style="font-size:23px;font-weight:900">
+      <div
+        class="card"
+        style="margin-top:8px">
+
+        <small class="muted">
+          Potansiyel Dönüş
+        </small>
+
+        <div
+          id="potentialReturn"
+          style="font-size:23px;font-weight:900">
           0 TL
         </div>
+
       </div>
 
       <div class="actions">
 
-        <button class="primary" onclick="saveCoupon()">
+        <button
+          class="primary"
+          onclick="saveCoupon()">
           Kuponu Kaydet
         </button>
 
-        <button class="danger" onclick="clearCoupon()">
+        <button
+          class="danger"
+          onclick="clearCoupon()">
           Temizle
         </button>
 
@@ -600,14 +700,18 @@ input[type="number"]{
     </div>
 
   </div>
+
 </section>
 
+
 <script>
+
 const API_FOOTBALL =
   "https://v3.football.api-sports.io";
 
 
 const LEAGUES = {
+
   39:{
     name:"Premier League",
     fd:"PL",
@@ -691,89 +795,161 @@ const LEAGUES = {
     fd:null,
     of:null
   }
+
 };
 
 
 let state = {
+
   analyses:[],
+
   tab:"strong",
+
   apiCalls:0,
+
   coupon:[]
+
 };
 
 
-const $ = selector =>
-  document.querySelector(selector);
+const $ =
+  selector =>
+    document.querySelector(
+      selector
+    );
 
 
 function apiKey(){
-  return localStorage.getItem("goalgrid_api_key") || "";
+
+  return(
+    localStorage.getItem(
+      "goalgrid_api_key"
+    )
+    ||
+    ""
+  );
+
 }
 
 
 function showApiState(){
-  if(apiKey()){
-    $("#apiTitle").textContent = "API-Football bağlı ✓";
-    $("#apiState").textContent = "Anahtar bu telefonda kayıtlı.";
+
+  if(
+    apiKey()
+  ){
+
+    $("#apiTitle").textContent =
+      "API-Football bağlı ✓";
+
+
+    $("#apiState").textContent =
+      "Anahtar bu telefonda kayıtlı.";
+
   }else{
-    $("#apiTitle").textContent = "API-Football anahtarı yok";
-    $("#apiState").textContent = "Bugünün fikstürü için anahtarı kaydet.";
+
+    $("#apiTitle").textContent =
+      "API-Football anahtarı yok";
+
+
+    $("#apiState").textContent =
+      "Fikstür için API anahtarını kaydet.";
+
   }
+
 }
 
 
 function changeApiKey(){
-  const key = prompt(
-    "API-Football anahtarını gir:",
-    apiKey()
-  );
 
-  if(key === null) return;
+  const key =
+    prompt(
+      "API-Football anahtarını gir:",
+      apiKey()
+    );
 
-  const clean = key.trim();
 
-  if(!clean) return;
+  if(
+    key === null
+  ){
+    return;
+  }
+
+
+  const clean =
+    key.trim();
+
+
+  if(
+    !clean
+  ){
+    return;
+  }
+
 
   localStorage.setItem(
     "goalgrid_api_key",
     clean
   );
 
+
   showApiState();
+
 }
 
 
 async function apiFootball(path){
+
   state.apiCalls++;
-  $("#apiCount").textContent = state.apiCalls;
+
+
+  $("#apiCount").textContent =
+    state.apiCalls;
+
 
   const response =
     await fetch(
       API_FOOTBALL + path,
       {
         headers:{
-          "x-apisports-key":apiKey()
+          "x-apisports-key":
+            apiKey()
         }
       }
     );
 
+
   const json =
     await response.json();
 
+
   if(
-    json.errors &&
-    Object.keys(json.errors).length
+    json.errors
+    &&
+    Object.keys(
+      json.errors
+    ).length
   ){
+
     throw new Error(
-      JSON.stringify(json.errors)
+      JSON.stringify(
+        json.errors
+      )
     );
+
   }
 
-  return json.response || [];
+
+  return(
+    json.response
+    ||
+    []
+  );
+
 }
 
 
-function todayISO(){
+function localDateISO(date){
+
   return new Intl.DateTimeFormat(
     "en-CA",
     {
@@ -782,20 +958,147 @@ function todayISO(){
       day:"2-digit",
       timeZone:"Europe/Istanbul"
     }
-  ).format(new Date());
+  ).format(date);
+
+}
+
+
+function todayISO(){
+
+  return(
+    localDateISO(
+      new Date()
+    )
+  );
+
+}
+
+
+function selectedDateISO(){
+
+  const value =
+    $("#selectedDate").value;
+
+
+  return(
+    value
+    ||
+    todayISO()
+  );
+
+}
+
+
+function setToday(){
+
+  $("#selectedDate").value =
+    todayISO();
+
+
+  updateSelectedDateText();
+
+}
+
+
+function setTomorrow(){
+
+  const now =
+    new Date();
+
+
+  const tomorrow =
+    new Date(
+      now.getTime()
+      +
+      24 *
+      60 *
+      60 *
+      1000
+    );
+
+
+  $("#selectedDate").value =
+    localDateISO(
+      tomorrow
+    );
+
+
+  updateSelectedDateText();
+
+}
+
+
+function updateSelectedDateText(){
+
+  const value =
+    $("#selectedDate").value;
+
+
+  if(
+    !value
+  ){
+
+    $("#selectedDateText").textContent =
+      "";
+
+    return;
+
+  }
+
+
+  const parts =
+    value.split("-");
+
+
+  const date =
+    new Date(
+      Number(parts[0]),
+      Number(parts[1])-1,
+      Number(parts[2])
+    );
+
+
+  $("#selectedDateText").textContent =
+    new Intl.DateTimeFormat(
+      "tr-TR",
+      {
+        weekday:"long",
+        day:"numeric",
+        month:"long",
+        year:"numeric"
+      }
+    ).format(date);
+
 }
 
 
 function normalizeText(value){
-  return String(value || "")
-    .toLocaleLowerCase("tr")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"")
-    .replace(/[^a-z0-9]/g,"");
+
+  return String(
+    value
+    ||
+    ""
+  )
+  .toLocaleLowerCase(
+    "tr"
+  )
+  .normalize(
+    "NFD"
+  )
+  .replace(
+    /[\u0300-\u036f]/g,
+    ""
+  )
+  .replace(
+    /[^a-z0-9]/g,
+    ""
+  );
+
 }
 
 
 const TEAM_ALIASES = {
+
   cagliari:"cagliaricalcio",
   lecce:"uslecce",
   lazio:"sslazio",
@@ -837,57 +1140,116 @@ const TEAM_ALIASES = {
   istanbulbasaksehir:"basaksehir",
   goztepe:"goztepe",
   alanyaspor:"alanyaspor"
+
 };
 
 
 function teamKey(name){
-  const clean =
-    normalizeText(name);
 
-  return TEAM_ALIASES[clean] || clean;
+  const clean =
+    normalizeText(
+      name
+    );
+
+
+  return(
+    TEAM_ALIASES[
+      clean
+    ]
+    ||
+    clean
+  );
+
 }
 
 
 function sameTeam(a,b){
-  const x = teamKey(a);
-  const y = teamKey(b);
 
-  if(!x || !y) return false;
+  const x =
+    teamKey(a);
 
-  if(x === y) return true;
+
+  const y =
+    teamKey(b);
+
+
+  if(
+    !x
+    ||
+    !y
+  ){
+
+    return false;
+
+  }
+
+
+  if(
+    x === y
+  ){
+
+    return true;
+
+  }
+
 
   return(
-    (x.length >= 6 && y.includes(x))
+    (
+      x.length >= 6
+      &&
+      y.includes(x)
+    )
     ||
-    (y.length >= 6 && x.includes(y))
+    (
+      y.length >= 6
+      &&
+      x.includes(y)
+    )
   );
+
 }
 
 
 function normalizeFootballDataMatch(match){
+
   const home =
-    match.evSahibi?.ad ||
-    match.evSahibi?.kisaAd ||
+    match.evSahibi?.ad
+    ||
+    match.evSahibi?.kisaAd
+    ||
     "";
 
+
   const away =
-    match.deplasman?.ad ||
-    match.deplasman?.kisaAd ||
+    match.deplasman?.ad
+    ||
+    match.deplasman?.kisaAd
+    ||
     "";
+
 
   const homeScore =
     match.skor?.tamMac?.ev;
 
+
   const awayScore =
     match.skor?.tamMac?.deplasman;
 
-  let score = null;
+
+  let score =
+    null;
+
 
   if(
-    Number.isFinite(Number(homeScore))
+    Number.isFinite(
+      Number(homeScore)
+    )
     &&
-    Number.isFinite(Number(awayScore))
+    Number.isFinite(
+      Number(awayScore)
+    )
   ){
+
     score = {
       ft:[
         Number(homeScore),
@@ -895,281 +1257,570 @@ function normalizeFootballDataMatch(match){
       ]
     };
 
+
     const htHome =
       match.skor?.ilkYari?.ev;
+
 
     const htAway =
       match.skor?.ilkYari?.deplasman;
 
+
     if(
-      Number.isFinite(Number(htHome))
+      Number.isFinite(
+        Number(htHome)
+      )
       &&
-      Number.isFinite(Number(htAway))
+      Number.isFinite(
+        Number(htAway)
+      )
     ){
+
       score.ht = [
         Number(htHome),
         Number(htAway)
       ];
+
     }
+
   }
 
-  const dateObj =
-    new Date(match.tarih);
 
-  return {
+  const dateObj =
+    new Date(
+      match.tarih
+    );
+
+
+  return{
+
     date:
-      Number.isNaN(dateObj.getTime())
-      ? ""
-      : dateObj.toISOString().slice(0,10),
+      Number.isNaN(
+        dateObj.getTime()
+      )
+      ?
+      ""
+      :
+      dateObj
+      .toISOString()
+      .slice(
+        0,
+        10
+      ),
 
     time:
-      Number.isNaN(dateObj.getTime())
-      ? ""
-      : dateObj.toISOString().slice(11,16),
+      Number.isNaN(
+        dateObj.getTime()
+      )
+      ?
+      ""
+      :
+      dateObj
+      .toISOString()
+      .slice(
+        11,
+        16
+      ),
 
-    team1:home,
-    team2:away,
+    team1:
+      home,
+
+    team2:
+      away,
+
     score,
-    source:"football-data.org"
+
+    source:
+      "football-data.org"
+
   };
+
 }
 
 
 async function loadFootballData(code){
-  if(!code) return [];
+
+  if(
+    !code
+  ){
+
+    return[];
+
+  }
+
 
   const cacheKey =
-    "goalgrid_fd_v16_" + code;
+    "goalgrid_fd_v17_"
+    +
+    code;
+
 
   const cached =
-    localStorage.getItem(cacheKey);
+    localStorage.getItem(
+      cacheKey
+    );
 
-  if(cached){
+
+  if(
+    cached
+  ){
+
     try{
+
       const parsed =
-        JSON.parse(cached);
+        JSON.parse(
+          cached
+        );
+
 
       if(
-        Date.now() - parsed.time
+        Date.now()
+        -
+        parsed.time
         <
-        15 * 60 * 1000
+        15 *
+        60 *
+        1000
       ){
-        return parsed.matches;
+
+        return(
+          parsed.matches
+        );
+
       }
+
     }catch{}
+
   }
+
 
   const response =
     await fetch(
       `/football-data?competition=${encodeURIComponent(code)}`
     );
 
-  if(!response.ok){
+
+  if(
+    !response.ok
+  ){
+
     throw new Error(
       `football-data.org ${response.status}`
     );
+
   }
+
 
   const json =
     await response.json();
 
-  if(!json.ok){
+
+  if(
+    !json.ok
+  ){
+
     throw new Error(
-      json.hata ||
+      json.hata
+      ||
       "football-data.org verisi alınamadı"
     );
+
   }
 
+
   const matches =
-    (json.maclar || [])
-      .map(normalizeFootballDataMatch)
-      .filter(
-        x =>
-          x.team1 &&
-          x.team2
-      );
+    (
+      json.maclar
+      ||
+      []
+    )
+    .map(
+      normalizeFootballDataMatch
+    )
+    .filter(
+      x =>
+        x.team1
+        &&
+        x.team2
+    );
+
 
   localStorage.setItem(
     cacheKey,
     JSON.stringify({
-      time:Date.now(),
+      time:
+        Date.now(),
+
       matches
     })
   );
 
-  return matches;
+
+  return(
+    matches
+  );
+
 }
 
 
 async function loadOpenFootball(code){
-  if(!code) return [];
+
+  if(
+    !code
+  ){
+
+    return[];
+
+  }
+
 
   const cacheKey =
-    "goalgrid_of_v16_" + code;
+    "goalgrid_of_v17_"
+    +
+    code;
+
 
   const cached =
-    localStorage.getItem(cacheKey);
+    localStorage.getItem(
+      cacheKey
+    );
 
-  if(cached){
+
+  if(
+    cached
+  ){
+
     try{
+
       const parsed =
-        JSON.parse(cached);
+        JSON.parse(
+          cached
+        );
+
 
       if(
-        Date.now() - parsed.time
+        Date.now()
+        -
+        parsed.time
         <
-        30 * 60 * 1000
+        30 *
+        60 *
+        1000
       ){
-        return parsed.matches;
+
+        return(
+          parsed.matches
+        );
+
       }
+
     }catch{}
+
   }
+
 
   const response =
     await fetch(
       `/data?league=${encodeURIComponent(code)}`
     );
 
-  if(!response.ok){
+
+  if(
+    !response.ok
+  ){
+
     throw new Error(
       `OpenFootball ${response.status}`
     );
+
   }
+
 
   const json =
     await response.json();
 
-  if(!json.ok){
+
+  if(
+    !json.ok
+  ){
+
     throw new Error(
-      json.hata ||
+      json.hata
+      ||
       "OpenFootball verisi alınamadı"
     );
+
   }
 
+
   const matches =
-    Array.isArray(json.maclar)
-    ? json.maclar.map(x => ({
+    Array.isArray(
+      json.maclar
+    )
+    ?
+    json.maclar.map(
+      x => ({
         ...x,
         source:"OpenFootball"
-      }))
-    : [];
+      })
+    )
+    :
+    [];
+
 
   localStorage.setItem(
     cacheKey,
     JSON.stringify({
-      time:Date.now(),
+      time:
+        Date.now(),
+
       matches
     })
   );
 
-  return matches;
+
+  return(
+    matches
+  );
+
 }
 
 
 function mergeMatches(...groups){
-  const map = new Map();
 
-  groups.flat().forEach(match => {
-    if(
-      !match ||
-      !match.team1 ||
-      !match.team2
-    ) return;
+  const map =
+    new Map();
 
-    const key =
-      [
-        match.date || "",
-        teamKey(match.team1),
-        teamKey(match.team2)
-      ].join("|");
 
-    const old =
-      map.get(key);
+  groups
+  .flat()
+  .forEach(
+    match => {
 
-    if(!old){
-      map.set(key,match);
-      return;
+      if(
+        !match
+        ||
+        !match.team1
+        ||
+        !match.team2
+      ){
+
+        return;
+
+      }
+
+
+      const key =
+        [
+          match.date || "",
+          teamKey(match.team1),
+          teamKey(match.team2)
+        ]
+        .join(
+          "|"
+        );
+
+
+      const old =
+        map.get(
+          key
+        );
+
+
+      if(
+        !old
+      ){
+
+        map.set(
+          key,
+          match
+        );
+
+        return;
+
+      }
+
+
+      if(
+        !old.score
+        &&
+        match.score
+      ){
+
+        map.set(
+          key,
+          match
+        );
+
+      }
+
     }
+  );
 
-    if(
-      !old.score &&
-      match.score
-    ){
-      map.set(key,match);
-    }
-  });
 
-  return [...map.values()]
+  return(
+    [
+      ...map.values()
+    ]
     .sort(
       (a,b) =>
-        String(a.date)
-        .localeCompare(
-          String(b.date)
+        String(
+          a.date
         )
-    );
+        .localeCompare(
+          String(
+            b.date
+          )
+        )
+    )
+  );
+
 }
 
 
 async function loadLeagueHistory(config){
-  const results = [];
-  const sources = [];
-  const errors = [];
 
-  if(config.fd){
+  const results=[];
+
+  const sources=[];
+
+  const errors=[];
+
+
+  /*
+    BURASI ÖNEMLİ:
+    football-data.org varsa çek.
+    OpenFootball varsa ayrıca çek.
+    Biri başarılı oldu diye diğerini atlama.
+  */
+
+
+  if(
+    config.fd
+  ){
+
     try{
+
       const fd =
-        await loadFootballData(config.fd);
-
-      if(fd.length){
-        results.push(fd);
-        sources.push(
-          `football-data.org (${fd.length})`
+        await loadFootballData(
+          config.fd
         );
+
+
+      if(
+        fd.length
+      ){
+
+        results.push(
+          fd
+        );
+
+
+        sources.push(
+          `football-data.org (${fd.length} maç)`
+        );
+
       }
+
     }catch(error){
+
       errors.push(
-        "football-data.org: " +
+        "football-data.org: "
+        +
         error.message
       );
+
     }
+
   }
 
-  if(config.of){
+
+  if(
+    config.of
+  ){
+
     try{
-      const of =
-        await loadOpenFootball(config.of);
 
-      if(of.length){
-        results.push(of);
-        sources.push(
-          `OpenFootball (${of.length})`
+      const of =
+        await loadOpenFootball(
+          config.of
         );
+
+
+      if(
+        of.length
+      ){
+
+        results.push(
+          of
+        );
+
+
+        sources.push(
+          `OpenFootball (${of.length} maç)`
+        );
+
       }
+
     }catch(error){
+
       errors.push(
-        "OpenFootball: " +
+        "OpenFootball: "
+        +
         error.message
       );
+
     }
+
   }
 
-  return {
-    matches:mergeMatches(...results),
+
+  const merged =
+    mergeMatches(
+      ...results
+    );
+
+
+  return{
+
+    matches:
+      merged,
+
     sources,
+
     errors
+
   };
+
 }
 
 
 function completed(match){
+
   return(
-    match &&
-    match.score &&
-    Array.isArray(match.score.ft) &&
-    match.score.ft.length >= 2 &&
-    Number.isFinite(Number(match.score.ft[0])) &&
-    Number.isFinite(Number(match.score.ft[1]))
+    match
+    &&
+    match.score
+    &&
+    Array.isArray(
+      match.score.ft
+    )
+    &&
+    match.score.ft.length >= 2
+    &&
+    Number.isFinite(
+      Number(
+        match.score.ft[0]
+      )
+    )
+    &&
+    Number.isFinite(
+      Number(
+        match.score.ft[1]
+      )
+    )
   );
+
 }
 
 
@@ -1179,50 +1830,99 @@ function lastMatches(
   targetDate,
   venue=null
 ){
+
   let list =
     allMatches.filter(
       match =>
-        completed(match)
+        completed(
+          match
+        )
         &&
-        String(match.date) < targetDate
+        String(
+          match.date
+        )
+        <
+        targetDate
         &&
         (
-          sameTeam(team,match.team1)
+          sameTeam(
+            team,
+            match.team1
+          )
           ||
-          sameTeam(team,match.team2)
+          sameTeam(
+            team,
+            match.team2
+          )
         )
     );
 
-  if(venue === "home"){
+
+  if(
+    venue ===
+    "home"
+  ){
+
     list =
       list.filter(
         match =>
-          sameTeam(team,match.team1)
+          sameTeam(
+            team,
+            match.team1
+          )
       );
+
   }
 
-  if(venue === "away"){
+
+  if(
+    venue ===
+    "away"
+  ){
+
     list =
       list.filter(
         match =>
-          sameTeam(team,match.team2)
+          sameTeam(
+            team,
+            match.team2
+          )
       );
+
   }
 
-  return list
+
+  return(
+    list
     .sort(
       (a,b) =>
-        String(b.date)
+        String(
+          b.date
+        )
         .localeCompare(
-          String(a.date)
+          String(
+            a.date
+          )
         )
     )
-    .slice(0,10);
+    .slice(
+      0,
+      10
+    )
+  );
+
 }
 
 
-function formStats(team,matches){
-  if(!matches.length){
+function formStats(
+  team,
+  matches
+){
+
+  if(
+    !matches.length
+  ){
+
     return{
       count:0,
       scored:0,
@@ -1238,7 +1938,9 @@ function formStats(team,matches){
       losses:0,
       cleanSheets:0
     };
+
   }
+
 
   let scored=0;
   let conceded=0;
@@ -1252,105 +1954,258 @@ function formStats(team,matches){
   let wins=0;
   let draws=0;
   let losses=0;
+
   let cleanSheets=0;
 
   const goalTotals=[];
 
-  matches.forEach((match,index)=>{
-    const isHome =
-      sameTeam(team,match.team1);
 
-    const ft =
-      match.score.ft;
+  matches.forEach(
+    (match,index) => {
 
-    const gf =
-      isHome
-      ? Number(ft[0])
-      : Number(ft[1]);
+      const isHome =
+        sameTeam(
+          team,
+          match.team1
+        );
 
-    const ga =
-      isHome
-      ? Number(ft[1])
-      : Number(ft[0]);
 
-    const weight =
-      Math.pow(.90,index);
+      const ft =
+        match.score.ft;
 
-    scored += gf * weight;
-    conceded += ga * weight;
-    totalWeight += weight;
 
-    if(gf > ga){
-      points += 3 * weight;
-      wins++;
-    }else if(gf === ga){
-      points += weight;
-      draws++;
-    }else{
-      losses++;
+      const gf =
+        isHome
+        ?
+        Number(
+          ft[0]
+        )
+        :
+        Number(
+          ft[1]
+        );
+
+
+      const ga =
+        isHome
+        ?
+        Number(
+          ft[1]
+        )
+        :
+        Number(
+          ft[0]
+        );
+
+
+      const weight =
+        Math.pow(
+          .90,
+          index
+        );
+
+
+      scored +=
+        gf *
+        weight;
+
+
+      conceded +=
+        ga *
+        weight;
+
+
+      totalWeight +=
+        weight;
+
+
+      if(
+        gf > ga
+      ){
+
+        points +=
+          3 *
+          weight;
+
+        wins++;
+
+      }else if(
+        gf === ga
+      ){
+
+        points +=
+          weight;
+
+        draws++;
+
+      }else{
+
+        losses++;
+
+      }
+
+
+      if(
+        gf > 0
+        &&
+        ga > 0
+      ){
+
+        btts++;
+
+      }
+
+
+      if(
+        gf + ga >= 2
+      ){
+
+        over15++;
+
+      }
+
+
+      if(
+        gf + ga >= 3
+      ){
+
+        over25++;
+
+      }
+
+
+      if(
+        ga === 0
+      ){
+
+        cleanSheets++;
+
+      }
+
+
+      goalTotals.push(
+        gf +
+        ga
+      );
+
     }
+  );
 
-    if(gf > 0 && ga > 0) btts++;
-    if(gf + ga >= 2) over15++;
-    if(gf + ga >= 3) over25++;
-    if(ga === 0) cleanSheets++;
-
-    goalTotals.push(gf + ga);
-  });
 
   const avgGoals =
     goalTotals.reduce(
       (a,b)=>a+b,
       0
-    ) / goalTotals.length;
+    )
+    /
+    goalTotals.length;
+
 
   const variance =
     goalTotals.reduce(
       (sum,value) =>
-        sum +
+        sum
+        +
         Math.pow(
-          value - avgGoals,
+          value -
+          avgGoals,
           2
         ),
       0
-    ) / goalTotals.length;
+    )
+    /
+    goalTotals.length;
+
 
   return{
-    count:matches.length,
-    scored:scored/totalWeight,
-    conceded:conceded/totalWeight,
-    ppg:points/totalWeight,
-    btts:btts/matches.length,
-    over15:over15/matches.length,
-    over25:over25/matches.length,
+
+    count:
+      matches.length,
+
+    scored:
+      scored /
+      totalWeight,
+
+    conceded:
+      conceded /
+      totalWeight,
+
+    ppg:
+      points /
+      totalWeight,
+
+    btts:
+      btts /
+      matches.length,
+
+    over15:
+      over15 /
+      matches.length,
+
+    over25:
+      over25 /
+      matches.length,
+
     avgGoals,
+
     variance,
+
     wins,
+
     draws,
+
     losses,
-    cleanSheets:cleanSheets/matches.length
+
+    cleanSheets:
+      cleanSheets /
+      matches.length
+
   };
+
 }
 
 
-function poisson(goals,lambda){
-  let factorial = 1;
+function poisson(
+  goals,
+  lambda
+){
 
-  for(let i=2;i<=goals;i++){
-    factorial *= i;
+  let factorial=1;
+
+
+  for(
+    let i=2;
+    i<=goals;
+    i++
+  ){
+
+    factorial *=
+      i;
+
   }
 
+
   return(
-    Math.exp(-lambda)
+    Math.exp(
+      -lambda
+    )
     *
-    Math.pow(lambda,goals)
+    Math.pow(
+      lambda,
+      goals
+    )
     /
     factorial
   );
+
 }
 
 
-function marketModel(homeXg,awayXg){
+function marketModel(
+  homeXg,
+  awayXg
+){
+
   let home=0;
   let draw=0;
   let away=0;
@@ -1360,23 +2215,98 @@ function marketModel(homeXg,awayXg){
   let over25=0;
   let over35=0;
 
-  for(let hg=0;hg<=8;hg++){
-    for(let ag=0;ag<=8;ag++){
+
+  for(
+    let hg=0;
+    hg<=8;
+    hg++
+  ){
+
+    for(
+      let ag=0;
+      ag<=8;
+      ag++
+    ){
+
       const p =
-        poisson(hg,homeXg)
+        poisson(
+          hg,
+          homeXg
+        )
         *
-        poisson(ag,awayXg);
+        poisson(
+          ag,
+          awayXg
+        );
 
-      if(hg > ag) home += p;
-      else if(hg === ag) draw += p;
-      else away += p;
 
-      if(hg > 0 && ag > 0) btts += p;
-      if(hg + ag >= 2) over15 += p;
-      if(hg + ag >= 3) over25 += p;
-      if(hg + ag >= 4) over35 += p;
+      if(
+        hg > ag
+      ){
+
+        home +=
+          p;
+
+      }else if(
+        hg === ag
+      ){
+
+        draw +=
+          p;
+
+      }else{
+
+        away +=
+          p;
+
+      }
+
+
+      if(
+        hg > 0
+        &&
+        ag > 0
+      ){
+
+        btts +=
+          p;
+
+      }
+
+
+      if(
+        hg + ag >= 2
+      ){
+
+        over15 +=
+          p;
+
+      }
+
+
+      if(
+        hg + ag >= 3
+      ){
+
+        over25 +=
+          p;
+
+      }
+
+
+      if(
+        hg + ag >= 4
+      ){
+
+        over35 +=
+          p;
+
+      }
+
     }
+
   }
+
 
   return{
     home,
@@ -1387,34 +2317,59 @@ function marketModel(homeXg,awayXg){
     over25,
     over35
   };
+
 }
 
 
-function blend(a,b,aWeight=.70){
+function blend(
+  a,
+  b,
+  weight=.70
+){
+
   return(
-    a * aWeight
+    a *
+    weight
     +
-    b * (1-aWeight)
+    b *
+    (
+      1 -
+      weight
+    )
   );
+
 }
 
 
-function dataQuality(homeCount,awayCount){
+function dataQuality(
+  homeCount,
+  awayCount
+){
+
   const count =
     Math.min(
       homeCount,
       awayCount
     );
 
+
   if(count >= 10) return 100;
+
   if(count >= 8) return 90;
+
   if(count >= 6) return 80;
+
   if(count >= 5) return 72;
+
   if(count >= 4) return 62;
+
   if(count >= 3) return 50;
+
   if(count >= 2) return 38;
 
+
   return 10;
+
 }
 
 
@@ -1423,57 +2378,112 @@ function grade(
   quality,
   probability
 ){
-  if(quality < 45){
-    return["OYNAMA","grade-no"];
-  }
 
   if(
-    probability >= .80 &&
+    quality < 45
+  ){
+
+    return[
+      "OYNAMA",
+      "grade-no"
+    ];
+
+  }
+
+
+  if(
+    probability >= .80
+    &&
     score >= 88
   ){
-    return["A+","grade-aplus"];
+
+    return[
+      "A+",
+      "grade-aplus"
+    ];
+
   }
 
+
   if(
-    probability >= .73 &&
+    probability >= .73
+    &&
     score >= 82
   ){
-    return["A","grade-a"];
+
+    return[
+      "A",
+      "grade-a"
+    ];
+
   }
+
 
   if(
-    probability >= .66 &&
+    probability >= .66
+    &&
     score >= 74
   ){
-    return["B","grade-b"];
+
+    return[
+      "B",
+      "grade-b"
+    ];
+
   }
 
-  return["OYNAMA","grade-no"];
+
+  return[
+    "OYNAMA",
+    "grade-no"
+  ];
+
 }
 
 
-function noReason(probability,score,quality){
-  if(quality < 45){
+function noReason(
+  probability,
+  score,
+  quality
+){
+
+  if(
+    quality < 45
+  ){
+
     return(
       `Veri kalitesi ${quality}/100. Güvenilir sınıflandırma için en az 45/100 gerekiyor.`
     );
+
   }
 
-  if(probability < .66){
+
+  if(
+    probability < .66
+  ){
+
     return(
       `En güçlü pazarın model olasılığı %${(probability*100).toFixed(1)}. B sınıfı için en az %66 gerekiyor.`
     );
+
   }
 
-  if(score < 74){
+
+  if(
+    score < 74
+  ){
+
     return(
       `Olasılık sınırı geçiliyor ancak güven puanı ${score}/100. B sınıfı için en az 74/100 gerekiyor.`
     );
+
   }
+
 
   return(
     "Veri kaynakları ve model bileşenleri yeterli ortak doğrulama üretmedi."
   );
+
 }
 
 
@@ -1482,14 +2492,22 @@ function analyseFixture(
   history,
   sourceNames
 ){
+
   const home =
     fixture.teams.home.name;
+
 
   const away =
     fixture.teams.away.name;
 
+
   const date =
-    fixture.fixture.date.slice(0,10);
+    fixture.fixture.date
+    .slice(
+      0,
+      10
+    );
+
 
   const homeLast =
     lastMatches(
@@ -1498,12 +2516,14 @@ function analyseFixture(
       date
     );
 
+
   const awayLast =
     lastMatches(
       away,
       history,
       date
     );
+
 
   const homeVenue =
     lastMatches(
@@ -1513,6 +2533,7 @@ function analyseFixture(
       "home"
     );
 
+
   const awayVenue =
     lastMatches(
       away,
@@ -1521,17 +2542,34 @@ function analyseFixture(
       "away"
     );
 
+
   const hf =
-    formStats(home,homeLast);
+    formStats(
+      home,
+      homeLast
+    );
+
 
   const af =
-    formStats(away,awayLast);
+    formStats(
+      away,
+      awayLast
+    );
+
 
   const hv =
-    formStats(home,homeVenue);
+    formStats(
+      home,
+      homeVenue
+    );
+
 
   const av =
-    formStats(away,awayVenue);
+    formStats(
+      away,
+      awayVenue
+    );
+
 
   const quality =
     dataQuality(
@@ -1539,72 +2577,138 @@ function analyseFixture(
       af.count
     );
 
+
   if(
-    hf.count < 2 ||
+    hf.count < 2
+    ||
     af.count < 2
   ){
+
     return{
+
       fixture,
-      grade:"OYNAMA",
-      gradeClass:"grade-no",
-      mainMarket:"VERİ YETERSİZ",
-      mainProbability:0,
-      score:0,
+
+      grade:
+        "OYNAMA",
+
+      gradeClass:
+        "grade-no",
+
+      mainMarket:
+        "VERİ YETERSİZ",
+
+      mainProbability:
+        0,
+
+      score:
+        0,
+
       quality,
+
       reason:
         "Takımlardan biri için yeterli geçmiş maç bulunamadı.",
+
       sources:
         sourceNames,
+
       homeForm:null,
+
       awayForm:null
+
     };
+
   }
+
 
   const homeAttack =
     hv.count >= 3
-    ? blend(hv.scored,hf.scored,.62)
-    : hf.scored;
+    ?
+    blend(
+      hv.scored,
+      hf.scored,
+      .62
+    )
+    :
+    hf.scored;
+
 
   const homeDefense =
     hv.count >= 3
-    ? blend(hv.conceded,hf.conceded,.62)
-    : hf.conceded;
+    ?
+    blend(
+      hv.conceded,
+      hf.conceded,
+      .62
+    )
+    :
+    hf.conceded;
+
 
   const awayAttack =
     av.count >= 3
-    ? blend(av.scored,af.scored,.62)
-    : af.scored;
+    ?
+    blend(
+      av.scored,
+      af.scored,
+      .62
+    )
+    :
+    af.scored;
+
 
   const awayDefense =
     av.count >= 3
-    ? blend(av.conceded,af.conceded,.62)
-    : af.conceded;
+    ?
+    blend(
+      av.conceded,
+      af.conceded,
+      .62
+    )
+    :
+    af.conceded;
+
 
   let homeXg =
-    .48 * homeAttack
+    .48 *
+    homeAttack
     +
-    .34 * awayDefense
+    .34 *
+    awayDefense
     +
-    .18 * 1.38;
+    .18 *
+    1.38;
+
 
   let awayXg =
-    .48 * awayAttack
+    .48 *
+    awayAttack
     +
-    .34 * homeDefense
+    .34 *
+    homeDefense
     +
-    .18 * 1.15;
+    .18 *
+    1.15;
+
 
   homeXg =
     Math.max(
       .25,
-      Math.min(3.6,homeXg)
+      Math.min(
+        3.6,
+        homeXg
+      )
     );
+
 
   awayXg =
     Math.max(
       .20,
-      Math.min(3.4,awayXg)
+      Math.min(
+        3.4,
+        awayXg
+      )
     );
+
 
   const model =
     marketModel(
@@ -1612,18 +2716,41 @@ function analyseFixture(
       awayXg
     );
 
+
   const historical = {
+
     btts:
-      (hf.btts + af.btts) / 2,
+      (
+        hf.btts
+        +
+        af.btts
+      )
+      /
+      2,
 
     over15:
-      (hf.over15 + af.over15) / 2,
+      (
+        hf.over15
+        +
+        af.over15
+      )
+      /
+      2,
 
     over25:
-      (hf.over25 + af.over25) / 2
+      (
+        hf.over25
+        +
+        af.over25
+      )
+      /
+      2
+
   };
 
+
   const markets = {
+
     "1.5 Üst":
       blend(
         model.over15,
@@ -1643,10 +2770,14 @@ function analyseFixture(
       ),
 
     "1X":
-      model.home + model.draw,
+      model.home
+      +
+      model.draw,
 
     "X2":
-      model.away + model.draw,
+      model.away
+      +
+      model.draw,
 
     "Ev Sahibi":
       model.home,
@@ -1659,75 +2790,146 @@ function analyseFixture(
 
     "3.5 Üst":
       model.over35
+
   };
 
+
   const ranking =
-    Object.entries(markets)
-      .map(
-        ([name,probability]) => ({
-          name,
-          probability
-        })
-      )
-      .sort(
-        (a,b) =>
-          b.probability -
-          a.probability
-      );
+    Object.entries(
+      markets
+    )
+    .map(
+      ([name,probability]) => ({
+        name,
+        probability
+      })
+    )
+    .sort(
+      (a,b) =>
+        b.probability
+        -
+        a.probability
+    );
+
 
   const main =
     ranking[0];
 
+
   const alternative =
     ranking[1];
 
+
   const agreement =
-    100 -
+    100
+    -
     Math.min(
       100,
+
       Math.abs(
-        model.over25 -
+        model.over25
+        -
         historical.over25
-      ) * 120
+      )
+      *
+      120
+
       +
+
       Math.abs(
-        model.btts -
+        model.btts
+        -
         historical.btts
-      ) * 90
+      )
+      *
+      90
     );
+
 
   const volatility =
     Math.min(
       100,
+
       (
-        (hf.variance + af.variance)
+        (
+          hf.variance
+          +
+          af.variance
+        )
         /
         2
-      ) * 22
+      )
+      *
+      22
     );
+
 
   const stability =
     Math.max(
       0,
-      100 - volatility
+      100 -
+      volatility
     );
 
+
   let score =
-    main.probability * 78
-    +
-    quality * .08
-    +
-    agreement * .07
-    +
-    stability * .07;
+    main.probability
+    *
+    78
 
-  if(quality < 60){
-    score -= 8;
+    +
+
+    quality
+    *
+    .08
+
+    +
+
+    agreement
+    *
+    .07
+
+    +
+
+    stability
+    *
+    .07;
+
+
+  if(
+    quality < 60
+  ){
+
+    score -=
+      8;
+
   }
 
-  if(main.probability < .65){
-    score -= 6;
+
+  if(
+    main.probability < .65
+  ){
+
+    score -=
+      6;
+
   }
+
+
+  /*
+    İKİ KAYNAK BİRDEN VARSA
+    veri güvenine küçük katkı.
+  */
+
+  if(
+    sourceNames.length >= 2
+  ){
+
+    score +=
+      2;
+
+  }
+
 
   score =
     Math.round(
@@ -1740,6 +2942,7 @@ function analyseFixture(
       )
     );
 
+
   const gradeResult =
     grade(
       score,
@@ -1747,61 +2950,125 @@ function analyseFixture(
       main.probability
     );
 
+
   const risks=[];
 
-  if(quality < 70){
+
+  if(
+    quality < 70
+  ){
+
     risks.push(
       "Geçmiş maç örneklemi sınırlı"
     );
+
   }
 
-  if(volatility >= 65){
+
+  if(
+    volatility >= 65
+  ){
+
     risks.push(
       "Skor profili yüksek oynaklık gösteriyor"
     );
+
   }
 
+
   if(
-    hf.cleanSheets < .20 &&
+    hf.cleanSheets < .20
+    &&
     af.cleanSheets < .20
   ){
+
     risks.push(
       "İki takımın savunma güvenilirliği düşük"
     );
+
   }
 
+
+  if(
+    sourceNames.length === 1
+  ){
+
+    risks.push(
+      "Analiz tek geçmiş veri kaynağıyla doğrulanabildi"
+    );
+
+  }
+
+
   return{
+
     fixture,
+
     homeXg,
+
     awayXg,
+
     markets,
-    homeForm:hf,
-    awayForm:af,
+
+    homeForm:
+      hf,
+
+    awayForm:
+      af,
+
     quality,
+
     agreement:
-      Math.round(agreement),
+      Math.round(
+        agreement
+      ),
+
     volatility:
-      Math.round(volatility),
+      Math.round(
+        volatility
+      ),
+
     stability:
-      Math.round(stability),
+      Math.round(
+        stability
+      ),
+
     score,
-    grade:gradeResult[0],
-    gradeClass:gradeResult[1],
-    mainMarket:main.name,
+
+    grade:
+      gradeResult[0],
+
+    gradeClass:
+      gradeResult[1],
+
+    mainMarket:
+      main.name,
+
     mainProbability:
       main.probability,
+
     alternative,
+
     risks,
+
     noReason:
-      gradeResult[0] === "OYNAMA"
-      ? noReason(
-          main.probability,
-          score,
-          quality
-        )
-      : "",
-    sources:sourceNames
+      gradeResult[0]
+      ===
+      "OYNAMA"
+      ?
+      noReason(
+        main.probability,
+        score,
+        quality
+      )
+      :
+      "",
+
+    sources:
+      sourceNames
+
   };
+
 }
 
 
@@ -1809,45 +3076,91 @@ function noDataAnalysis(
   fixture,
   reason
 ){
+
   return{
+
     fixture,
-    grade:"OYNAMA",
-    gradeClass:"grade-no",
-    mainMarket:"GEÇMİŞ VERİ YOK",
-    mainProbability:0,
-    score:0,
-    quality:0,
+
+    grade:
+      "OYNAMA",
+
+    gradeClass:
+      "grade-no",
+
+    mainMarket:
+      "GEÇMİŞ VERİ YOK",
+
+    mainProbability:
+      0,
+
+    score:
+      0,
+
+    quality:
+      0,
+
     reason,
-    sources:["Yalnızca fikstür"],
+
+    sources:[
+      "Yalnızca fikstür"
+    ],
+
     homeForm:null,
+
     awayForm:null
+
   };
+
 }
 
 
 async function scan(){
-  if(!apiKey()){
+
+  if(
+    !apiKey()
+  ){
+
     changeApiKey();
 
-    if(!apiKey()){
+
+    if(
+      !apiKey()
+    ){
+
       return;
+
     }
+
   }
 
-  state.apiCalls = 0;
-  $("#apiCount").textContent = "0";
+
+  state.apiCalls=0;
+
+
+  $("#apiCount").textContent =
+    "0";
+
+
+  const date =
+    selectedDateISO();
+
 
   $("#scanState").textContent =
-    "Bugünün fikstürü alınıyor…";
+    `${date} tarihli fikstür alınıyor…`;
+
 
   try{
-    const date =
-      todayISO();
+
+    /*
+      FİKSTÜR:
+      API-Football
+    */
 
     const fixtures =
       await apiFootball(
         `/fixtures?date=${date}&timezone=Europe/Istanbul`
       );
+
 
     const selectedFixtures =
       fixtures.filter(
@@ -1859,6 +3172,25 @@ async function scan(){
           )
       );
 
+
+    if(
+      !selectedFixtures.length
+    ){
+
+      state.analyses=[];
+
+      render();
+
+
+      $("#scanState").textContent =
+        "Seçilen tarihte takip edilen liglerde maç bulunamadı.";
+
+
+      return;
+
+    }
+
+
     const leagueIds =
       [
         ...new Set(
@@ -1869,150 +3201,261 @@ async function scan(){
         )
       ];
 
+
     $("#scanState").textContent =
-      `${selectedFixtures.length} maç bulundu. ${leagueIds.length} lig için geçmiş veriler hazırlanıyor…`;
+      `${selectedFixtures.length} maç bulundu. ${leagueIds.length} lig için tüm bağlı veri kaynakları taranıyor…`;
+
 
     const histories={};
 
-    for(const leagueId of leagueIds){
-      const config =
-        LEAGUES[leagueId];
 
-      try{
-        histories[leagueId] =
-          await loadLeagueHistory(
-            config
-          );
-      }catch(error){
-        histories[leagueId] = {
-          matches:[],
-          sources:[],
-          errors:[
-            error.message
-          ]
-        };
-      }
+    /*
+      HER LİG İÇİN:
+      football-data.org + OpenFootball
+      ikisini de deniyoruz.
+    */
+
+    for(
+      const leagueId
+      of leagueIds
+    ){
+
+      const config =
+        LEAGUES[
+          leagueId
+        ];
+
+
+      histories[
+        leagueId
+      ] =
+        await loadLeagueHistory(
+          config
+        );
+
     }
+
 
     state.analyses =
       selectedFixtures
-        .map(
-          fixture => {
-            const leagueId =
-              fixture.league.id;
+      .map(
+        fixture => {
 
-            const config =
-              LEAGUES[leagueId];
+          const leagueId =
+            fixture.league.id;
 
-            const history =
-              histories[leagueId];
 
-            if(
-              !config.fd &&
-              !config.of
-            ){
-              return(
-                noDataAnalysis(
-                  fixture,
-                  "Bu lig için geçmiş veri kaynağı henüz bağlanmadı."
-                )
-              );
-            }
+          const config =
+            LEAGUES[
+              leagueId
+            ];
 
-            if(
-              !history ||
-              !history.matches.length
-            ){
-              const detail =
-                history?.errors?.length
-                ? history.errors.join(" • ")
-                : "Geçmiş maç bulunamadı.";
 
-              return(
-                noDataAnalysis(
-                  fixture,
-                  detail
-                )
-              );
-            }
+          const history =
+            histories[
+              leagueId
+            ];
+
+
+          if(
+            !config.fd
+            &&
+            !config.of
+          ){
 
             return(
-              analyseFixture(
+              noDataAnalysis(
                 fixture,
-                history.matches,
-                history.sources
+                "Bu lig için geçmiş veri kaynağı henüz bağlanmadı."
               )
             );
+
           }
-        )
-        .sort(
-          (a,b) =>
-            b.score - a.score
-        );
+
+
+          if(
+            !history
+            ||
+            !history.matches.length
+          ){
+
+            const detail =
+              history?.errors?.length
+              ?
+              history.errors.join(
+                " • "
+              )
+              :
+              "Geçmiş maç bulunamadı.";
+
+
+            return(
+              noDataAnalysis(
+                fixture,
+                detail
+              )
+            );
+
+          }
+
+
+          return(
+            analyseFixture(
+              fixture,
+              history.matches,
+              history.sources
+            )
+          );
+
+        }
+      )
+      .sort(
+        (a,b) =>
+          b.score
+          -
+          a.score
+      );
+
 
     syncCouponWithAnalyses();
 
+
     render();
 
+
+    const activeSources =
+      new Set();
+
+
+    Object.values(
+      histories
+    )
+    .forEach(
+      h =>
+        (
+          h.sources
+          ||
+          []
+        )
+        .forEach(
+          s =>
+            activeSources.add(
+              s.split(" (")[0]
+            )
+        )
+    );
+
+
     $("#scanState").textContent =
-      `✓ ${selectedFixtures.length} maç analiz edildi • ${state.apiCalls} API-Football çağrısı.`;
+      `✓ ${date} • ${selectedFixtures.length} maç analiz edildi • Kaynaklar: ${[...activeSources].join(" + ") || "fikstür"} • ${state.apiCalls} API-Football çağrısı.`;
+
 
   }catch(error){
+
     $("#scanState").textContent =
-      "Hata: " + error.message;
+      "Hata: "
+      +
+      error.message;
+
   }
+
 }
 
 
 function oddsHistoryRead(){
+
   const keys = [
+    "goalgrid_oran_gecmisi_v17",
     "goalgrid_oran_gecmisi_v16",
     "goalgrid_oran_gecmisi_v152",
     "goalgrid_oran_gecmisi_v15"
   ];
 
-  for(const key of keys){
+
+  for(
+    const key
+    of keys
+  ){
+
     try{
+
       const value =
         JSON.parse(
-          localStorage.getItem(key)
+          localStorage.getItem(
+            key
+          )
         );
 
+
       if(
-        Array.isArray(value) &&
+        Array.isArray(
+          value
+        )
+        &&
         value.length
       ){
-        return value;
+
+        return(
+          value
+        );
+
       }
+
     }catch{}
+
   }
 
+
   return[];
+
 }
 
 
-function oddsHistoryWrite(list){
+function oddsHistoryWrite(
+  list
+){
+
   localStorage.setItem(
-    "goalgrid_oran_gecmisi_v16",
-    JSON.stringify(list)
+    "goalgrid_oran_gecmisi_v17",
+    JSON.stringify(
+      list
+    )
   );
+
 }
 
 
-function addOddsHistory(record){
+function addOddsHistory(
+  record
+){
+
   const list =
     oddsHistoryRead();
 
-  list.push(record);
 
-  if(list.length > 5000){
+  list.push(
+    record
+  );
+
+
+  if(
+    list.length >
+    5000
+  ){
+
     list.splice(
       0,
-      list.length - 5000
+      list.length -
+      5000
     );
+
   }
 
-  oddsHistoryWrite(list);
+
+  oddsHistoryWrite(
+    list
+  );
+
 }
 
 
@@ -2021,29 +3464,45 @@ function oddsHistoryText(
   market,
   type
 ){
+
   const list =
     oddsHistoryRead()
-      .filter(
-        x =>
-          x.matchId === matchId
-          &&
-          x.market === market
-          &&
-          x.type === type
-      )
-      .slice(-4)
-      .reverse();
+    .filter(
+      x =>
+        x.matchId ===
+        matchId
+        &&
+        x.market ===
+        market
+        &&
+        x.type ===
+        type
+    )
+    .slice(
+      -4
+    )
+    .reverse();
 
-  if(!list.length){
+
+  if(
+    !list.length
+  ){
+
     return(
       "Bu pazar için daha önce oran girmedin."
     );
+
   }
 
+
   return list
-    .map(record=>{
-      const time =
-        new Date(record.time)
+    .map(
+      record => {
+
+        const time =
+          new Date(
+            record.time
+          )
           .toLocaleTimeString(
             "tr-TR",
             {
@@ -2052,16 +3511,28 @@ function oddsHistoryText(
             }
           );
 
-      return(
-        `${time} • ${record.site} ${record.odds.toFixed(2)}`
-      );
-    })
-    .join("<br>");
+
+        return(
+          `${time} • ${record.site} ${record.odds.toFixed(2)}`
+        );
+
+      }
+    )
+    .join(
+      "<br>"
+    );
+
 }
 
 
 function safeId(value){
-  return normalizeText(value);
+
+  return(
+    normalizeText(
+      value
+    )
+  );
+
 }
 
 
@@ -2070,13 +3541,18 @@ function evaluateOdds(
   market,
   type
 ){
+
   const analysis =
     state.analyses[
       analysisIndex
     ];
 
+
   const id =
-    safeId(market);
+    safeId(
+      market
+    );
+
 
   const odds =
     Number(
@@ -2085,81 +3561,156 @@ function evaluateOdds(
       ).value
     );
 
+
   if(
-    !Number.isFinite(odds)
+    !Number.isFinite(
+      odds
+    )
     ||
     odds <= 1
   ){
-    alert("Geçerli bir oran gir.");
+
+    alert(
+      "Geçerli bir oran gir."
+    );
+
+
     return;
+
   }
 
+
   const site =
-    type === "international"
-    ? "Jojobet"
-    : $(
-        `#site_${type}_${analysisIndex}_${id}`
-      ).value;
+    type ===
+    "international"
+    ?
+    "Jojobet"
+    :
+    $(
+      `#site_${type}_${analysisIndex}_${id}`
+    ).value;
+
 
   const modelProbability =
-    analysis.markets[market] || 0;
+    analysis.markets[
+      market
+    ]
+    ||
+    0;
+
 
   const marketProbability =
-    1 / odds;
+    1 /
+    odds;
+
 
   const fairOdds =
     modelProbability > 0
-    ? 1 / modelProbability
-    : null;
+    ?
+    1 /
+    modelProbability
+    :
+    null;
+
 
   const probabilityEdge =
     (
-      modelProbability -
+      modelProbability
+      -
       marketProbability
-    ) * 100;
+    )
+    *
+    100;
+
 
   const value =
     (
-      odds *
-      modelProbability -
+      odds
+      *
+      modelProbability
+      -
       1
-    ) * 100;
+    )
+    *
+    100;
+
 
   let comment =
     "Değer görünmüyor";
 
-  if(value >= 12){
-    comment = "Çok güçlü değer";
-  }else if(value >= 7){
-    comment = "Güçlü değer";
-  }else if(value >= 3){
-    comment = "Olumlu değer";
-  }else if(value >= 0){
-    comment = "Sınırlı değer";
+
+  if(
+    value >= 12
+  ){
+
+    comment =
+      "Çok güçlü değer";
+
+  }else if(
+    value >= 7
+  ){
+
+    comment =
+      "Güçlü değer";
+
+  }else if(
+    value >= 3
+  ){
+
+    comment =
+      "Olumlu değer";
+
+  }else if(
+    value >= 0
+  ){
+
+    comment =
+      "Sınırlı değer";
+
   }
 
+
   addOddsHistory({
-    time:new Date().toISOString(),
+
+    time:
+      new Date()
+      .toISOString(),
+
     matchId:
       analysis.fixture.fixture.id,
+
     league:
       analysis.fixture.league.name,
+
     home:
       analysis.fixture.teams.home.name,
+
     away:
       analysis.fixture.teams.away.name,
+
     market,
+
     type,
+
     site,
+
     odds,
+
     modelProbability,
+
     marketProbability,
+
     fairOdds,
+
     probabilityEdge,
+
     value,
+
     score:
       analysis.score
+
   });
+
 
   $(
     `#oddsResult_${type}_${analysisIndex}_${id}`
@@ -2175,13 +3726,15 @@ function evaluateOdds(
       <b>${fairOdds ? fairOdds.toFixed(2) : "—"}</b><br>
 
       Olasılık farkı:
-      ${probabilityEdge>=0?"+":""}${probabilityEdge.toFixed(1)} puan<br>
+      ${probabilityEdge>=0?"+":""}${probabilityEdge.toFixed(1)}
+      puan<br>
 
       Oransal değer:
       ${value>=0?"+":""}${value.toFixed(1)}%<br>
 
       <b>${comment}</b>
     `;
+
 
   $(
     `#history_${type}_${analysisIndex}_${id}`
@@ -2191,39 +3744,65 @@ function evaluateOdds(
       market,
       type
     );
+
 }
 
 
 function loadActiveCoupon(){
+
   const keys = [
+    "goalgrid_aktif_kupon_v17",
     "goalgrid_aktif_kupon_v16",
     "goalgrid_aktif_kupon_v152"
   ];
 
-  for(const key of keys){
+
+  for(
+    const key
+    of keys
+  ){
+
     try{
+
       const value =
         JSON.parse(
-          localStorage.getItem(key)
+          localStorage.getItem(
+            key
+          )
         );
 
-      if(Array.isArray(value)){
-        return value;
+
+      if(
+        Array.isArray(
+          value
+        )
+      ){
+
+        return(
+          value
+        );
+
       }
+
     }catch{}
+
   }
 
+
   return[];
+
 }
 
 
 function saveActiveCoupon(){
+
   localStorage.setItem(
-    "goalgrid_aktif_kupon_v16",
+    "goalgrid_aktif_kupon_v17",
     JSON.stringify(
       state.coupon
     )
   );
+
 }
 
 
@@ -2232,18 +3811,24 @@ function couponSelectionChanged(
   market,
   type
 ){
+
   const analysis =
     state.analyses[
       analysisIndex
     ];
 
+
   const id =
-    safeId(market);
+    safeId(
+      market
+    );
+
 
   const checkbox =
     $(
       `#coupon_${type}_${analysisIndex}_${id}`
     );
+
 
   const odds =
     Number(
@@ -2252,47 +3837,73 @@ function couponSelectionChanged(
       ).value
     );
 
+
   if(
     checkbox.checked
     &&
     (
-      !Number.isFinite(odds)
+      !Number.isFinite(
+        odds
+      )
       ||
       odds <= 1
     )
   ){
+
     alert(
       "Kupona eklemeden önce oranı gir."
     );
 
-    checkbox.checked = false;
+
+    checkbox.checked =
+      false;
+
+
     return;
+
   }
 
-  const site =
-    type === "international"
-    ? "Jojobet"
-    : $(
-        `#site_${type}_${analysisIndex}_${id}`
-      ).value;
 
-  if(checkbox.checked){
+  const site =
+    type ===
+    "international"
+    ?
+    "Jojobet"
+    :
+    $(
+      `#site_${type}_${analysisIndex}_${id}`
+    ).value;
+
+
+  if(
+    checkbox.checked
+  ){
+
     const duplicate =
       state.coupon.some(
         item =>
           item.matchId ===
           analysis.fixture.fixture.id
           &&
-          item.market === market
+          item.market ===
+          market
           &&
-          item.type === type
+          item.type ===
+          type
           &&
-          item.site === site
+          item.site ===
+          site
       );
 
-    if(duplicate){
+
+    if(
+      duplicate
+    ){
+
       return;
+
     }
+
 
     const sameMatch =
       state.coupon.some(
@@ -2301,35 +3912,68 @@ function couponSelectionChanged(
           analysis.fixture.fixture.id
       );
 
-    if(sameMatch){
+
+    if(
+      sameMatch
+    ){
+
       const accept =
         confirm(
           "Bu maçtan kuponda başka bir seçim var. Yine de eklemek istiyor musun?"
         );
 
-      if(!accept){
-        checkbox.checked = false;
+
+      if(
+        !accept
+      ){
+
+        checkbox.checked =
+          false;
+
+
         return;
+
       }
+
     }
 
+
     state.coupon.push({
-      id:Date.now()+Math.random(),
+
+      id:
+        Date.now()
+        +
+        Math.random(),
+
       matchId:
         analysis.fixture.fixture.id,
+
       match:
         `${analysis.fixture.teams.home.name} - ${analysis.fixture.teams.away.name}`,
+
       market,
+
       type,
+
       site,
+
       odds,
+
       modelProbability:
-        analysis.markets[market],
+        analysis.markets[
+          market
+        ],
+
       score:
-        analysis.score
+        analysis.score,
+
+      matchDate:
+        analysis.fixture.fixture.date
+
     });
 
   }else{
+
     state.coupon =
       state.coupon.filter(
         item =>
@@ -2337,264 +3981,484 @@ function couponSelectionChanged(
             item.matchId ===
             analysis.fixture.fixture.id
             &&
-            item.market === market
+            item.market ===
+            market
             &&
-            item.type === type
+            item.type ===
+            type
             &&
-            item.site === site
+            item.site ===
+            site
           )
       );
+
   }
 
+
   saveActiveCoupon();
+
+
   updateCoupon();
+
 }
 
 
 function syncCouponWithAnalyses(){
-  if(!state.coupon.length){
+
+  if(
+    !state.coupon.length
+  ){
+
     return;
+
   }
 
+
   state.coupon =
-    state.coupon.map(item=>{
-      const analysis =
-        state.analyses.find(
-          x =>
-            x.fixture?.fixture?.id
-            ===
-            item.matchId
-        );
+    state.coupon.map(
+      item => {
 
-      if(
-        !analysis ||
-        !analysis.markets
-      ){
-        return item;
-      }
+        const analysis =
+          state.analyses.find(
+            x =>
+              x.fixture?.fixture?.id
+              ===
+              item.matchId
+          );
 
-      return{
-        ...item,
-        score:
-          analysis.score,
-        modelProbability:
-          Number.isFinite(
+
+        if(
+          !analysis
+          ||
+          !analysis.markets
+        ){
+
+          return(
+            item
+          );
+
+        }
+
+
+        return{
+
+          ...item,
+
+          score:
+            analysis.score,
+
+          modelProbability:
+            Number.isFinite(
+              analysis.markets[
+                item.market
+              ]
+            )
+            ?
             analysis.markets[
               item.market
             ]
-          )
-          ? analysis.markets[item.market]
-          : item.modelProbability
-      };
-    });
+            :
+            item.modelProbability
+
+        };
+
+      }
+    );
+
 
   saveActiveCoupon();
+
+
   updateCoupon();
+
 }
 
 
 function updateCoupon(){
-  if(!state.coupon.length){
+
+  if(
+    !state.coupon.length
+  ){
+
     $("#couponPanel")
-      .classList.add("hidden");
+    .classList
+    .add(
+      "hidden"
+    );
+
 
     saveActiveCoupon();
+
+
     return;
+
   }
 
+
   $("#couponPanel")
-    .classList.remove("hidden");
+  .classList
+  .remove(
+    "hidden"
+  );
 
-  let totalOdds = 1;
-  let scoreSum = 0;
-  let minScore = 100;
-  let joint = 1;
 
-  state.coupon.forEach(item=>{
-    totalOdds *= item.odds;
-    scoreSum += item.score;
-    minScore =
-      Math.min(
-        minScore,
-        item.score
-      );
-    joint *=
-      item.modelProbability;
-  });
+  let totalOdds=1;
+
+  let scoreSum=0;
+
+  let minScore=100;
+
+  let joint=1;
+
+
+  state.coupon.forEach(
+    item => {
+
+      totalOdds *=
+        item.odds;
+
+
+      scoreSum +=
+        item.score;
+
+
+      minScore =
+        Math.min(
+          minScore,
+          item.score
+        );
+
+
+      joint *=
+        item.modelProbability;
+
+    }
+  );
+
 
   $("#couponCount").textContent =
     `${state.coupon.length} seçim`;
 
+
   $("#totalOdds").textContent =
-    totalOdds.toFixed(2);
+    totalOdds.toFixed(
+      2
+    );
+
 
   $("#avgConfidence").textContent =
     Math.round(
-      scoreSum /
+      scoreSum
+      /
       state.coupon.length
-    ) + "/100";
+    )
+    +
+    "/100";
+
 
   $("#minConfidence").textContent =
-    minScore + "/100";
+    minScore
+    +
+    "/100";
+
 
   $("#jointProbability").textContent =
-    "%" + (joint*100).toFixed(1);
+    "%"
+    +
+    (
+      joint *
+      100
+    )
+    .toFixed(
+      1
+    );
+
 
   $("#couponLegs").innerHTML =
     state.coupon
-      .map(item=>`
-        <div class="couponLeg">
-          <b>${item.match}</b>
-          <div class="muted">
-            ${item.market}
-            • ${item.site}
-            @ ${item.odds.toFixed(2)}
-            • Güven ${item.score}/100
+    .map(
+      item => {
+
+        const dateText =
+          item.matchDate
+          ?
+          new Date(
+            item.matchDate
+          )
+          .toLocaleDateString(
+            "tr-TR"
+          )
+          :
+          "";
+
+
+        return`
+          <div class="couponLeg">
+
+            <b>
+              ${item.match}
+            </b>
+
+            <div class="muted">
+
+              ${dateText}
+              •
+              ${item.market}
+              •
+              ${item.site}
+              @
+              ${item.odds.toFixed(2)}
+              •
+              Güven
+              ${item.score}/100
+
+            </div>
+
           </div>
-        </div>
-      `)
-      .join("");
+        `;
+
+      }
+    )
+    .join(
+      ""
+    );
+
 
   const stake =
     Number(
       $("#stake")?.value
-    ) || 0;
+    )
+    ||
+    0;
+
 
   $("#potentialReturn").textContent =
     (
-      stake *
+      stake
+      *
       totalOdds
-    ).toLocaleString(
+    )
+    .toLocaleString(
       "tr-TR",
       {
-        maximumFractionDigits:2
+        maximumFractionDigits:
+          2
       }
-    ) + " TL";
+    )
+    +
+    " TL";
+
 
   saveActiveCoupon();
+
 }
 
 
 function toggleCouponDetails(){
+
   $("#couponDetails")
-    .classList.toggle(
-      "hidden"
-    );
+  .classList
+  .toggle(
+    "hidden"
+  );
+
 }
 
 
 function clearCoupon(){
+
   state.coupon=[];
 
+
   document
-    .querySelectorAll(
-      'input[type="checkbox"]'
-    )
-    .forEach(
-      box =>
-        box.checked = false
-    );
+  .querySelectorAll(
+    'input[type="checkbox"]'
+  )
+  .forEach(
+    box =>
+      box.checked =
+      false
+  );
+
 
   saveActiveCoupon();
+
+
   updateCoupon();
+
 }
 
 
 function couponHistoryRead(){
+
   const keys = [
+    "goalgrid_kupon_gecmisi_v17",
     "goalgrid_kupon_gecmisi_v16",
     "goalgrid_kupon_gecmisi_v152"
   ];
 
-  for(const key of keys){
+
+  for(
+    const key
+    of keys
+  ){
+
     try{
+
       const value =
         JSON.parse(
-          localStorage.getItem(key)
+          localStorage.getItem(
+            key
+          )
         );
 
+
       if(
-        Array.isArray(value) &&
+        Array.isArray(
+          value
+        )
+        &&
         value.length
       ){
-        return value;
+
+        return(
+          value
+        );
+
       }
+
     }catch{}
+
   }
 
+
   return[];
+
 }
 
 
 function saveCoupon(){
-  if(!state.coupon.length){
+
+  if(
+    !state.coupon.length
+  ){
+
     return;
+
   }
+
 
   let totalOdds=1;
 
+
   state.coupon.forEach(
     item =>
-      totalOdds *= item.odds
+      totalOdds *=
+      item.odds
   );
+
 
   const bankroll =
     Number(
       $("#bankroll").value
-    ) || 0;
+    )
+    ||
+    0;
+
 
   const stake =
     Number(
       $("#stake").value
-    ) || 0;
+    )
+    ||
+    0;
+
 
   const record = {
-    id:Date.now(),
-    time:new Date().toISOString(),
+
+    id:
+      Date.now(),
+
+    time:
+      new Date()
+      .toISOString(),
+
     bankroll,
+
     stake,
+
     totalOdds,
+
     potential:
-      stake * totalOdds,
+      stake
+      *
+      totalOdds,
+
     selections:
       JSON.parse(
         JSON.stringify(
           state.coupon
         )
       ),
-    result:"Bekliyor"
+
+    result:
+      "Bekliyor"
+
   };
+
 
   const history =
     couponHistoryRead();
 
-  history.unshift(record);
+
+  history.unshift(
+    record
+  );
+
 
   localStorage.setItem(
-    "goalgrid_kupon_gecmisi_v16",
-    JSON.stringify(history)
+    "goalgrid_kupon_gecmisi_v17",
+    JSON.stringify(
+      history
+    )
   );
+
 
   alert(
     "Kupon geçmişe kaydedildi."
   );
+
 }
 
 
-function meter(name,value){
+function meter(
+  name,
+  value
+){
+
   return`
     <div class="metric">
-      <small>${name}</small>
-      <b>${value}/100</b>
+
+      <small>
+        ${name}
+      </small>
+
+      <b>
+        ${value}/100
+      </b>
 
       <div class="bar">
+
         <div
           class="fill"
           style="width:${value}%">
         </div>
+
       </div>
+
     </div>
   `;
+
 }
 
 
@@ -2602,28 +4466,42 @@ function oddsArea(
   analysis,
   index
 ){
+
   const markets =
     Object.entries(
       analysis.markets
     )
     .sort(
-      (a,b)=>b[1]-a[1]
+      (a,b) =>
+        b[1]
+        -
+        a[1]
     )
-    .map(x=>x[0]);
+    .map(
+      x =>
+        x[0]
+    );
+
 
   const options =
     markets
-      .map(
-        market=>`
+    .map(
+      market =>
+        `
           <option
             value="${market}"
             ${market===analysis.mainMarket?"selected":""}>
+
             ${market}
             (%${Math.round(analysis.markets[market]*100)})
+
           </option>
         `
-      )
-      .join("");
+    )
+    .join(
+      ""
+    );
+
 
   return`
     <div class="section">
@@ -2635,10 +4513,14 @@ function oddsArea(
       <select
         id="market_${index}"
         onchange="refreshOddsArea(${index})">
+
         ${options}
+
       </select>
 
-      <div id="oddsArea_${index}">
+      <div
+        id="oddsArea_${index}">
+
         ${
           singleMarketOdds(
             analysis,
@@ -2646,21 +4528,30 @@ function oddsArea(
             analysis.mainMarket
           )
         }
+
       </div>
 
     </div>
   `;
+
 }
 
 
-function refreshOddsArea(index){
+function refreshOddsArea(
+  index
+){
+
   const analysis =
-    state.analyses[index];
+    state.analyses[
+      index
+    ];
+
 
   const market =
     $(
       `#market_${index}`
     ).value;
+
 
   $(
     `#oddsArea_${index}`
@@ -2670,6 +4561,7 @@ function refreshOddsArea(index){
       index,
       market
     );
+
 }
 
 
@@ -2678,11 +4570,16 @@ function singleMarketOdds(
   index,
   market
 ){
+
   const id =
-    safeId(market);
+    safeId(
+      market
+    );
+
 
   const matchId =
     analysis.fixture.fixture.id;
+
 
   return`
     <div class="oddsGrid">
@@ -2693,10 +4590,21 @@ function singleMarketOdds(
           Yurtiçi Site
         </label>
 
-        <select id="site_domestic_${index}_${id}">
-          <option>Nesine</option>
-          <option>Misli</option>
-          <option>Bilyoner</option>
+        <select
+          id="site_domestic_${index}_${id}">
+
+          <option>
+            Nesine
+          </option>
+
+          <option>
+            Misli
+          </option>
+
+          <option>
+            Bilyoner
+          </option>
+
         </select>
 
         <div class="oddsRow">
@@ -2731,9 +4639,15 @@ function singleMarketOdds(
 
         <div class="history">
 
-          <b>Son Girişler</b><br>
+          <b>
+            Son Girişler
+          </b>
 
-          <span id="history_domestic_${index}_${id}">
+          <br>
+
+          <span
+            id="history_domestic_${index}_${id}">
+
             ${
               oddsHistoryText(
                 matchId,
@@ -2741,6 +4655,7 @@ function singleMarketOdds(
                 "domestic"
               )
             }
+
           </span>
 
         </div>
@@ -2798,9 +4713,15 @@ function singleMarketOdds(
 
         <div class="history">
 
-          <b>Son Girişler</b><br>
+          <b>
+            Son Girişler
+          </b>
 
-          <span id="history_international_${index}_${id}">
+          <br>
+
+          <span
+            id="history_international_${index}_${id}">
+
             ${
               oddsHistoryText(
                 matchId,
@@ -2808,6 +4729,7 @@ function singleMarketOdds(
                 "international"
               )
             }
+
           </span>
 
         </div>
@@ -2816,6 +4738,7 @@ function singleMarketOdds(
 
     </div>
   `;
+
 }
 
 
@@ -2823,8 +4746,10 @@ function matchCard(
   analysis,
   index
 ){
+
   const f =
     analysis.fixture;
+
 
   const time =
     new Date(
@@ -2839,13 +4764,18 @@ function matchCard(
       }
     );
 
-  if(!analysis.homeForm){
+
+  if(
+    !analysis.homeForm
+  ){
+
     return`
       <section class="card">
 
         <div class="row">
 
           <div>
+
             <div class="league">
               ${f.league.name}
             </div>
@@ -2855,6 +4785,7 @@ function matchCard(
               —
               ${f.teams.away.name}
             </div>
+
           </div>
 
           <div class="time">
@@ -2868,11 +4799,13 @@ function matchCard(
           <div>
 
             <div class="pick">
+
               ${analysis.mainMarket}
 
               <span class="grade grade-no">
                 OYNAMA
               </span>
+
             </div>
 
           </div>
@@ -2880,33 +4813,56 @@ function matchCard(
         </div>
 
         <div class="reasonNo">
+
           ${analysis.reason}
+
         </div>
 
         <div class="sourceList">
+
           ${
-            (analysis.sources || [])
-              .map(
-                source =>
-                  `<span class="source">${source}</span>`
-              )
-              .join("")
+            (
+              analysis.sources
+              ||
+              []
+            )
+            .map(
+              source =>
+                `<span class="source">${source}</span>`
+            )
+            .join(
+              ""
+            )
           }
+
         </div>
 
       </section>
     `;
+
   }
 
+
   const noBox =
-    analysis.grade === "OYNAMA"
-    ? `
+    analysis.grade ===
+    "OYNAMA"
+    ?
+    `
       <div class="reasonNo">
-        <b>Neden OYNAMA?</b><br>
+
+        <b>
+          Neden OYNAMA?
+        </b>
+
+        <br>
+
         ${analysis.noReason}
+
       </div>
     `
-    : "";
+    :
+    "";
+
 
   return`
     <section class="card">
@@ -2914,6 +4870,7 @@ function matchCard(
       <div class="row">
 
         <div>
+
           <div class="league">
             ${f.league.name}
           </div>
@@ -2923,6 +4880,7 @@ function matchCard(
             —
             ${f.teams.away.name}
           </div>
+
         </div>
 
         <div class="time">
@@ -2941,21 +4899,28 @@ function matchCard(
             🎯
             ${analysis.mainMarket}
 
-            <span class="grade ${analysis.gradeClass}">
+            <span
+              class="grade ${analysis.gradeClass}">
+
               ${analysis.grade}
+
             </span>
 
           </div>
 
           <div class="muted">
+
             GoalGrid Güven Puanı:
             ${analysis.score}/100
+
           </div>
 
         </div>
 
         <div class="bigPct">
+
           %${Math.round(analysis.mainProbability*100)}
+
         </div>
 
       </div>
@@ -2973,24 +4938,39 @@ function matchCard(
         <div class="grid3">
 
           <div class="metric">
-            <small>1 - Ev Sahibi</small>
+
+            <small>
+              1 - Ev Sahibi
+            </small>
+
             <b>
               %${Math.round(analysis.markets["Ev Sahibi"]*100)}
             </b>
+
           </div>
 
           <div class="metric">
-            <small>X - Beraberlik</small>
+
+            <small>
+              X - Beraberlik
+            </small>
+
             <b>
               %${Math.round(analysis.markets["Beraberlik"]*100)}
             </b>
+
           </div>
 
           <div class="metric">
-            <small>2 - Deplasman</small>
+
+            <small>
+              2 - Deplasman
+            </small>
+
             <b>
               %${Math.round(analysis.markets["Deplasman"]*100)}
             </b>
+
           </div>
 
         </div>
@@ -3001,55 +4981,99 @@ function matchCard(
       <div class="grid2">
 
         <div class="metric">
-          <small>Ev Sahibi Beklenen Gol</small>
-          <b>${analysis.homeXg.toFixed(2)}</b>
+
+          <small>
+            Ev Sahibi Beklenen Gol
+          </small>
+
+          <b>
+            ${analysis.homeXg.toFixed(2)}
+          </b>
+
         </div>
 
         <div class="metric">
-          <small>Deplasman Beklenen Gol</small>
-          <b>${analysis.awayXg.toFixed(2)}</b>
+
+          <small>
+            Deplasman Beklenen Gol
+          </small>
+
+          <b>
+            ${analysis.awayXg.toFixed(2)}
+          </b>
+
         </div>
 
         <div class="metric">
-          <small>Toplam Gol Beklentisi</small>
+
+          <small>
+            Toplam Gol Beklentisi
+          </small>
+
           <b>
             ${(analysis.homeXg+analysis.awayXg).toFixed(2)}
           </b>
+
         </div>
 
         <div class="metric">
-          <small>1.5 Üst</small>
+
+          <small>
+            1.5 Üst
+          </small>
+
           <b>
             %${Math.round(analysis.markets["1.5 Üst"]*100)}
           </b>
+
         </div>
 
         <div class="metric">
-          <small>2.5 Üst</small>
+
+          <small>
+            2.5 Üst
+          </small>
+
           <b>
             %${Math.round(analysis.markets["2.5 Üst"]*100)}
           </b>
+
         </div>
 
         <div class="metric">
-          <small>KG Var</small>
+
+          <small>
+            KG Var
+          </small>
+
           <b>
             %${Math.round(analysis.markets["KG Var"]*100)}
           </b>
+
         </div>
 
         <div class="metric">
-          <small>1X</small>
+
+          <small>
+            1X
+          </small>
+
           <b>
             %${Math.round(analysis.markets["1X"]*100)}
           </b>
+
         </div>
 
         <div class="metric">
-          <small>X2</small>
+
+          <small>
+            X2
+          </small>
+
           <b>
             %${Math.round(analysis.markets["X2"]*100)}
           </b>
+
         </div>
 
       </div>
@@ -3064,70 +5088,109 @@ function matchCard(
         <div class="grid2">
 
           <div class="metric">
-            <small>Veri Örneklemi</small>
+
+            <small>
+              Veri Örneklemi
+            </small>
+
             <b>
               ${analysis.homeForm.count}
               /
               ${analysis.awayForm.count}
             </b>
+
           </div>
 
           <div class="metric">
-            <small>Maç Başına Puan</small>
+
+            <small>
+              Maç Başına Puan
+            </small>
+
             <b>
               ${analysis.homeForm.ppg.toFixed(2)}
               /
               ${analysis.awayForm.ppg.toFixed(2)}
             </b>
+
           </div>
 
           <div class="metric">
-            <small>Attığı Gol</small>
+
+            <small>
+              Attığı Gol
+            </small>
+
             <b>
               ${analysis.homeForm.scored.toFixed(2)}
               /
               ${analysis.awayForm.scored.toFixed(2)}
             </b>
+
           </div>
 
           <div class="metric">
-            <small>Yediği Gol</small>
+
+            <small>
+              Yediği Gol
+            </small>
+
             <b>
               ${analysis.homeForm.conceded.toFixed(2)}
               /
               ${analysis.awayForm.conceded.toFixed(2)}
             </b>
+
           </div>
 
           <div class="metric">
-            <small>KG Var Geçmişi</small>
+
+            <small>
+              KG Var Geçmişi
+            </small>
+
             <b>
               %${Math.round(analysis.homeForm.btts*100)}
               /
               %${Math.round(analysis.awayForm.btts*100)}
             </b>
+
           </div>
 
           <div class="metric">
-            <small>2.5 Üst Geçmişi</small>
+
+            <small>
+              2.5 Üst Geçmişi
+            </small>
+
             <b>
               %${Math.round(analysis.homeForm.over25*100)}
               /
               %${Math.round(analysis.awayForm.over25*100)}
             </b>
+
           </div>
 
           <div class="metric">
-            <small>Gol Yememe</small>
+
+            <small>
+              Gol Yememe
+            </small>
+
             <b>
               %${Math.round(analysis.homeForm.cleanSheets*100)}
               /
               %${Math.round(analysis.awayForm.cleanSheets*100)}
             </b>
+
           </div>
 
           <div class="metric">
-            <small>Son Sonuçlar</small>
+
+            <small>
+              Son Sonuçlar
+            </small>
+
             <b>
               ${analysis.homeForm.wins}G
               ${analysis.homeForm.draws}B
@@ -3137,6 +5200,7 @@ function matchCard(
               ${analysis.awayForm.draws}B
               ${analysis.awayForm.losses}M
             </b>
+
           </div>
 
         </div>
@@ -3153,8 +5217,11 @@ function matchCard(
         <div class="grid2">
 
           ${meter("Veri Kalitesi",analysis.quality)}
+
           ${meter("Model Uyumu",analysis.agreement)}
+
           ${meter("Oynaklık",analysis.volatility)}
+
           ${meter("İstikrar",analysis.stability)}
 
         </div>
@@ -3170,14 +5237,20 @@ function matchCard(
 
         <div class="muted">
 
-          Ev sahibi son ${analysis.homeForm.count} maçta
-          maç başına ${analysis.homeForm.scored.toFixed(2)}
-          gol atıp ${analysis.homeForm.conceded.toFixed(2)}
+          Ev sahibi son
+          ${analysis.homeForm.count}
+          maçta maç başına
+          ${analysis.homeForm.scored.toFixed(2)}
+          gol atıp
+          ${analysis.homeForm.conceded.toFixed(2)}
           gol yedi.
 
-          Deplasman son ${analysis.awayForm.count} maçta
-          maç başına ${analysis.awayForm.scored.toFixed(2)}
-          gol atıp ${analysis.awayForm.conceded.toFixed(2)}
+          Deplasman son
+          ${analysis.awayForm.count}
+          maçta maç başına
+          ${analysis.awayForm.scored.toFixed(2)}
+          gol atıp
+          ${analysis.awayForm.conceded.toFixed(2)}
           gol yedi.
 
           Model ile tarihsel verinin uyumu
@@ -3210,8 +5283,12 @@ function matchCard(
 
           ${
             analysis.risks.length
-            ? analysis.risks.join(" • ")
-            : "Mevcut veride belirgin yapısal risk görülmedi."
+            ?
+            analysis.risks.join(
+              " • "
+            )
+            :
+            "Mevcut veride belirgin yapısal risk görülmedi."
           }
 
         </div>
@@ -3219,7 +5296,12 @@ function matchCard(
       </div>
 
 
-      ${oddsArea(analysis,index)}
+      ${
+        oddsArea(
+          analysis,
+          index
+        )
+      }
 
 
       <div class="section">
@@ -3231,12 +5313,18 @@ function matchCard(
         <div class="sourceList">
 
           ${
-            (analysis.sources || [])
-              .map(
-                source =>
-                  `<span class="source">${source}</span>`
-              )
-              .join("")
+            (
+              analysis.sources
+              ||
+              []
+            )
+            .map(
+              source =>
+                `<span class="source">${source}</span>`
+            )
+            .join(
+              ""
+            )
           }
 
         </div>
@@ -3245,172 +5333,276 @@ function matchCard(
 
     </section>
   `;
+
 }
 
 
 function couponHistoryRender(){
+
   const history =
     couponHistoryRead();
 
-  if(!history.length){
+
+  if(
+    !history.length
+  ){
+
     $("#content").innerHTML =
       `
         <div class="empty">
           Henüz kayıtlı kupon bulunmuyor.
         </div>
       `;
+
+
     return;
+
   }
+
 
   $("#content").innerHTML =
     history
-      .map(coupon=>`
-        <section class="card">
+    .map(
+      coupon =>
+        `
+          <section class="card">
 
-          <div class="row">
+            <div class="row">
 
-            <div>
-              <b>
-                ${new Date(coupon.time).toLocaleString("tr-TR")}
-              </b>
+              <div>
 
-              <div class="muted">
-                ${(coupon.selections || []).length} seçim
+                <b>
+                  ${new Date(coupon.time).toLocaleString("tr-TR")}
+                </b>
+
+                <div class="muted">
+
+                  ${
+                    (
+                      coupon.selections
+                      ||
+                      []
+                    ).length
+                  }
+                  seçim
+
+                </div>
+
               </div>
+
+              <div
+                style="
+                  font-size:22px;
+                  font-weight:900">
+
+                ${Number(coupon.totalOdds || 1).toFixed(2)}
+
+              </div>
+
             </div>
 
-            <div style="font-size:22px;font-weight:900">
-              ${Number(coupon.totalOdds || 1).toFixed(2)}
+            <div class="section">
+
+              ${
+                (
+                  coupon.selections
+                  ||
+                  []
+                )
+                .map(
+                  item =>
+                    `
+                      <div class="couponLeg">
+
+                        <b>
+                          ${item.match}
+                        </b>
+
+                        <div class="muted">
+
+                          ${item.market}
+                          •
+                          ${item.site}
+                          @
+                          ${Number(item.odds).toFixed(2)}
+                          •
+                          Güven
+                          ${item.score}/100
+
+                        </div>
+
+                      </div>
+                    `
+                )
+                .join(
+                  ""
+                )
+              }
+
             </div>
 
-          </div>
+          </section>
+        `
+    )
+    .join(
+      ""
+    );
 
-          <div class="section">
-
-            ${
-              (coupon.selections || [])
-                .map(item=>`
-                  <div class="couponLeg">
-
-                    <b>
-                      ${item.match}
-                    </b>
-
-                    <div class="muted">
-
-                      ${item.market}
-                      • ${item.site}
-                      @ ${Number(item.odds).toFixed(2)}
-                      • Güven ${item.score}/100
-
-                    </div>
-
-                  </div>
-                `)
-                .join("")
-            }
-
-          </div>
-
-        </section>
-      `)
-      .join("");
 }
 
 
 function render(){
+
   $("#matchCount").textContent =
     state.analyses.length;
 
+
   $("#strongCount").textContent =
     state.analyses
-      .filter(
-        x =>
-          x.grade === "A"
-          ||
-          x.grade === "A+"
-      )
-      .length;
+    .filter(
+      x =>
+        x.grade ===
+        "A"
+        ||
+        x.grade ===
+        "A+"
+    )
+    .length;
+
 
   $("#noCount").textContent =
     state.analyses
-      .filter(
-        x =>
-          x.grade === "OYNAMA"
-      )
-      .length;
+    .filter(
+      x =>
+        x.grade ===
+        "OYNAMA"
+    )
+    .length;
 
-  if(state.tab === "coupons"){
+
+  if(
+    state.tab ===
+    "coupons"
+  ){
+
     couponHistoryRender();
+
+
     return;
+
   }
 
-  let list =
-    [...state.analyses];
 
-  if(state.tab === "strong"){
+  let list =
+    [
+      ...state.analyses
+    ];
+
+
+  if(
+    state.tab ===
+    "strong"
+  ){
+
     list =
       list.filter(
         x =>
-          x.grade === "A"
+          x.grade ===
+          "A"
           ||
-          x.grade === "A+"
+          x.grade ===
+          "A+"
       );
+
   }
 
-  if(!list.length){
+
+  if(
+    !list.length
+  ){
+
     $("#content").innerHTML =
       `
         <div class="empty">
           Bu kategoride maç bulunmuyor.
         </div>
       `;
+
+
     return;
+
   }
+
 
   $("#content").innerHTML =
     list
-      .map(
-        analysis =>
-          matchCard(
-            analysis,
-            state.analyses.indexOf(analysis)
+    .map(
+      analysis =>
+        matchCard(
+          analysis,
+          state.analyses.indexOf(
+            analysis
           )
-      )
-      .join("");
+        )
+    )
+    .join(
+      ""
+    );
+
 }
 
 
 document
-  .querySelectorAll(".tab")
-  .forEach(button=>{
-    button.onclick = ()=>{
-      document
-        .querySelectorAll(".tab")
+.querySelectorAll(
+  ".tab"
+)
+.forEach(
+  button => {
+
+    button.onclick =
+      () => {
+
+        document
+        .querySelectorAll(
+          ".tab"
+        )
         .forEach(
           x =>
-            x.classList.remove("active")
+            x.classList.remove(
+              "active"
+            )
         );
 
-      button.classList.add("active");
-      state.tab = button.dataset.tab;
 
-      render();
-    };
-  });
+        button.classList.add(
+          "active"
+        );
 
 
-$("#today").textContent =
-  new Intl.DateTimeFormat(
-    "tr-TR",
-    {
-      weekday:"long",
-      day:"numeric",
-      month:"long",
-      year:"numeric",
-      timeZone:"Europe/Istanbul"
-    }
-  ).format(new Date());
+        state.tab =
+          button.dataset.tab;
+
+
+        render();
+
+      };
+
+  }
+);
+
+
+$("#selectedDate").value =
+  todayISO();
+
+
+$("#selectedDate")
+.addEventListener(
+  "change",
+  updateSelectedDateText
+);
+
+
+updateSelectedDateText();
 
 
 const oldBankroll =
@@ -3418,28 +5610,40 @@ const oldBankroll =
     "goalgrid_kasa"
   );
 
-if(oldBankroll){
+
+if(
+  oldBankroll
+){
+
   $("#bankroll").value =
     oldBankroll;
+
 }
 
+
 $("#bankroll")
-  .addEventListener(
-    "input",
-    ()=>{
-      localStorage.setItem(
-        "goalgrid_kasa",
-        $("#bankroll").value
-      );
-    }
-  );
+.addEventListener(
+  "input",
+  () => {
+
+    localStorage.setItem(
+      "goalgrid_kasa",
+      $("#bankroll").value
+    );
+
+  }
+);
 
 
 state.coupon =
   loadActiveCoupon();
 
+
 showApiState();
+
+
 updateCoupon();
+
 </script>
 
 </body>
