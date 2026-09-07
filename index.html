@@ -5,114 +5,51 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>GoalGrid V0.3</title>
+<title>GoalGrid V1 Core</title>
 
 <style>
 :root{
- --bg:#07101d;--card:#101b2b;--card2:#142238;
- --text:#eef4ff;--muted:#8fa1b9;--green:#6ee7b7;
- --blue:#93c5fd;--line:#24324a;--red:#fb7185;
+--bg:#07101d;--card:#101b2b;--card2:#142238;--text:#eef4ff;
+--muted:#8fa1b9;--green:#6ee7b7;--blue:#93c5fd;--line:#24324a;
+--red:#fb7185;--yellow:#fcd34d
 }
 *{box-sizing:border-box}
-body{
- margin:0;background:linear-gradient(180deg,#08111f,#060b13);
- color:var(--text);
- font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
- min-height:100vh
-}
-main{
- max-width:760px;margin:auto;
- padding:calc(24px + env(safe-area-inset-top)) 14px 50px
-}
-h1{font-size:32px;margin:0}
-.subtitle{color:var(--muted);margin:4px 0 16px}
-.card{
- background:linear-gradient(180deg,var(--card2),var(--card));
- border:1px solid var(--line);
- border-radius:18px;
- padding:15px;
- margin-bottom:11px
-}
-button{
- border:0;border-radius:13px;
- padding:12px 15px;
- font-weight:800;font-size:14px
-}
-.primary{background:var(--green);color:#052218}
-.dark{background:#152238;color:white;border:1px solid var(--line)}
-input{
- width:100%;padding:13px;
- border-radius:12px;border:1px solid #31425d;
- background:#07101d;color:white;margin:8px 0
-}
-.stats{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:8px;margin-bottom:11px
-}
-.stat{text-align:center}
-.stat b{display:block;font-size:23px}
-.stat small{color:var(--muted)}
-.tabs{display:flex;gap:7px;overflow:auto;margin:12px 0}
-.tab{
- background:#0d1726;color:var(--muted);
- border:1px solid var(--line);
- border-radius:999px;white-space:nowrap;padding:9px 12px
-}
-.tab.active{background:#183a4d;color:white}
-.status{font-size:13px;color:var(--muted)}
-.match{margin-bottom:11px}
-.head{
- display:flex;justify-content:space-between;
- gap:10px;align-items:flex-start
-}
-.league{font-size:11px;color:var(--muted)}
-.teams{font-size:17px;font-weight:850;margin-top:3px}
-.time{font-size:12px;color:var(--blue);font-weight:800}
-.pick{
- display:grid;grid-template-columns:1fr auto;
- gap:10px;margin-top:12px;padding-top:12px;
- border-top:1px solid var(--line)
-}
-.market{font-weight:850;font-size:16px}
-.prob{font-size:25px;font-weight:900}
-.grade{
- display:inline-block;margin-left:7px;
- padding:4px 8px;border-radius:999px;
- font-size:11px;font-weight:900
-}
-.aplus{background:#104934;color:#9cf4d0}
-.a{background:#193d60;color:#bbddff}
-.b{background:#4a3817;color:#ffe79c}
-.pass{background:#41242f;color:#ffb9c6}
-.grid{
- display:grid;grid-template-columns:repeat(2,1fr);
- gap:7px;margin-top:11px
-}
-.metric{
- background:#0b1523;border:1px solid #213149;
- border-radius:11px;padding:9px
-}
-.metric small{display:block;color:var(--muted);font-size:10px}
-.metric b{font-size:14px}
-.reason{
- color:#bcc9da;font-size:12px;
- line-height:1.5;margin-top:10px
-}
-.alt{
- margin-top:8px;padding-top:8px;
- border-top:1px dashed #2a3950;
- color:#9fb1c8;font-size:12px
-}
-.risk{color:#ffd78b}
-.good{color:#8cf0c8}
-.hidden{display:none}
-.empty{
- padding:30px 10px;text-align:center;color:var(--muted)
-}
-.leagueRow{
- display:flex;justify-content:space-between;
- padding:11px 0;border-bottom:1px solid var(--line)
-}
+body{margin:0;background:linear-gradient(180deg,#08111f,#060b13);color:var(--text);
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+main{max-width:780px;margin:auto;padding:calc(22px + env(safe-area-inset-top)) 13px 55px}
+h1{font-size:31px;margin:0}.sub{color:var(--muted);margin:4px 0 16px}
+.card{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);
+border-radius:18px;padding:15px;margin-bottom:10px}
+button{border:0;border-radius:12px;padding:11px 13px;font-weight:800}
+.primary{background:var(--green);color:#052218}.secondary{background:#183149;color:#dcecff}
+input{width:100%;box-sizing:border-box;padding:12px;border-radius:11px;border:1px solid #31425d;
+background:#07101d;color:white;margin:8px 0}
+.head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.league{font-size:11px;color:var(--muted)}.teams{font-size:16px;font-weight:850;margin-top:3px}
+.time{font-size:12px;color:var(--blue);font-weight:800}.status{font-size:12px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.stat{text-align:center}.stat b{display:block;font-size:21px}.stat small{color:var(--muted);font-size:10px}
+.tabs{display:flex;gap:6px;overflow:auto;margin:11px 0}.tab{background:#0d1726;color:var(--muted);
+border:1px solid var(--line);border-radius:999px;white-space:nowrap;padding:9px 11px}
+.tab.active{background:#19394d;color:white}
+.pick{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:11px;padding-top:11px;border-top:1px solid var(--line)}
+.market{font-size:16px;font-weight:900}.prob{font-size:24px;font-weight:900}
+.grade{display:inline-block;margin-left:6px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900}
+.aplus{background:#104934;color:#9cf4d0}.a{background:#193d60;color:#bbddff}
+.b{background:#4a3817;color:#ffe79c}.pass{background:#41242f;color:#ffb9c6}
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:10px}
+.metric{background:#0b1523;border:1px solid #213149;border-radius:10px;padding:8px}
+.metric small{display:block;color:var(--muted);font-size:9px}.metric b{font-size:13px}
+.section{margin-top:11px;padding-top:10px;border-top:1px solid var(--line)}
+.sectionTitle{font-size:11px;font-weight:900;color:#bed0e6;margin-bottom:6px}
+.reason{font-size:12px;line-height:1.5;color:#bdc9da}
+.good{color:#8cf0c8}.warn{color:#ffd78b}.bad{color:#ff9cab}
+.bar{height:6px;background:#07101d;border-radius:10px;overflow:hidden;margin-top:5px}
+.fill{height:100%;background:#6ee7b7;border-radius:10px}
+.oddsBox{background:#091521;border:1px solid #253852;border-radius:11px;padding:10px;margin-top:9px}
+.oddsRow{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #1d2a3e}
+.oddsRow:last-child{border-bottom:0}.value{color:#6ee7b7;font-weight:900}.noValue{color:#fca5a5}
+.empty{text-align:center;padding:30px 10px;color:var(--muted)}
 </style>
 </head>
 
@@ -120,51 +57,37 @@ input{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="subtitle">Kişisel futbol analiz sistemi • V0.3</p>
+<p class="sub">Futbol Karar Motoru • V1 Core</p>
 
-<section class="card" id="apiCard">
+<section class="card">
 <b>API-Football</b>
 <input id="apiKey" type="password" placeholder="API Key">
 <button class="primary" onclick="saveKey()">Anahtarı Kaydet</button>
-<p id="apiStatus" class="status">
-Anahtar sadece bu telefonda saklanır.
-</p>
+<span id="keyStatus" class="status"></span>
 </section>
 
 <section class="card">
 <div class="head">
 <div>
-<div style="font-size:11px;color:#6ee7b7;font-weight:800">BUGÜN</div>
-<div id="dateLabel" style="font-size:18px;font-weight:850;margin-top:4px"></div>
+<div class="league">BUGÜN</div>
+<div id="today" style="font-weight:850;font-size:18px"></div>
 </div>
-<button class="primary" onclick="run()">⚽ Tara & Analiz Et</button>
+<button class="primary" onclick="run(false)">Tara & Analiz Et</button>
 </div>
+<div id="runStatus" class="status" style="margin-top:9px">Hazır.</div>
 </section>
 
 <section class="stats">
-<div class="card stat">
-<b id="countAll">0</b>
-<small>Maç</small>
-</div>
-<div class="card stat">
-<b id="countA">0</b>
-<small>A / A+</small>
-</div>
-<div class="card stat">
-<b id="countRoll">0</b>
-<small>Roll Adayı</small>
-</div>
+<div class="card stat"><b id="nMatches">0</b><small>MAÇ</small></div>
+<div class="card stat"><b id="nA">0</b><small>A/A+</small></div>
+<div class="card stat"><b id="nPass">0</b><small>PASS</small></div>
+<div class="card stat"><b id="apiCalls">0</b><small>API</small></div>
 </section>
 
 <div class="tabs">
 <button class="tab active" data-tab="best">En Güçlüler</button>
 <button class="tab" data-tab="all">Tüm Maçlar</button>
-<button class="tab" data-tab="leagues">Ligler</button>
 </div>
-
-<section class="card status" id="status">
-Hazır.
-</section>
 
 <div id="content"></div>
 
@@ -175,96 +98,28 @@ Hazır.
 const API="https://v3.football.api-sports.io";
 
 const LEAGUES=[
- {id:39,name:"Premier League",country:"İngiltere"},
- {id:40,name:"Championship",country:"İngiltere"},
- {id:78,name:"Bundesliga",country:"Almanya"},
- {id:135,name:"Serie A",country:"İtalya"},
- {id:140,name:"La Liga",country:"İspanya"},
- {id:61,name:"Ligue 1",country:"Fransa"},
- {id:88,name:"Eredivisie",country:"Hollanda"},
- {id:89,name:"Eerste Divisie",country:"Hollanda"},
- {id:203,name:"Süper Lig",country:"Türkiye"},
- {id:204,name:"1. Lig",country:"Türkiye"},
- {id:144,name:"Jupiler Pro League",country:"Belçika"},
- {id:2,name:"Şampiyonlar Ligi",country:"Avrupa"},
- {id:3,name:"Avrupa Ligi",country:"Avrupa"},
- {id:848,name:"Konferans Ligi",country:"Avrupa"}
+39,40,78,135,140,61,88,89,203,204,144,2,3,848
 ];
 
-let state={
- tab:"best",
- analyses:[]
-};
+let state={analyses:[],tab:"best",calls:0};
 
-const $=q=>document.querySelector(q);
+const $=x=>document.querySelector(x);
 
-function istanbulDate(){
- const parts=new Intl.DateTimeFormat("en-CA",{
-  timeZone:"Europe/Istanbul",
-  year:"numeric",month:"2-digit",day:"2-digit"
- }).formatToParts(new Date());
-
- const obj={};
-
- parts.forEach(p=>obj[p.type]=p.value);
-
- return `${obj.year}-${obj.month}-${obj.day}`;
-}
-
-function dateShift(dateString,days){
-
- const d=new Date(dateString+"T12:00:00Z");
-
- d.setUTCDate(d.getUTCDate()+days);
-
- return d.toISOString().slice(0,10);
-
-}
-
-function currentSeason(){
-
- const d=new Date();
-
- const m=Number(
-  new Intl.DateTimeFormat("en",{
-   timeZone:"Europe/Istanbul",
-   month:"numeric"
-  }).format(d)
- );
-
- const y=Number(
-  new Intl.DateTimeFormat("en",{
-   timeZone:"Europe/Istanbul",
-   year:"numeric"
-  }).format(d)
- );
-
- return m>=7 ? y : y-1;
-
-}
-
-function key(){
- return localStorage.getItem("goalgrid_key")||"";
-}
+function getKey(){return localStorage.getItem("gg_key")||""}
 
 function saveKey(){
-
  const v=$("#apiKey").value.trim();
-
  if(!v)return;
-
- localStorage.setItem("goalgrid_key",v);
-
- $("#apiStatus").textContent="✓ API anahtarı kaydedildi.";
-
+ localStorage.setItem("gg_key",v);
+ $("#keyStatus").textContent=" ✓ Kaydedildi";
 }
 
 async function api(path){
+ state.calls++;
+ $("#apiCalls").textContent=state.calls;
 
  const r=await fetch(API+path,{
-  headers:{
-   "x-apisports-key":key()
-  }
+  headers:{"x-apisports-key":getKey()}
  });
 
  const j=await r.json();
@@ -274,630 +129,770 @@ async function api(path){
  }
 
  return j.response||[];
+}
 
+function trDate(){
+ return new Intl.DateTimeFormat("en-CA",{
+  timeZone:"Europe/Istanbul",
+  year:"numeric",month:"2-digit",day:"2-digit"
+ }).format(new Date());
+}
+
+function finished(x){
+ return ["FT","AET","PEN"].includes(x.fixture.status.short);
 }
 
 function normalize(x){
-
  return{
   id:x.fixture.id,
   date:x.fixture.date,
   status:x.fixture.status.short,
-
-  league:{
-   id:x.league.id,
-   name:x.league.name,
-   country:x.league.country
-  },
-
-  home:{
-   id:x.teams.home.id,
-   name:x.teams.home.name
-  },
-
-  away:{
-   id:x.teams.away.id,
-   name:x.teams.away.name
-  },
-
+  league:x.league,
+  home:x.teams.home,
+  away:x.teams.away,
   gh:x.goals.home,
   ga:x.goals.away
  };
+}
 
+function weightedForm(teamId,games,venue=null){
+
+ let list=games
+ .filter(x=>finished(x))
+ .map(normalize)
+ .filter(x=>x.home.id===teamId||x.away.id===teamId);
+
+ if(venue==="home")list=list.filter(x=>x.home.id===teamId);
+ if(venue==="away")list=list.filter(x=>x.away.id===teamId);
+
+ list=list
+ .sort((a,b)=>new Date(b.date)-new Date(a.date))
+ .slice(0,10);
+
+ if(!list.length){
+  return {n:0,gf:0,ga:0,ppg:0,btts:0,o15:0,o25:0,totalAvg:0,variance:0};
+ }
+
+ let wg=0,wga=0,wp=0,weights=0,btts=0,o15=0,o25=0;
+ let totals=[];
+
+ list.forEach((m,i)=>{
+
+  const w=Math.pow(.88,i);
+
+  const home=m.home.id===teamId;
+  const gf=home?m.gh:m.ga;
+  const ga=home?m.ga:m.gh;
+
+  wg+=gf*w;
+  wga+=ga*w;
+
+  let pts=0;
+  if(gf>ga)pts=3;
+  else if(gf===ga)pts=1;
+
+  wp+=pts*w;
+  weights+=w;
+
+  if(gf>0&&ga>0)btts++;
+  if(gf+ga>=2)o15++;
+  if(gf+ga>=3)o25++;
+
+  totals.push(gf+ga);
+ });
+
+ const mean=totals.reduce((a,b)=>a+b,0)/totals.length;
+ const variance=totals.reduce((s,x)=>s+Math.pow(x-mean,2),0)/totals.length;
+
+ return{
+  n:list.length,
+  gf:wg/weights,
+  ga:wga/weights,
+  ppg:wp/weights,
+  btts:btts/list.length,
+  o15:o15/list.length,
+  o25:o25/list.length,
+  totalAvg:mean,
+  variance
+ };
 }
 
 function poisson(k,l){
-
  let f=1;
-
  for(let i=2;i<=k;i++)f*=i;
-
  return Math.exp(-l)*Math.pow(l,k)/f;
-
 }
 
-function probabilities(hx,ax){
+function poissonMarkets(hx,ax){
 
- let home=0,draw=0,away=0;
- let btts=0,o15=0,o25=0,o35=0;
+ let h=0,d=0,a=0,btts=0,o15=0,o25=0,o35=0;
 
  for(let i=0;i<=8;i++){
-
   for(let j=0;j<=8;j++){
 
    const p=poisson(i,hx)*poisson(j,ax);
 
-   if(i>j)home+=p;
-   else if(i===j)draw+=p;
-   else away+=p;
+   if(i>j)h+=p;
+   else if(i===j)d+=p;
+   else a+=p;
 
-   if(i>0 && j>0)btts+=p;
-
+   if(i>0&&j>0)btts+=p;
    if(i+j>=2)o15+=p;
    if(i+j>=3)o25+=p;
    if(i+j>=4)o35+=p;
-
   }
-
  }
 
+ return {h,d,a,btts,o15,o25,o35};
+}
+
+function daysBetween(a,b){
+ return Math.round(Math.abs(new Date(a)-new Date(b))/86400000);
+}
+
+function scheduleInfo(teamId,target,nextGames,lastGames){
+
+ const previous=lastGames
+ .filter(x=>finished(x))
+ .sort((a,b)=>new Date(b.fixture.date)-new Date(a.fixture.date))[0];
+
+ const next=nextGames
+ .filter(x=>x.fixture.id!==target.fixture.id)
+ .sort((a,b)=>new Date(a.fixture.date)-new Date(b.fixture.date))[0];
+
  return{
-  home,draw,away,
-  btts,o15,o25,o35
+  rest:previous?daysBetween(previous.fixture.date,target.fixture.date):null,
+  next:next?daysBetween(next.fixture.date,target.fixture.date):null,
+  nextLeague:next?next.league.name:null
  };
-
 }
 
-function finished(m){
- return m.status==="FT";
+function blend(a,b,w=.65){
+ return a*w+b*(1-w);
 }
 
-function form(teamId,games,venue=null){
+function quality(n1,n2){
+ const n=Math.min(n1,n2);
+ if(n>=10)return 100;
+ if(n>=8)return 90;
+ if(n>=6)return 78;
+ if(n>=4)return 62;
+ if(n>=2)return 40;
+ return 10;
+}
 
- let list=games.filter(m=>
-  finished(m) &&
-  (m.home.id===teamId || m.away.id===teamId)
+function classify(score,dataQuality){
+ if(dataQuality<50)return["PASS","pass"];
+ if(score>=88)return["A+","aplus"];
+ if(score>=81)return["A","a"];
+ if(score>=73)return["B","b"];
+ return["PASS","pass"];
+}
+
+function analyze(fixture,H,A){
+
+ const hAll=weightedForm(fixture.teams.home.id,H.last);
+ const aAll=weightedForm(fixture.teams.away.id,A.last);
+
+ const hHome=weightedForm(fixture.teams.home.id,H.last,"home");
+ const aAway=weightedForm(fixture.teams.away.id,A.last,"away");
+
+ const dq=quality(hAll.n,aAll.n);
+
+ if(dq<40){
+  return {
+   fixture,
+   dataQuality:dq,
+   score:0,
+   grade:"PASS",
+   gradeClass:"pass",
+   market:"VERİ YETERSİZ",
+   probability:0,
+   reasons:["Yeterli gerçek geçmiş maç bulunamadı."],
+   noBet:true
+  };
+ }
+
+ const homeGF=hHome.n>=3?blend(hHome.gf,hAll.gf):hAll.gf;
+ const homeGA=hHome.n>=3?blend(hHome.ga,hAll.ga):hAll.ga;
+
+ const awayGF=aAway.n>=3?blend(aAway.gf,aAll.gf):aAll.gf;
+ const awayGA=aAway.n>=3?blend(aAway.ga,aAll.ga):aAll.ga;
+
+ let hx=.52*homeGF+.38*awayGA+.10*1.35;
+ let ax=.52*awayGF+.38*homeGA+.10*1.15;
+
+ hx=Math.max(.25,Math.min(3.5,hx));
+ ax=Math.max(.20,Math.min(3.3,ax));
+
+ const hSched=scheduleInfo(
+  fixture.teams.home.id,
+  fixture,
+  H.next,
+  H.last
  );
 
- if(venue==="home"){
-  list=list.filter(m=>m.home.id===teamId);
- }
+ const aSched=scheduleInfo(
+  fixture.teams.away.id,
+  fixture,
+  A.next,
+  A.last
+ );
 
- if(venue==="away"){
-  list=list.filter(m=>m.away.id===teamId);
- }
+ let rotation=0;
 
- list=list
- .sort((a,b)=>new Date(b.date)-new Date(a.date))
- .slice(0,8);
+ if(hSched.rest!==null&&hSched.rest<=3){hx*=.95;rotation+=5}
+ if(aSched.rest!==null&&aSched.rest<=3){ax*=.95;rotation+=5}
 
- let gf=0,ga=0,w=0,d=0,l=0;
+ if(hSched.next!==null&&hSched.next<=3)rotation+=7;
+ if(aSched.next!==null&&aSched.next<=3)rotation+=7;
 
- list.forEach(m=>{
+ const p=poissonMarkets(hx,ax);
 
-  const home=m.home.id===teamId;
-
-  const scored=home ? m.gh : m.ga;
-  const conceded=home ? m.ga : m.gh;
-
-  gf+=scored||0;
-  ga+=conceded||0;
-
-  if(scored>conceded)w++;
-  else if(scored===conceded)d++;
-  else l++;
-
- });
-
- const n=list.length||1;
-
- return{
-  n:list.length,
-  gf:gf/n,
-  ga:ga/n,
-  ppg:(w*3+d)/n,
-  games:list
+ const empirical={
+  btts:(hAll.btts+aAll.btts)/2,
+  o15:(hAll.o15+aAll.o15)/2,
+  o25:(hAll.o25+aAll.o25)/2
  };
 
-}
+ const marketProbs={
+  "1.5 Üst":blend(p.o15,empirical.o15,.72),
+  "2.5 Üst":blend(p.o25,empirical.o25,.72),
+  "KG Var":blend(p.btts,empirical.btts,.72),
+  "1X":p.h+p.d,
+  "X2":p.a+p.d,
+  "Ev Sahibi":p.h,
+  "Deplasman":p.a,
+  "3.5 Üst":p.o35
+ };
 
-function schedule(teamId,target,fixtures){
+ const ranked=Object.entries(marketProbs)
+ .map(([name,prob])=>({name,prob}))
+ .sort((x,y)=>y.prob-x.prob);
 
- const t=new Date(target.date);
+ const main=ranked[0];
+ const second=ranked[1];
 
- const prev=fixtures
- .filter(m=>
-   finished(m) &&
-   (m.home.id===teamId || m.away.id===teamId) &&
-   new Date(m.date)<t
- )
- .sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
-
- const next=fixtures
- .filter(m=>
-   !finished(m) &&
-   m.id!==target.id &&
-   (m.home.id===teamId || m.away.id===teamId) &&
-   new Date(m.date)>t
- )
- .sort((a,b)=>new Date(a.date)-new Date(b.date))[0];
-
- function days(m){
-
-  if(!m)return null;
-
-  return Math.round(
-   Math.abs(new Date(m.date)-t)/86400000
+ const agreementGol=
+  100-Math.min(100,
+   Math.abs(p.o25-empirical.o25)*150+
+   Math.abs(p.btts-empirical.btts)*100
   );
 
- }
-
- return{
-  prev:days(prev),
-  next:days(next)
- };
-
-}
-
-function grade(score){
-
- if(score>=88)return["A+","aplus"];
- if(score>=80)return["A","a"];
- if(score>=72)return["B","b"];
-
- return["PASS","pass"];
-
-}
-
-function analyze(match,leagueFixtures){
-
- const homeAll=form(match.home.id,leagueFixtures);
- const awayAll=form(match.away.id,leagueFixtures);
-
- const homeVenue=form(match.home.id,leagueFixtures,"home");
- const awayVenue=form(match.away.id,leagueFixtures,"away");
-
- const hGF=
-  homeVenue.n>=3 ? homeVenue.gf : homeAll.gf;
-
- const hGA=
-  homeVenue.n>=3 ? homeVenue.ga : homeAll.ga;
-
- const aGF=
-  awayVenue.n>=3 ? awayVenue.gf : awayAll.gf;
-
- const aGA=
-  awayVenue.n>=3 ? awayVenue.ga : awayAll.ga;
-
- let hx=
-  0.45*hGF +
-  0.35*aGA +
-  0.20*1.45;
-
- let ax=
-  0.45*aGF +
-  0.35*hGA +
-  0.20*1.20;
-
- hx=Math.max(.30,Math.min(3.1,hx));
- ax=Math.max(.25,Math.min(2.9,ax));
-
- const hr=schedule(
-  match.home.id,
-  match,
-  leagueFixtures
+ const volatility=Math.min(
+  100,
+  ((hAll.variance+aAll.variance)/2)*24
  );
 
- const ar=schedule(
-  match.away.id,
-  match,
-  leagueFixtures
- );
+ let score=main.prob*100;
 
- if(hr.prev!==null && hr.prev<=3)hx*=.95;
- if(ar.prev!==null && ar.prev<=3)ax*=.95;
+ score+=dq*.07;
+ score+=agreementGol*.05;
+ score-=volatility*.04;
+ score-=rotation*.30;
 
- const p=probabilities(hx,ax);
+ score=Math.round(Math.max(0,Math.min(96,score)));
 
- const candidates=[
-  {name:"1.5 Üst",p:p.o15},
-  {name:"Ev Sahibi 1X",p:p.home+p.draw},
-  {name:"Deplasman X2",p:p.away+p.draw},
-  {name:"2.5 Üst",p:p.o25},
-  {name:"KG Var",p:p.btts},
-  {name:"Ev Sahibi Kazanır",p:p.home},
-  {name:"Deplasman Kazanır",p:p.away},
-  {name:"3.5 Üst",p:p.o35}
+ const cls=classify(score,dq);
+
+ const reasons=[
+  `Son maç örneklemi ${hAll.n}/${aAll.n}`,
+  `Ağırlıklı PPG ${hAll.ppg.toFixed(2)} / ${aAll.ppg.toFixed(2)}`,
+  `Gol üretimi ${hAll.gf.toFixed(2)} / ${aAll.gf.toFixed(2)}`,
+  `Gol yeme ${hAll.ga.toFixed(2)} / ${aAll.ga.toFixed(2)}`
  ];
 
- candidates.sort((a,b)=>b.p-a.p);
+ const risks=[];
 
- const main=candidates[0];
- const second=candidates[1];
-
- const sample=
-  Math.min(homeAll.n,awayAll.n);
-
- let score=
-  main.p*100;
-
- score += Math.min(7,sample*.8);
-
- let rotationRisk=false;
-
- if(
-  (hr.next!==null && hr.next<=3) ||
-  (ar.next!==null && ar.next<=3)
- ){
-  score-=4;
-  rotationRisk=true;
- }
-
- if(
-  (hr.prev!==null && hr.prev<=3) ||
-  (ar.prev!==null && ar.prev<=3)
- ){
-  score-=3;
- }
-
- if(sample<4){
-  score=Math.min(score,76);
- }
-
- score=Math.round(
-  Math.max(45,Math.min(95,score))
- );
-
- const g=grade(score);
-
- const reasons=[];
-
- reasons.push(
-  `Örneklem ${homeAll.n}/${awayAll.n} maç`
- );
-
- reasons.push(
-  `Form PPG ${homeAll.ppg.toFixed(2)} / ${awayAll.ppg.toFixed(2)}`
- );
-
- reasons.push(
-  `Gol ort. ${homeAll.gf.toFixed(2)}-${homeAll.ga.toFixed(2)} / ${awayAll.gf.toFixed(2)}-${awayAll.ga.toFixed(2)}`
- );
-
- if(hr.prev!==null || ar.prev!==null){
-  reasons.push(
-   `Dinlenme ${hr.prev??"?"}/${ar.prev??"?"} gün`
-  );
- }
+ if(rotation>=7)risks.push("Yakın fikstür / olası rotasyon");
+ if(volatility>=65)risks.push("Yüksek maç volatilitesi");
+ if(dq<75)risks.push("Orta/düşük veri kalitesi");
 
  return{
-  match,
-  score,
-  grade:g[0],
-  gradeClass:g[1],
-
+  fixture,
+  hAll,aAll,
+  hx,ax,
+  p,
+  marketProbs,
   market:main.name,
-  probability:main.p,
-
-  secondary:second.name,
-  secondaryProbability:second.p,
-
-  hx,
-  ax,
-  totalXg:hx+ax,
-
-  homeAll,
-  awayAll,
-
-  hr,
-  ar,
-
-  rotationRisk,
+  probability:main.prob,
+  secondary:second,
+  score,
+  grade:cls[0],
+  gradeClass:cls[1],
+  dataQuality:dq,
+  agreement:Math.round(agreementGol),
+  volatility:Math.round(volatility),
+  rotation,
+  hSched,aSched,
   reasons,
-
-  probs:p
+  risks,
+  noBet:cls[0]==="PASS"
  };
-
 }
 
-async function run(){
+async function run(force=false){
 
- if(!key()){
+ if(!getKey()){
   alert("Önce API anahtarını kaydet.");
   return;
  }
 
- $("#status").textContent=
- "Bugünün maçları alınıyor…";
+ state.calls=0;
+ $("#apiCalls").textContent="0";
+
+ const day=trDate();
+
+ const saved=localStorage.getItem("gg_cache_"+day);
+
+ if(saved&&!force){
+  const parsed=JSON.parse(saved);
+  state.analyses=parsed.analyses||[];
+  render();
+  $("#runStatus").textContent="✓ Bugünkü analiz telefon önbelleğinden açıldı. API kotası kullanılmadı.";
+  return;
+ }
+
+ $("#runStatus").textContent="Bugünün fikstürü alınıyor…";
 
  try{
 
-  const today=istanbulDate();
+  const all=await api(`/fixtures?date=${day}&timezone=Europe/Istanbul`);
 
-  const allowed=new Set(
-   LEAGUES.map(x=>x.id)
-  );
+  const allowed=new Set(LEAGUES);
 
-  const rawToday=await api(
-   `/fixtures?date=${today}&timezone=Europe/Istanbul`
-  );
+  const games=all.filter(x=>allowed.has(x.league.id));
 
-  const todayGames=rawToday
-   .map(normalize)
-   .filter(m=>allowed.has(m.league.id));
-
-  if(!todayGames.length){
-
+  if(!games.length){
    state.analyses=[];
-
    render();
-
-   $("#status").textContent=
-   "Bugün seçili liglerde maç bulunamadı.";
-
+   $("#runStatus").textContent="Bugün seçili liglerde maç yok.";
    return;
   }
 
-  const activeLeagues=[
-   ...new Set(
-    todayGames.map(x=>x.league.id)
-   )
-  ];
+  const teamIds=[...new Set(
+   games.flatMap(x=>[
+    x.teams.home.id,
+    x.teams.away.id
+   ])
+  )];
 
-  const from=dateShift(today,-60);
-  const to=dateShift(today,7);
-  const season=currentSeason();
+  $("#runStatus").textContent=
+  `${games.length} maç bulundu. ${teamIds.length} takımın gerçek formu çekiliyor…`;
 
-  $("#status").textContent=
-  `${activeLeagues.length} aktif lig için form ve fikstür verisi alınıyor…`;
+  const teamData={};
 
-  const leagueMap={};
+  for(const team of teamIds){
 
-  for(const leagueId of activeLeagues){
-
-   try{
-
-    const data=await api(
-     `/fixtures?league=${leagueId}&season=${season}&from=${from}&to=${to}&timezone=Europe/Istanbul`
-    );
-
-    leagueMap[leagueId]=data.map(normalize);
-
-   }catch(e){
-
-    leagueMap[leagueId]=[];
-
-   }
-
-  }
-
-  state.analyses=todayGames.map(match=>{
-
-   return analyze(
-    match,
-    leagueMap[match.league.id]||[]
+   const last=await api(
+    `/fixtures?team=${team}&last=10&status=FT-AET-PEN`
    );
 
-  })
+   const next=await api(
+    `/fixtures?team=${team}&next=3&timezone=Europe/Istanbul`
+   );
+
+   teamData[team]={last,next};
+  }
+
+  state.analyses=games.map(f=>
+   analyze(
+    f,
+    teamData[f.teams.home.id],
+    teamData[f.teams.away.id]
+   )
+  )
   .sort((a,b)=>b.score-a.score);
 
   localStorage.setItem(
-   "goalgrid_last_analysis",
+   "gg_cache_"+day,
    JSON.stringify({
-    time:Date.now(),
+    created:Date.now(),
     analyses:state.analyses
    })
   );
 
   render();
 
-  $("#status").textContent=
-  `✓ ${state.analyses.length} maç analiz edildi. ${activeLeagues.length+1} API çağrısı kullanıldı.`;
+  $("#runStatus").textContent=
+  `✓ ${games.length} maç işlendi • ${state.calls} API çağrısı • Sonuç önbelleğe alındı.`;
 
  }catch(e){
 
-  $("#status").textContent=
+  $("#runStatus").textContent=
   "Hata: "+e.message;
 
  }
 
 }
 
-function matchCard(a){
+async function loadOdds(fixtureId,index){
 
- const m=a.match;
+ const el=$("#odds_"+fixtureId);
 
- const time=new Date(m.date)
+ el.innerHTML="Oranlar alınıyor…";
+
+ try{
+
+  const odds=await api(`/odds?fixture=${fixtureId}`);
+
+  if(!odds.length){
+   el.innerHTML="<span class='warn'>Bu maç için oran bulunamadı.</span>";
+   return;
+  }
+
+  const bookmakers=odds.flatMap(x=>x.bookmakers||[]);
+
+  const markets={};
+
+  bookmakers.forEach(book=>{
+
+   (book.bets||[]).forEach(bet=>{
+
+    const n=(bet.name||"").toLowerCase();
+
+    bet.values.forEach(v=>{
+
+     let key=null;
+
+     const val=(v.value||"").toLowerCase();
+
+     if(n.includes("match winner")){
+      if(val==="home")key="Ev Sahibi";
+      if(val==="away")key="Deplasman";
+      if(val==="draw")key="Beraberlik";
+     }
+
+     if(n.includes("both teams")&&val.includes("yes"))
+      key="KG Var";
+
+     if(
+      n.includes("over/under") &&
+      val.includes("over 2.5")
+     )key="2.5 Üst";
+
+     if(
+      n.includes("over/under") &&
+      val.includes("over 1.5")
+     )key="1.5 Üst";
+
+     if(key){
+
+      markets[key]??=[];
+
+      const odd=parseFloat(v.odd);
+
+      if(Number.isFinite(odd)){
+       markets[key].push({
+        odd,
+        book:book.name
+       });
+      }
+
+     }
+
+    });
+
+   });
+
+  });
+
+  const analysis=state.analyses[index];
+
+  const rows=[];
+
+  Object.entries(markets).forEach(([market,vals])=>{
+
+   if(!vals.length)return;
+
+   const best=vals
+   .sort((a,b)=>b.odd-a.odd)[0];
+
+   const avg=
+   vals.reduce((s,x)=>s+x.odd,0)/vals.length;
+
+   const model=
+   analysis.marketProbs?.[market];
+
+   let valueHTML="";
+
+   if(model){
+
+    const implied=1/avg;
+    const edge=(model-implied)*100;
+
+    valueHTML=
+    `<div class="${edge>3?"value":"noValue"}">
+     Edge ${edge>=0?"+":""}${edge.toFixed(1)} puan
+     </div>`;
+
+   }
+
+   rows.push(`
+    <div class="oddsRow">
+     <div>
+      <b>${market}</b>
+      <div class="status">
+       Ortalama ${avg.toFixed(2)}
+      </div>
+     </div>
+     <div style="text-align:right">
+      <b>${best.odd.toFixed(2)}</b>
+      <div class="status">${best.book}</div>
+      ${valueHTML}
+     </div>
+    </div>
+   `);
+
+  });
+
+  if(!rows.length){
+   el.innerHTML=
+   "<span class='warn'>Desteklediğimiz pazarlarda oran bulunamadı.</span>";
+   return;
+  }
+
+  el.innerHTML=rows.join("");
+
+ }catch(e){
+
+  el.innerHTML=
+  `<span class="bad">Oran hatası: ${e.message}</span>`;
+
+ }
+
+}
+
+function meter(label,value){
+
+ return`
+ <div class="metric">
+  <small>${label}</small>
+  <b>${value}/100</b>
+  <div class="bar">
+   <div class="fill" style="width:${value}%"></div>
+  </div>
+ </div>
+ `;
+
+}
+
+function card(a,index){
+
+ const f=a.fixture;
+
+ const time=new Date(f.fixture.date)
  .toLocaleTimeString("tr-TR",{
   hour:"2-digit",
   minute:"2-digit",
   timeZone:"Europe/Istanbul"
  });
 
+ if(a.noBet&&a.dataQuality<40){
+
+  return`
+  <section class="card">
+   <div class="league">${f.league.name}</div>
+   <div class="teams">
+    ${f.teams.home.name} — ${f.teams.away.name}
+   </div>
+   <div class="pick">
+    <div>
+     <div class="market">
+      VERİ YETERSİZ
+      <span class="grade pass">PASS</span>
+     </div>
+    </div>
+   </div>
+   <div class="reason bad">
+    Gerçek geçmiş maç verisi yeterli olmadığı için GoalGrid tahmin üretmedi.
+   </div>
+  </section>`;
+ }
+
  return`
- <section class="card match">
+ <section class="card">
 
-  <div class="head">
-
-   <div>
-    <div class="league">
-     ${m.league.name}
-    </div>
-
-    <div class="teams">
-     ${m.home.name} — ${m.away.name}
-    </div>
+ <div class="head">
+  <div>
+   <div class="league">${f.league.name}</div>
+   <div class="teams">
+    ${f.teams.home.name} — ${f.teams.away.name}
    </div>
+  </div>
+  <div class="time">${time}</div>
+ </div>
 
-   <div class="time">
-    ${time}
+ <div class="pick">
+  <div>
+   <div class="market">
+    🎯 ${a.market}
+    <span class="grade ${a.gradeClass}">
+     ${a.grade}
+    </span>
    </div>
-
+   <div class="status">
+    GoalGrid Composite ${a.score}/100
+   </div>
   </div>
 
-  <div class="pick">
+  <div class="prob">
+   %${Math.round(a.probability*100)}
+  </div>
+ </div>
 
-   <div>
+ <div class="metrics">
 
-    <div class="market">
-     🎯 ${a.market}
-
-     <span class="grade ${a.gradeClass}">
-      ${a.grade}
-     </span>
-
-    </div>
-
-    <div class="status">
-     GoalGrid ${a.score}/100
-    </div>
-
-   </div>
-
-   <div class="prob">
-    %${Math.round(a.probability*100)}
-   </div>
-
+  <div class="metric">
+   <small>Beklenen Gol</small>
+   <b>${a.hx.toFixed(2)} — ${a.ax.toFixed(2)}</b>
   </div>
 
-  <div class="grid">
+  <div class="metric">
+   <small>Toplam Gol</small>
+   <b>${(a.hx+a.ax).toFixed(2)}</b>
+  </div>
 
-   <div class="metric">
-    <small>Beklenen gol</small>
-    <b>
-     ${a.hx.toFixed(2)}
-     —
-     ${a.ax.toFixed(2)}
-    </b>
-   </div>
+  <div class="metric">
+   <small>1.5 Üst</small>
+   <b>%${Math.round(a.marketProbs["1.5 Üst"]*100)}</b>
+  </div>
 
-   <div class="metric">
-    <small>Toplam gol beklentisi</small>
-    <b>${a.totalXg.toFixed(2)}</b>
-   </div>
+  <div class="metric">
+   <small>2.5 Üst</small>
+   <b>%${Math.round(a.marketProbs["2.5 Üst"]*100)}</b>
+  </div>
 
-   <div class="metric">
-    <small>KG Var</small>
-    <b>%${Math.round(a.probs.btts*100)}</b>
-   </div>
+  <div class="metric">
+   <small>KG Var</small>
+   <b>%${Math.round(a.marketProbs["KG Var"]*100)}</b>
+  </div>
 
-   <div class="metric">
-    <small>2.5 Üst</small>
-    <b>%${Math.round(a.probs.o25*100)}</b>
-   </div>
+  <div class="metric">
+   <small>1X</small>
+   <b>%${Math.round(a.marketProbs["1X"]*100)}</b>
+  </div>
 
-   <div class="metric">
-    <small>1X</small>
-    <b>%${Math.round((a.probs.home+a.probs.draw)*100)}</b>
-   </div>
+  <div class="metric">
+   <small>X2</small>
+   <b>%${Math.round(a.marketProbs["X2"]*100)}</b>
+  </div>
 
-   <div class="metric">
-    <small>X2</small>
-    <b>%${Math.round((a.probs.away+a.probs.draw)*100)}</b>
-   </div>
+  <div class="metric">
+   <small>Alternatif</small>
+   <b>
+    ${a.secondary.name}
+    %${Math.round(a.secondary.prob*100)}
+   </b>
+  </div>
 
+ </div>
+
+ <div class="section">
+
+  <div class="sectionTitle">
+   MODEL KALİTESİ
+  </div>
+
+  <div class="metrics">
+   ${meter("Veri Kalitesi",a.dataQuality)}
+   ${meter("Model Uyum",a.agreement)}
+   ${meter("Volatilite",a.volatility)}
+   ${meter("Rotasyon Riski",Math.min(100,a.rotation*5))}
+  </div>
+
+ </div>
+
+ <div class="section">
+
+  <div class="sectionTitle">
+   NEDEN?
   </div>
 
   <div class="reason">
    ${a.reasons.join(" • ")}
   </div>
 
-  ${
-   a.rotationRisk
-   ? `<div class="reason risk">
-      ⚠️ Yakın fikstür var: rotasyon riski puana eksi olarak işlendi.
-     </div>`
-   : `<div class="reason good">
-      ✓ Yakın fikstür kaynaklı belirgin rotasyon alarmı yok.
-     </div>`
-  }
+ </div>
 
-  <div class="alt">
-   Alternatif:
-   <b>${a.secondary}</b>
-   —
-   %${Math.round(a.secondaryProbability*100)}
+ <div class="section">
+
+  <div class="sectionTitle">
+   RİSKLER
   </div>
 
- </section>
- `;
+  <div class="reason ${a.risks.length?"warn":"good"}">
+   ${a.risks.length?a.risks.join(" • "):"Belirgin yapısal risk tespit edilmedi."}
+  </div>
 
+ </div>
+
+ <div class="section">
+
+  <button
+   class="secondary"
+   onclick="loadOdds(${f.fixture.id},${index})">
+   💰 Oranları Getir & Value Hesapla
+  </button>
+
+  <div
+   class="oddsBox status"
+   id="odds_${f.fixture.id}">
+   Oranlar henüz alınmadı.
+  </div>
+
+ </div>
+
+ </section>`;
 }
 
 function render(){
 
- $("#countAll").textContent=
+ $("#nMatches").textContent=
  state.analyses.length;
 
- $("#countA").textContent=
+ $("#nA").textContent=
  state.analyses.filter(
-  x=>x.score>=80
+  x=>x.grade==="A"||x.grade==="A+"
  ).length;
 
- $("#countRoll").textContent=
- Math.min(
-  3,
-  state.analyses.filter(
-   x=>x.score>=80
-  ).length
- );
-
- if(state.tab==="leagues"){
-
-  $("#content").innerHTML=
-  `<section class="card">
-   ${LEAGUES.map(l=>`
-    <div class="leagueRow">
-     <div>
-      <b>${l.name}</b>
-      <div class="status">${l.country}</div>
-     </div>
-     <div class="good">✓</div>
-    </div>
-   `).join("")}
-  </section>`;
-
-  return;
- }
+ $("#nPass").textContent=
+ state.analyses.filter(
+  x=>x.grade==="PASS"
+ ).length;
 
  let arr=[...state.analyses];
 
  if(state.tab==="best"){
-
-  arr=arr
-   .filter(x=>x.score>=80)
-   .slice(0,10);
-
+  arr=arr.filter(
+   x=>x.grade==="A"||x.grade==="A+"
+  );
  }
 
  if(!arr.length){
-
   $("#content").innerHTML=
   `<div class="empty">
-   Bu sekmede henüz analiz bulunmuyor.
+   Bu kategoride maç yok.
   </div>`;
-
   return;
  }
 
  $("#content").innerHTML=
- arr.map(matchCard).join("");
+ arr.map((a,i)=>card(a,state.analyses.indexOf(a))).join("");
 
 }
 
-document
-.querySelectorAll(".tab")
-.forEach(btn=>{
+document.querySelectorAll(".tab")
+.forEach(b=>{
 
- btn.onclick=()=>{
+ b.onclick=()=>{
 
-  document
-  .querySelectorAll(".tab")
+  document.querySelectorAll(".tab")
   .forEach(x=>x.classList.remove("active"));
 
-  btn.classList.add("active");
+  b.classList.add("active");
 
-  state.tab=btn.dataset.tab;
+  state.tab=b.dataset.tab;
 
   render();
 
@@ -905,9 +900,9 @@ document
 
 });
 
-$("#apiKey").value=key();
+$("#apiKey").value=getKey();
 
-$("#dateLabel").textContent=
+$("#today").textContent=
 new Intl.DateTimeFormat("tr-TR",{
  weekday:"long",
  day:"numeric",
@@ -915,22 +910,6 @@ new Intl.DateTimeFormat("tr-TR",{
  year:"numeric",
  timeZone:"Europe/Istanbul"
 }).format(new Date());
-
-try{
-
- const saved=JSON.parse(
-  localStorage.getItem("goalgrid_last_analysis")
- );
-
- if(saved?.analyses){
-
-  state.analyses=saved.analyses;
-
-  render();
-
- }
-
-}catch{}
 
 </script>
 
