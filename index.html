@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07101d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>GoalGrid V1.9.6</title>
+<title>GoalGrid V1.9.7</title>
 
 <style>
 :root{
@@ -444,7 +444,7 @@ input[type="date"]{
 <main>
 
 <h1>⚽ GoalGrid</h1>
-<p class="subtitle">Futbol Karar Motoru • V1.9.6</p>
+<p class="subtitle">Futbol Karar Motoru • V1.9.7</p>
 
 <section class="card">
 
@@ -660,9 +660,9 @@ const BASE_LEAGUES = {
   140:{name:"La Liga",fd:"PD",of:"laliga"},
   61:{name:"Ligue 1",fd:"FL1",of:"ligue1"},
   88:{name:"Eredivisie",fd:"DED",of:"eredivisie"},
-  89:{name:"Eerste Divisie",fd:null,of:null},
+  89:{name:"Eerste Divisie",fd:null,of:"eerstedivisie"},
   203:{name:"Süper Lig",fd:null,of:"superlig"},
-  204:{name:"Türkiye 1. Lig",fd:null,of:null},
+  204:{name:"Türkiye 1. Lig",fd:null,of:"tff1"},
   144:{name:"Belçika Ligi",fd:null,of:"belcika"}
 
 };
@@ -1245,14 +1245,11 @@ function sameTeam(
     targetId !== null &&
     targetId !== undefined &&
     matchId !== null &&
-    matchId !== undefined
+    matchId !== undefined &&
+    Number(targetId) === Number(matchId)
   ){
-
-    return(
-      Number(targetId)
-      ===
-      Number(matchId)
-    );
+    return true;
+  }
 
   }
 
@@ -1381,6 +1378,9 @@ function normalizeApiFootballHistoryMatch(match){
 
 
 async function loadTeamHistory(teamId){
+  /* V1.9.7: Free planda güncel sezon takım geçmişi kapalı; yerel çoklu kaynak kullan. */
+  return [];
+
 
   if(teamId===null || teamId===undefined || teamId===""){
     return[];

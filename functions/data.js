@@ -38,8 +38,18 @@ export async function onRequestGet(context) {
       sezonlar: ["2026-27", "2025-26"]
     },
 
+    eerstedivisie: {
+      dosya: "nl.2.json",
+      sezonlar: ["2026-27", "2025-26"]
+    },
+
     superlig: {
       dosya: "tr.1.json",
+      sezonlar: ["2026-27", "2025-26"]
+    },
+
+    tff1: {
+      dosya: "tr.2.json",
       sezonlar: ["2026-27", "2025-26"]
     },
 
