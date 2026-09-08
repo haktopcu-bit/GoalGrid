@@ -1,4 +1,4 @@
-const BASE = "https://api.sofascore.com/api/v1";
+const BASE = "https://www.sofascore.com/api/v1";
 
 export async function onRequestGet(context) {
   const url = new URL(context.request.url);
@@ -22,7 +22,7 @@ export async function onRequestGet(context) {
     const team = candidates[0];
     const matches = [];
 
-    for (let page=0; page<3 && matches.length<14; page++) {
+    for (let page=0; page<4 && matches.length<18; page++) {
       const data = await getJson(`${BASE}/team/${team.id}/events/last/${page}`);
       const events = Array.isArray(data.events) ? data.events : [];
       for (const e of events) {
@@ -47,15 +47,34 @@ export async function onRequestGet(context) {
       if (!data.hasNextPage) break;
     }
 
-    matches.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-    return out({ok:true,team:{id:team.id,name:team.name},matches:matches.slice(0,12)},200,{"cache-control":"public, max-age=1800"});
+    const unique = new Map();
+    for (const m of matches) {
+      const key = `${m.date}|${norm(m.team1)}|${norm(m.team2)}`;
+      if (!unique.has(key)) unique.set(key,m);
+    }
+
+    const finalMatches = [...unique.values()]
+      .sort((a,b)=>String(b.date).localeCompare(String(a.date)))
+      .slice(0,14);
+
+    return out({
+      ok:true,
+      team:{id:team.id,name:team.name},
+      matches:finalMatches
+    },200,{"cache-control":"public, max-age=900"});
   } catch (e) {
     return out({ok:false,error:e.message || String(e)},502);
   }
 }
 
 async function getJson(url){
-  const r = await fetch(url,{headers:{"User-Agent":"GoalGrid/1.9.9"}});
+  const r = await fetch(url,{
+    headers:{
+      "User-Agent":"Mozilla/5.0 (compatible; GoalGrid/1.11.3)",
+      "Accept":"application/json,text/plain,*/*",
+      "Referer":"https://www.sofascore.com/"
+    }
+  });
   if(!r.ok) throw new Error(`Sofascore HTTP ${r.status}`);
   return r.json();
 }
