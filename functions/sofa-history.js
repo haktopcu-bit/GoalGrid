@@ -22,7 +22,7 @@ export async function onRequestGet(context) {
     const team = candidates[0];
     const matches = [];
 
-    for (let page=0; page<4 && matches.length<18; page++) {
+    for (let page=0; page<4 && matches.length<20; page++) {
       const data = await getJson(`${BASE}/team/${team.id}/events/last/${page}`);
       const events = Array.isArray(data.events) ? data.events : [];
       for (const e of events) {
@@ -31,6 +31,10 @@ export async function onRequestGet(context) {
         const h = num(e.homeScore?.current ?? e.homeScore?.normaltime ?? e.homeScore?.display);
         const a = num(e.awayScore?.current ?? e.awayScore?.normaltime ?? e.awayScore?.display);
         if (h === null || a === null) continue;
+        const homeId = Number(e.homeTeam?.id) || null;
+        const awayId = Number(e.awayTeam?.id) || null;
+        const subjectSide = Number(team.id) === homeId ? "home" : Number(team.id) === awayId ? "away" : null;
+        if (!subjectSide) continue;
         matches.push({
           date: isoDate(e.startTimestamp),
           time: isoTime(e.startTimestamp),
@@ -38,6 +42,9 @@ export async function onRequestGet(context) {
           team2: e.awayTeam?.name || "",
           team1Id: null,
           team2Id: null,
+          sofaHomeId: homeId,
+          sofaAwayId: awayId,
+          subjectSide,
           score: {ft:[h,a]},
           source: "Sofascore",
           leagueName: e.tournament?.uniqueTournament?.name || e.tournament?.name || "",
@@ -55,7 +62,7 @@ export async function onRequestGet(context) {
 
     const finalMatches = [...unique.values()]
       .sort((a,b)=>String(b.date).localeCompare(String(a.date)))
-      .slice(0,14);
+      .slice(0,16);
 
     return out({
       ok:true,
@@ -70,7 +77,7 @@ export async function onRequestGet(context) {
 async function getJson(url){
   const r = await fetch(url,{
     headers:{
-      "User-Agent":"Mozilla/5.0 (compatible; GoalGrid/1.11.3)",
+      "User-Agent":"Mozilla/5.0 (compatible; GoalGrid/1.12.9)",
       "Accept":"application/json,text/plain,*/*",
       "Referer":"https://www.sofascore.com/"
     }
