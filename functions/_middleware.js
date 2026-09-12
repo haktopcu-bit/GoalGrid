@@ -3,7 +3,7 @@ export async function onRequest(context) {
   const type = response.headers.get('content-type') || '';
   if (!type.includes('text/html')) return response;
   return new HTMLRewriter()
-    .on('head', { element(el) { el.append('<link rel="stylesheet" href="/goalgrid-v111.css?v=1126">', { html: true }); } })
-    .on('body', { element(el) { el.append('<script src="/goalgrid-v111.js?v=1126"></script><script src="/goalgrid-v111-fix.js?v=1126"></script><script src="/goalgrid-v1112-fix.js?v=1126"></script><script src="/goalgrid-v1113-fix.js?v=1126"></script><script src="/goalgrid-v1114-ui.js?v=1126"></script><script src="/goalgrid-v1115-fix.js?v=1126"></script><script src="/goalgrid-v1116-fix.js?v=1126"></script><script src="/goalgrid-v1117-fix.js?v=1126"></script><script src="/goalgrid-v1118-fix.js?v=1126"></script><script src="/goalgrid-v1122-quota.js?v=1126"></script><script src="/goalgrid-v1125-uefa-clean.js?v=1126"></script><script src="/goalgrid-v1126-market-policy.js?v=1126"></script>', { html: true }); } })
+    .on('head', { element(el) { el.append('<link rel="stylesheet" href="/goalgrid-v111.css?v=1127">', { html: true }); } })
+    .on('body', { element(el) { el.append('<script src="/goalgrid-v111.js?v=1127"></script><script src="/goalgrid-v111-fix.js?v=1127"></script><script src="/goalgrid-v1112-fix.js?v=1127"></script><script src="/goalgrid-v1113-fix.js?v=1127"></script><script src="/goalgrid-v1114-ui.js?v=1127"></script><script src="/goalgrid-v1115-fix.js?v=1127"></script><script src="/goalgrid-v1116-fix.js?v=1127"></script><script src="/goalgrid-v1117-fix.js?v=1127"></script><script src="/goalgrid-v1118-fix.js?v=1127"></script><script src="/goalgrid-v1122-quota.js?v=1127"></script><script src="/goalgrid-v1125-uefa-clean.js?v=1127"></script><script src="/goalgrid-v1126-market-policy.js?v=1127"></script><script src="/goalgrid-v1127-data-recovery.js?v=1127"></script>', { html: true }); } })
     .transform(response);
 }
