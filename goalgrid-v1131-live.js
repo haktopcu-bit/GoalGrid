@@ -1,0 +1,1 @@
+(()=>{'use strict';const V='V1.13.1';window.__GOALGRID_LIVE_VERSION__=V;window.addEventListener('DOMContentLoaded',()=>{document.title=`GoalGrid ${V}`;const s=document.querySelector('.subtitle');if(s)s.textContent=`Futbol Karar Motoru • ${V}`;});})();
